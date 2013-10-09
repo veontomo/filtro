@@ -1,7 +1,9 @@
 <?php
-class AdProvider{
+interface AdProvider{
 	public $url;
-	public 
+	public $urlPattern;
+
+	public function retrievePage($url){}
 }
 
 ?>
