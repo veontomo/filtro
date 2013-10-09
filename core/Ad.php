@@ -1,19 +1,29 @@
 <?php
 /**
 * Represents an advertisement
-* @var String 	$date 		publication date of the ad
-* @var String 	$author 	author of the ad
-* @var String 	$content 	text of the ad
-* @var String 	$url 		link to the ad (where it is published)
 * @author 	A.Shcherbakov
 * @author 	veontomo@gmail.com
 * @version 	0.0.2
+*
 */
 
 class Ad{
+	/**
+	* @var Integer 	$date 	publication date of the ad
+	*/
 	public $date;
+
+	/**
+	* @var String $url 		link to the ad (where it is published)
+	*/
 	public $url;
+	/**
+	* @var String $content 	text of the ad	
+	*/
 	public $content;
+	/**
+	* @var String $author 		author of the ad
+	*/
 	public $author;
 
 	/**
