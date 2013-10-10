@@ -12,5 +12,11 @@ class SubitoTest extends PHPUnit_Framework_TestCase
 
  	}
 
+
+ 	public function testRetriveOnePage(){
+ 		$subito = new Subito;
+ 		$subito->setUrl("localhost/webImitation/annunci-lazio/vendita/offerte-lavoro/th=1&o=2.html");
+ 	}
+
 }
 ?>
