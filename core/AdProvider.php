@@ -39,7 +39,7 @@ interface AdProvider{
 	* @param void
 	* @return Array an array each element of which is an instance of class Ad.
 	*/
-	public function retrievePage();
+	public function retrieveAds();
 }
 
 ?>
