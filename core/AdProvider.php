@@ -36,10 +36,10 @@ interface AdProvider{
 
 	/**
 	* produces the content of the page $url
-	* @param String $url url of the page
-	* @return String
+	* @param void
+	* @return Array an array each element of which is an instance of class Ad.
 	*/
-	public function retrievePage($url);
+	public function retrievePage();
 }
 
 ?>

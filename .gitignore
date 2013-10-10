@@ -3,3 +3,8 @@ resources/
 config/
 FirePHPCore/
 docs/
+webImitation/
+
+
+phpdoc-*.error.log
+phpdoc-*.log
