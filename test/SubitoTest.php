@@ -112,15 +112,20 @@ class SubitoTest extends PHPUnit_Framework_TestCase
 
 		$subito = new Subito;
  	    $today = date("d M Y");
+ 	    $yesterday = date("d M Y", strtotime("-1 day"));
 
  		$this->assertEquals('Operatore macchine a controllo numerico', $result[0]->content);
  		$this->assertEquals($today.' 08:54', $result[0]->date);
  		//$this->assertEquals('http://www.subito.it/offerte-lavoro/operatore-macchine-a-controllo-numerico-latina-75363838.htm', $result[0]->url);
 
  		$this->assertEquals('Analista programmatore J2EE', $result[6]->content);
+ 		$this->assertEquals($today.' 08:32', $result[6]->date);
+
  		$this->assertEquals('Dialogatori Save the children contratto garantito', $result[48]->content);
+ 		$this->assertEquals($yesterday.' 18:00', $result[48]->date);
 
  		$this->assertEquals('Agenti e consulenti alla vendita retribuzione 12.000 €', $result[3]->content);
+ 		$this->assertEquals($today.' 08:39', $result[3]->date);
  		 
 
  	}
