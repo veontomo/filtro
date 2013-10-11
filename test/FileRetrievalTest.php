@@ -9,10 +9,10 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
         if(!is_dir($dirPath) ) {
             try{
                 mkdir($dirPath);
+                echo PHP_EOL.'Directory '.$dirPath. ' is created.';
             }catch(Exception $e){
                 throw new Exception("Problem with creating drectory in ".__METHOD__.
                     ". Got message: ".$e->getMessage(), 1);
-                
             }
         }else{
             throw new Exception("Error in: ".__METHOD__.
@@ -21,8 +21,10 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
         $fileName = 'test'.date("Y-d-M-H-i-s", time());
         $filePath = $dirPath.DIRECTORY_SEPARATOR.$fileName;
         $content = __METHOD__. date(" Y d M H:i:s ", time());
-        file_put_contents($filePath, $content);
-        return array('content' => $content, 'filename' => $fileName);
+        if(file_put_contents($filePath, $content)){
+            echo PHP_EOL.'File '.$filePath. ' is created.';
+            return array('content' => $content, 'filename' => $fileName);
+        };
     }
 
     private function removeExternalUrl($arr){
@@ -53,7 +55,7 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
                 throw new Exception('Directory '.$dirPath. ' is NOT removed: '.$e->getMessage(), 1);
             }
         }else{
-            echo PHP_EOL.'Attention: non such directory! Are you sure you are using it correctly?'.PHP_EOL;
+            echo PHP_EOL.'Attention: no such directory! Are you sure you are using it correctly?'.PHP_EOL;
         }
     }
 
@@ -63,10 +65,6 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
     }
 
     public function testRetrieveFromWeb(){
-        // $file = dirname(__FILE__).'\..\webImitation\annunci-lazio\th=1&o=2';
-        // $this->assertTrue(file_exists($file), 'file that imitates an external url is not present');
-        // $fileContent = file_get_contents($file);
-
         $startInfo = $this->createExternalUrl('webImitation3');
         $fileContent = $startInfo['content'];
         $fileName = $startInfo['filename']; 
