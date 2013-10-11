@@ -124,18 +124,21 @@ class Subito implements AdProvider{
 		$ads = $xpath->query("//*/ul[@class='list']/li");
 		foreach ($ads as $ad) {
 			$adCurrent = new Ad;
+			$dates = array();
+			$dateNodes = $xpath->query('div[@class="date"]', $ad);
+			// it is supposed to be just one date in the ad, so if others are present, neglect them
+			if($dateNodes->length > 0){
+				$adCurrent->date =  $this->formatTime($dateNodes->item(0)->nodeValue);
+			}
 
-			$adDivs = $ad->getElementsByTagName("div");
-			foreach ($adDivs as $adDiv) {
-				if($adDiv->hasAttribute('class') && $adDiv->getAttribute('class') == 'date'){
-					$adCurrent->pubdate = $this->formatTime($adDiv->nodeValue);
-				}
-				if($adDiv->hasAttribute('class') && $adDiv->getAttribute('class') == 'descr'){
-					$adCurrent->content = trim($adDiv->nodeValue);
-					$links = $adDiv->getElementsByTagName('a');
-					foreach ($links as $link) {
-						$adCurrent->url .= $this->url.basename($link->getAttribute('href'));
-					}
+			$descrNodes = $xpath->query('div[@class="descr"]', $ad);
+			// it is supposed to be just one description in the ad, so if others are present, neglect them
+			if($descrNodes->length > 0){ 								
+				$descrNode = $descrNodes->item(0);
+				$adCurrent->content = trim(preg_replace('/(\s)+/', ' ', $descrNode->nodeValue));
+				$linkNodes = $descrNode->getElementsByTagName('a');
+				if($linkNodes->length > 0){
+					$adCurrent->url = $this->url.$linkNodes->item(0)->getAttribute('href');
 				}
 			}
 			$output[] = $adCurrent;

@@ -82,11 +82,13 @@ class SubitoTest extends PHPUnit_Framework_TestCase
 
  	public function testFormatTime(){
  		$subito = new Subito;
- 	    $today = date("d M");
- 	    $yesterday = date("d M", strtotime("-1 day"));
+ 	    $today = date("d M Y");
+ 	    $yesterday = date("d M Y", strtotime("-1 day"));
  	    $year = date("Y");
- 	    $this->assertEquals($subito->formatTime("Oggi 12:48"), "$today $year 12:48");
- 	    $this->assertEquals($subito->formatTime("Ieri 02:48"), "$yesterday $year 02:48");
+ 	    $this->assertEquals($subito->formatTime("Oggi 12:48"), "$today 12:48");
+ 	    $this->assertEquals($subito->formatTime("Oggi12:48"), "$today 12:48");
+ 	    $this->assertEquals($subito->formatTime("Ieri 02:48"), "$yesterday 02:48");
+ 	    $this->assertEquals($subito->formatTime("Ieri02:48"), "$yesterday 02:48");
  	    $this->assertEquals($subito->formatTime("20 ago 22:14"), "20 Aug $year 22:14");
  	    $this->assertEquals($subito->formatTime("01 gen 22:14"), "01 Jan $year 22:14");
  	    $this->assertEquals($subito->formatTime("01 Feb 22:14"), "01 Feb $year 22:14");
@@ -103,9 +105,24 @@ class SubitoTest extends PHPUnit_Framework_TestCase
  		$result = $subito->retriveAdsOnePage('th=1&o=2');
  		$this->assertEquals('array', gettype($result));
  		$this->assertFalse(empty($result));
+ 		$this->assertEquals(50, count($result));
  		foreach ($result as $ad) {
  			$this->assertEquals('Ad', get_class($ad));
  		}
+
+		$subito = new Subito;
+ 	    $today = date("d M Y");
+
+ 		$this->assertEquals('Operatore macchine a controllo numerico', $result[0]->content);
+ 		$this->assertEquals($today.' 08:54', $result[0]->date);
+ 		//$this->assertEquals('http://www.subito.it/offerte-lavoro/operatore-macchine-a-controllo-numerico-latina-75363838.htm', $result[0]->url);
+
+ 		$this->assertEquals('Analista programmatore J2EE', $result[6]->content);
+ 		$this->assertEquals('Dialogatori Save the children contratto garantito', $result[48]->content);
+
+ 		$this->assertEquals('Agenti e consulenti alla vendita retribuzione 12.000 €', $result[3]->content);
+ 		 
+
  	}
 
 }
