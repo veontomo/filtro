@@ -93,7 +93,47 @@ class SubitoTest extends PHPUnit_Framework_TestCase
  	    $this->assertEquals($subito->formatTime("01 gen 22:14"), "01 Jan $year 22:14");
  	    $this->assertEquals($subito->formatTime("01 Feb 22:14"), "01 Feb $year 22:14");
  	    $this->assertEquals($subito->formatTime("01 mar 2:14"), "01 Mar $year 02:14");
- 	}   
+ 	}
+
+ 	public function testTimeMax(){
+ 		$subito = new Subito;
+  		$time = time();
+ 		$this->assertEquals($time, $subito->timeMax());
+
+ 		$date1 = 1223;
+ 		$this->assertTrue($subito->setTimeMax($date1));
+ 		$this->assertEquals($date1, $subito->timeMax());
+
+ 		$date2 = "abcd";
+ 		$this->assertFalse($subito->setTimeMax($date2));
+ 		$this->assertEquals($date1, $subito->timeMax(), "since \"$date2\" can not be transformed into time, the previously imposed value should remain.");
+
+ 		$date3 = "12 Oct 2013 10:17";
+ 		$this->assertTrue($subito->setTimeMax($date3));
+ 		$this->assertEquals(strtotime($date3), $subito->timeMax());
+
+ 	}
+
+	public function testTimeMin(){
+		$subito = new Subito;
+ 		$time = strtotime('-1 day');
+		$this->assertEquals($time, $subito->timeMin());
+
+		$date1 = 1223;
+		$this->assertTrue($subito->setTimeMin($date1));
+		$this->assertEquals($date1, $subito->timeMin());
+
+		$date2 = "abcd";
+		$this->assertFalse($subito->setTimeMin($date2));
+		$this->assertEquals($date1, $subito->timeMin(), "since \"$date2\" can not be transformed into time, the previously imposed value should remain.");
+
+		$date3 = "12 Oct 2013 10:17";
+		$this->assertTrue($subito->setTimeMin($date3));
+		$this->assertEquals(strtotime($date3), $subito->timeMin());
+
+	}  
+
+
 
 
  	public function testRetriveAdsOnePage(){
@@ -126,8 +166,6 @@ class SubitoTest extends PHPUnit_Framework_TestCase
 
  		$this->assertEquals('Agenti e consulenti alla vendita retribuzione 12.000 €', $result[3]->content);
  		$this->assertEquals($today.' 08:39', $result[3]->date);
- 		 
-
  	}
 
 }

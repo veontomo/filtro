@@ -28,6 +28,27 @@ class Subito implements AdProvider{
 	* 'http://www.subito.it/annunci-lazio/vendita/offerte-lavoro/?th=1&o=2'
 	*/
 	public $page;
+
+	/** 
+	* the max value of the ad publication time. Default value is set to now.
+	* @var Integer  the earliest possible time of the publication of ad. 
+	*/
+	private $timeMax;
+
+	/** 
+	* the min value of the ad publication time. Default value is set to 1 hour before now.
+	* @var Integer  the latest possible time of the publication of ad. 
+	*/
+	private $timeMin;
+
+
+	/**
+	* Constructor: imposes the default value of the timeMax (current time) and timeMin (yesterday)
+	*/
+	public function __construct(){
+		$this->timeMax = time();
+		$this->timeMin = strtotime('-1 day');
+	}
 	
 	/**
 	* Getter for the url
@@ -38,6 +59,71 @@ class Subito implements AdProvider{
 		return $this->url;
 	}
 
+	/**
+	* Setter for the timeMax
+	* If the argument is a string, then it is transformed into an integer corresponding to the time format 
+	* and if this operation is successful, the timeMax is set to  that integer
+	* If the argument is an integer, the timeMax is set to this integer
+	* @param mixed $str String or Integer
+	* @return Boolean true if assignment is successeful, false - otherwise
+	*/
+	public function setTimeMax($arg){
+		if(is_int($arg)){
+			$this->timeMax = $arg;
+			return true;
+		}
+		if(is_string($arg)){
+			$attempt = strtotime($arg);
+			if($attempt){
+				$this->timeMax = $attempt;
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	/**
+	* Getter for the timeMax
+	* @param void
+	* @return Integer 	timeMax
+	*/
+	public function timeMax(){
+		return $this->timeMax;
+	}
+
+	/**
+	* Setter for the timeMin
+	* If the argument is a string, then it is transformed into an integer corresponding to the time format 
+	* and if this operation is successful, the timeMin is set to  that integer
+	* If the argument is an integer, the timeMin is set to this integer
+	* @param mixed $str String or Integer
+	* @return Boolean true if assignment is successeful, false - otherwise
+	*/
+	public function setTimeMin($arg){
+		if(is_int($arg)){
+			$this->timeMin = $arg;
+			return true;
+		}
+		if(is_string($arg)){
+			$attempt = strtotime($arg);
+			if($attempt){
+				$this->timeMin = $attempt;
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	/**
+	* Getter for the timeMin
+	* @param void
+	* @return Integer 	timeMin
+	*/
+	public function timeMin(){
+		return $this->timeMin;
+	}
 
 	/**
 	* Setter for the url
@@ -58,7 +144,7 @@ class Subito implements AdProvider{
 	}
 
 	/**
-	* retrive all the advertisments from the 'entry page" and forthcoming ones defined by the url pattern
+	* retrive all the advertisments from the "entry page" and forthcoming ones defined by the url pattern
 	* @param void
 	* @return 	Array 	an array each element of which is an instance of class Ad.
 	*/
