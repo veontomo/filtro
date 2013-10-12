@@ -2,7 +2,7 @@
 require_once DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'formatTime.php';
 class formatTimeTest extends PHPUnit_Framework_TestCase
 {
-	public function testFormatTime2(){
+	public function testFormatTime(){
  	    $today = date("d M Y");
  	    $yesterday = date("d M Y", strtotime("-1 day"));
  	    $year = date("Y");

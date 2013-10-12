@@ -1,5 +1,5 @@
 <?php
-require DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'FileRetrieval.php';
+require_once DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'FileRetrieval.php';
 
 
 class FileRetrievalTest extends PHPUnit_Framework_TestCase

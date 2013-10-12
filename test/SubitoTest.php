@@ -1,5 +1,5 @@
 <?php
-require DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'Subito.php';
+require_once DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'Subito.php';
 class SubitoTest extends PHPUnit_Framework_TestCase
 {
 	private function createExternalUrl($dirName){
