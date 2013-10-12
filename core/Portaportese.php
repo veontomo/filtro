@@ -2,15 +2,14 @@
 require_once 'AdProvider.php';
 require_once 'FileRetrieval.php';
 require_once 'Ad.php';
-require_once 'helpers'.DIRECTORY_SEPARATOR.'formatTime.php';
 
 /**
-* Represents a specific case of AdProvider class corresponding to "Subito" page.
+* Represents a specific case of AdProvider class corresponding to "Portaportese" page.
 * @author A.Shcherbakov
 * @author veontomo@gmail.com
 * @version 0.0.1 
 */
-class Subito implements AdProvider{
+class Portaportese implements AdProvider{
 	/**
 	* @var 	String $url url of the 'entry page'
 	*/
@@ -19,23 +18,15 @@ class Subito implements AdProvider{
 	/**
 	* @var 	String $urlPattern a pattern to parametrize all pages inside the 'entry page'
 	*/
-	private $urlPattern = '?th=PLACEHOLDER1&o=PLACEHOLDER2';
-
+	private $urlPattern = 'm-usCPLACEHOLDER1&pagPLACEHOLDER2';
 
 	/**
-	* @var 	String $page url of the specific page inside 'entry page'
-	* @example	if for the 'entry page' $url is 'http://www.subito.it/annunci-lazio/vendita/offerte-lavoro/'
-	* then $page might be equal to '?th=1&o=2', so that complete url of the page is 
-	* 'http://www.subito.it/annunci-lazio/vendita/offerte-lavoro/?th=1&o=2'
+	* @var 		String 	$page url of the specific page inside 'entry page'
+	* @example	if for the 'entry page' $url is 'http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/'
+	* then $page might be equal to 'm-usC72&pag4', so that complete url of the page is 
+	* 'http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/m-usC72&pag4'
 	*/
 	public $page;
-
-	/**
-	* the maximal number of pages to look through.
-	* When retrieving ads it might be nesessary to download several pages within a bunch of pages.
-	* In order to avoid excessive number of pages to download, $maxPageIterations is introduced.
-	*/
-	public $maxPageIterations = 3;
 
 	/** 
 	* the max value of the ad publication time. Default value is set to now.
@@ -123,7 +114,6 @@ class Subito implements AdProvider{
 		return false;
 	}
 
-
 	/**
 	* Getter for the timeMin
 	* @param void
@@ -157,34 +147,7 @@ class Subito implements AdProvider{
 	* @return 	Array 	an array each element of which is an instance of class Ad.
 	*/
 	public function retrieveAds(){
-		$counter = 1;
-		$ads = array();
-		$isEnough = false;
-		do{
-			$page = preg_replace(array('/PLACEHOLDER1/', '/PLACEHOLDER2/'), array(1, $counter), $this->urlPattern);
-			$adRetrieved = $this->retriveAdsOnePage($page);
-			$adRetrievedLen = count($adRetrieved);
-			$adFiltered = array();
-			for($i = 0; $i < $adRetrievedLen; $i++){
-				$adCurrent = $adRetrieved[$i];
-				$date = strtotime($adCurrent->date);
-				// echo $i.": date: ".$adRetrieved[$i]->date, ", timeMax: ".$this->timeMax.", timeMin = ".$this->timeMin;
-				if($date > $this->timeMax){
-					// echo 'too young';
-					continue;
-				}
-				if($date < $this->timeMin){
-					$isEnough = true;
-					// echo 'too old';
-					break;
-				};
-				$adFiltered[] = $adRetrieved[$i];
-			}
-			$ads = array_merge($ads, $adFiltered);
-			$counter++;
-		}
-		while ($counter < $this->maxPageIterations+1 && !$isEnough); 
-		return $ads;
+		return null;
 	}
 
 
@@ -248,7 +211,7 @@ class Subito implements AdProvider{
 			$dateNodes = $xpath->query('div[@class="date"]', $ad);
 			// it is supposed to be just one date in the ad, so if others are present, neglect them
 			if($dateNodes->length > 0){
-				$adCurrent->date =  formatTime($dateNodes->item(0)->nodeValue);
+				$adCurrent->date =  $this->formatTime($dateNodes->item(0)->nodeValue);
 			}
 
 			$descrNodes = $xpath->query('div[@class="descr"]', $ad);
