@@ -229,7 +229,6 @@ class Subito implements AdProvider{
 	* @uses		Ads
 	* @param 	String 		$page 	url of the page parametrized by the $page in the bunch of $this->url
 	* @return 	Array 		an array each element of which is an instance of Ad class
-	* @todo 	refactor the xpath part in order to move the corresponding block into another class
 	*/
 	public function retriveAdsOnePage($page){
 		$output = array();

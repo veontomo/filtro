@@ -176,9 +176,6 @@ class SubitoTest extends PHPUnit_Framework_TestCase
  		$this->assertEquals($today.' 08:39', $result[3]->date);
  	}
 
- 	/**
- 	* @group current
- 	*/
 	public function testRetrieveAds(){
 		$subito = new Subito;
 		$today = date("d M Y");
@@ -191,10 +188,18 @@ class SubitoTest extends PHPUnit_Framework_TestCase
  		$this->assertFalse(empty($result));
  		$this->assertEquals(count($result), 5);
 		
+		$this->assertTrue($subito->setTimeMax($today." 17:00"));
 		$this->assertTrue($subito->setTimeMin($yesterday." 15:00"));
 		$result = $subito->retrieveAds();
 		$this->assertFalse(empty($result));
-		$this->assertEquals(count($result), 5);
+		$this->assertEquals(count($result), 123);
+
+
+		$this->assertTrue($subito->setTimeMax($today." 15:00"));
+		$this->assertTrue($subito->setTimeMin($yesterday." 15:00"));
+		$result = $subito->retrieveAds();
+		$this->assertFalse(empty($result));
+		$this->assertEquals(count($result), 119);
 
 	}
 
