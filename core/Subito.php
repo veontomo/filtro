@@ -29,6 +29,13 @@ class Subito implements AdProvider{
 	*/
 	public $page;
 
+	/**
+	* the maximal number of pages to look through.
+	* When retrieving ads it might be nesessary to download several pages within a bunch of pages.
+	* In order to avoid excessive number of pages to download, $maxPageIterations is introduced.
+	*/
+	public $maxPageIterations = 3;
+
 	/** 
 	* the max value of the ad publication time. Default value is set to now.
 	* @var Integer  the earliest possible time of the publication of ad. 
@@ -145,11 +152,38 @@ class Subito implements AdProvider{
 
 	/**
 	* retrive all the advertisments from the "entry page" and forthcoming ones defined by the url pattern
-	* @param void
+	* @param 	void
 	* @return 	Array 	an array each element of which is an instance of class Ad.
 	*/
 	public function retrieveAds(){
-		return null;
+		$counter = 1;
+		$ads = array();
+		$isEnough = false;
+		do{
+			$page = preg_replace(array('/PLACEHOLDER1/', '/PLACEHOLDER2/'), array(1, $counter), $this->urlPattern);
+			$adRetrieved = $this->retriveAdsOnePage($page);
+			$adRetrievedLen = count($adRetrieved);
+			$adFiltered = array();
+			for($i = 0; $i < $adRetrievedLen; $i++){
+				$adCurrent = $adRetrieved[$i];
+				$date = strtotime($adCurrent->date);
+				// echo $i.": date: ".$adRetrieved[$i]->date, ", timeMax: ".$this->timeMax.", timeMin = ".$this->timeMin;
+				if($date > $this->timeMax){
+					// echo 'too young';
+					continue;
+				}
+				if($date < $this->timeMin){
+					$isEnough = true;
+					// echo 'too old';
+					break;
+				};
+				$adFiltered[] = $adRetrieved[$i];
+			}
+			$ads = array_merge($ads, $adFiltered);
+			$counter++;
+		}
+		while ($counter < $this->maxPageIterations+1 && !$isEnough); 
+		return $ads;
 	}
 
 

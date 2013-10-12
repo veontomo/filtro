@@ -112,6 +112,9 @@ class SubitoTest extends PHPUnit_Framework_TestCase
  		$this->assertTrue($subito->setTimeMax($date3));
  		$this->assertEquals(strtotime($date3), $subito->timeMax());
 
+ 		$date4 = "-1 day";
+ 		$this->assertTrue($subito->setTimeMax($date4));
+ 		$this->assertEquals(strtotime($date4), $subito->timeMax());
  	}
 
 	public function testTimeMin(){
@@ -131,18 +134,23 @@ class SubitoTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($subito->setTimeMin($date3));
 		$this->assertEquals(strtotime($date3), $subito->timeMin());
 
+		$date4 = "-1 day";
+		$this->assertTrue($subito->setTimeMin($date4));
+		$this->assertEquals(strtotime($date4), $subito->timeMin());
 	}  
 
-
-
-
  	public function testRetriveAdsOnePage(){
- 		$this->assertTrue(file_exists(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'resources'
- 			.DIRECTORY_SEPARATOR.'subito'.DIRECTORY_SEPARATOR.'th=1&o=2'), "In order to make the test pass, save 
- 			a page with advertisements from www.subito.it in the folder resources/subito/th=1&o=2");
+ 		$savedAdDir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR
+ 			.'subito'.DIRECTORY_SEPARATOR;
+ 		$this->assertTrue(file_exists($savedAdDir.'index.php') && 
+ 						  file_exists($savedAdDir.'th=1&o=2.html'), 
+ 			'In order to make the test start: '.PHP_EOL
+ 			.'1. save a page with advertisements from '
+ 			.'www.subito.it in the folder resources/subito/ with a name "th=1&o=2.html"'.PHP_EOL
+ 			.'2. make sure that the above folder contains dispatcher index.php.');
  		$subito = new Subito;
  		$subito->setUrl('http://localhost/filtro/resources/subito/');
- 		$result = $subito->retriveAdsOnePage('th=1&o=2');
+ 		$result = $subito->retriveAdsOnePage('?th=1&o=2');
  		$this->assertEquals('array', gettype($result));
  		$this->assertFalse(empty($result));
  		$this->assertEquals(50, count($result));
@@ -167,6 +175,30 @@ class SubitoTest extends PHPUnit_Framework_TestCase
  		$this->assertEquals('Agenti e consulenti alla vendita retribuzione 12.000 €', $result[3]->content);
  		$this->assertEquals($today.' 08:39', $result[3]->date);
  	}
+
+ 	/**
+ 	* @group current
+ 	*/
+	public function testRetrieveAds(){
+		$subito = new Subito;
+		$today = date("d M Y");
+		$yesterday = date("d M Y", strtotime("-1 day"));
+
+ 		$subito->setUrl('http://localhost/filtro/resources/subito/');
+ 		$this->assertTrue($subito->setTimeMax($today." 17:00"));
+ 		$this->assertTrue($subito->setTimeMin($today." 14:00"));
+ 		$result = $subito->retrieveAds();
+ 		$this->assertFalse(empty($result));
+ 		$this->assertEquals(count($result), 5);
+		
+		$this->assertTrue($subito->setTimeMin($yesterday." 15:00"));
+		$result = $subito->retrieveAds();
+		$this->assertFalse(empty($result));
+		$this->assertEquals(count($result), 5);
+
+	}
+
+
 
 }
 ?>
