@@ -14,6 +14,11 @@ class formatTimeTest extends PHPUnit_Framework_TestCase
  	    $this->assertEquals(formatTime("01 gen 22:14"), "01 Jan $year 22:14");
  	    $this->assertEquals(formatTime("01 Feb 22:14"), "01 Feb $year 22:14");
  	    $this->assertEquals(formatTime("01 mar 2:14"), "01 Mar $year 02:14");
+ 	    $this->assertEquals(formatTime("venerdì 11 Ott"), "11 Oct $year 00:00");
+ 	    $this->assertEquals(formatTime("lunedì 9 Mar"), "09 Mar $year 00:00");
+ 	    $this->assertEquals(formatTime("mercoledì 21 Lug"), "21 Jul $year 00:00");
+ 	    $this->assertEquals(formatTime("mercoledì 18 Dic"), "18 Dec $year 00:00");
+
  	}
  }
 
