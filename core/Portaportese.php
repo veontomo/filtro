@@ -21,6 +21,50 @@ class Portaportese implements AdProvider{
 	private $urlPattern = 'm-usCPLACEHOLDER1&pagPLACEHOLDER2';
 
 	/**
+	* @var 	String $repoDir		absolute path to the repository 
+	* directory in which local versions of the retrieved pages should be stored
+	*/
+	private $repoDir;
+
+
+	/**
+	* Setter for the repository directory
+	* @param String $repoDir 	absolute path to the repository directory
+	* @return void
+	*/
+	public function setRepoDir($repoDir){
+			$this->repoDir = $repoDir;
+	}
+
+	/**
+	* Getter for the repository directory
+	* @param  	void
+	* @return 	String 	absolute path to the repository
+	*/
+	public function repoDir(){
+		return $this->repoDir;
+	}
+
+
+	/**
+	* full path to a local copy of an external url
+	* @var String $page
+	* @example if $this->url is "http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/",
+	* then localCopy("m-usC72&pag4") should be 
+	* "portaportese/rubriche/Lavoro/Lavoro_qualificato/m-usC72&pag4"
+	*/
+	public function localPath($page){
+		$urlInfo = parse_url($this->url);
+		if(strpos($page,'&pag') === false){
+			$page .= '&pag1';
+		}
+		$host = 'portaportese';
+		return $host.$urlInfo['path'].$page;
+	}
+
+
+
+	/**
 	* @var 		String 	$page url of the specific page inside 'entry page'
 	* @example	if for the 'entry page' $url is 'http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/'
 	* then $page might be equal to 'm-usC72&pag4', so that complete url of the page is 
@@ -46,13 +90,13 @@ class Portaportese implements AdProvider{
 	*/
 	public function __construct(){
 		$this->timeMax = time();
-		$this->timeMin = strtotime('-1 day');
+		$this->timeMin = strtotime('-7 day');
 	}
 	
 	/**
 	* Getter for the url
-	* @param void
-	* @return String 	url for the 'entry page'
+	* @param 	void
+	* @return 	String 		url for the 'entry page'
 	*/
 	public function url(){
 		return $this->url;
@@ -157,12 +201,12 @@ class Portaportese implements AdProvider{
 	* @return 	String 				content of the page given by $url
 	* @uses 	FileRetrieval::retrieveFromWeb() to retrieve the content
 	*/
-	public function pageContent($page){
-		$urlComplete = $this->url.$page;
-		$retr = new FileRetrieval;
-		$content = $retr->retrieveFromWeb($urlComplete);
-		return $content;
-	}
+	// public function pageContent($page){
+	// 	$urlComplete = $this->url.$page;
+	// 	$retr = new FileRetrieval;
+	// 	$content = $retr->retrieveFromWeb($urlComplete);
+	// 	return $content;
+	// }
 
 
 	// /**
@@ -194,42 +238,42 @@ class Portaportese implements AdProvider{
 	* @param 	String 		$page 	url of the page parametrized by the $page in the bunch of $this->url
 	* @return 	Array 		an array each element of which is an instance of Ad class
 	*/
-	public function retriveAdsOnePage($page){
-		$output = array();
-		$content =  $this->pageContent($page);
+	// public function retriveAdsOnePage($page){
+	// 	$output = array();
+	// 	$content =  $this->pageContent($page);
 
-		$previousSetting = libxml_use_internal_errors(true);
-		$doc = new DOMDocument();
-		$doc->loadHTML($content);
-		libxml_use_internal_errors($previousSetting); // set the initial value of libxml_use_internal_errors
-		$xpath = new DOMXpath($doc);
+	// 	$previousSetting = libxml_use_internal_errors(true);
+	// 	$doc = new DOMDocument();
+	// 	$doc->loadHTML($content);
+	// 	libxml_use_internal_errors($previousSetting); // set the initial value of libxml_use_internal_errors
+	// 	$xpath = new DOMXpath($doc);
 
-		$ads = $xpath->query("//*/ul[@class='list']/li");
-		foreach ($ads as $ad) {
-			$adCurrent = new Ad;
-			$dates = array();
-			$dateNodes = $xpath->query('div[@class="date"]', $ad);
-			// it is supposed to be just one date in the ad, so if others are present, neglect them
-			if($dateNodes->length > 0){
-				$adCurrent->date =  $this->formatTime($dateNodes->item(0)->nodeValue);
-			}
+	// 	$ads = $xpath->query("//*/ul[@class='list']/li");
+	// 	foreach ($ads as $ad) {
+	// 		$adCurrent = new Ad;
+	// 		$dates = array();
+	// 		$dateNodes = $xpath->query('div[@class="date"]', $ad);
+	// 		// it is supposed to be just one date in the ad, so if others are present, neglect them
+	// 		if($dateNodes->length > 0){
+	// 			$adCurrent->date =  $this->formatTime($dateNodes->item(0)->nodeValue);
+	// 		}
 
-			$descrNodes = $xpath->query('div[@class="descr"]', $ad);
-			// it is supposed to be just one description in the ad, so if others are present, neglect them
-			if($descrNodes->length > 0){ 								
-				$descrNode = $descrNodes->item(0);
-				$adCurrent->content = trim(preg_replace('/(\s)+/', ' ', $descrNode->nodeValue));
-				$linkNodes = $descrNode->getElementsByTagName('a');
-				if($linkNodes->length > 0){
-					$adCurrent->url = $this->url.$linkNodes->item(0)->getAttribute('href');
-				}
-			}
-			$output[] = $adCurrent;
-		}
+	// 		$descrNodes = $xpath->query('div[@class="descr"]', $ad);
+	// 		// it is supposed to be just one description in the ad, so if others are present, neglect them
+	// 		if($descrNodes->length > 0){ 								
+	// 			$descrNode = $descrNodes->item(0);
+	// 			$adCurrent->content = trim(preg_replace('/(\s)+/', ' ', $descrNode->nodeValue));
+	// 			$linkNodes = $descrNode->getElementsByTagName('a');
+	// 			if($linkNodes->length > 0){
+	// 				$adCurrent->url = $this->url.$linkNodes->item(0)->getAttribute('href');
+	// 			}
+	// 		}
+	// 		$output[] = $adCurrent;
+	// 	}
 
-		return $output;
+	// 	return $output;
 
-	}
+	// }
 
 }
 

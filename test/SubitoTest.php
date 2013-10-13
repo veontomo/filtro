@@ -80,21 +80,6 @@ class SubitoTest extends PHPUnit_Framework_TestCase
 
  	}
 
- 	// public function testFormatTime(){
- 	// 	$subito = new Subito;
- 	//     $today = date("d M Y");
- 	//     $yesterday = date("d M Y", strtotime("-1 day"));
- 	//     $year = date("Y");
- 	//     $this->assertEquals($subito->formatTime("Oggi 12:48"), "$today 12:48");
- 	//     $this->assertEquals($subito->formatTime("Oggi12:48"), "$today 12:48");
- 	//     $this->assertEquals($subito->formatTime("Ieri 02:48"), "$yesterday 02:48");
- 	//     $this->assertEquals($subito->formatTime("Ieri02:48"), "$yesterday 02:48");
- 	//     $this->assertEquals($subito->formatTime("20 ago 22:14"), "20 Aug $year 22:14");
- 	//     $this->assertEquals($subito->formatTime("01 gen 22:14"), "01 Jan $year 22:14");
- 	//     $this->assertEquals($subito->formatTime("01 Feb 22:14"), "01 Feb $year 22:14");
- 	//     $this->assertEquals($subito->formatTime("01 mar 2:14"), "01 Mar $year 02:14");
- 	// }
-
  	public function testTimeMax(){
  		$subito = new Subito;
   		$time = time();
