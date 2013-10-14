@@ -121,6 +121,7 @@ class FileRetrieval{
 			return file_get_contents($fn);
 		}
 		else{
+			echo "file $fn does not exist!";
 			return false;
 		}
 	}

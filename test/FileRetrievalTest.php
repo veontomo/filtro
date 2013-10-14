@@ -110,15 +110,18 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
     */
  
     public function testGetFromRepo(){
+        // START: creating a local copy of a file corresponding to $this->url
         $baseDir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
         mkdir($baseDir.'repo');
-        mkdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'test1');
-        mkdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'test1'.DIRECTORY_SEPARATOR.'test2');
+        mkdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'www.test.com');
+        mkdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'www.test.com'.DIRECTORY_SEPARATOR.'test1');
+        mkdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'www.test.com'.DIRECTORY_SEPARATOR.'test1'.DIRECTORY_SEPARATOR.'test2');
         $fileContent = __CLASS__.' '. date('d M Y H:i', time());
-        $fileFullPath = $baseDir.'repo'.DIRECTORY_SEPARATOR.'test1'
-            .DIRECTORY_SEPARATOR.'test2'.DIRECTORY_SEPARATOR.'default';
+        $fileFullPath = $baseDir.'repo'.DIRECTORY_SEPARATOR.'www.test.com'
+            .DIRECTORY_SEPARATOR.'test1'.DIRECTORY_SEPARATOR.'test2'.DIRECTORY_SEPARATOR.'default';
         $this->assertEquals(file_put_contents($fileFullPath, $fileContent), 
             strlen($fileContent));
+        // END
 
         $fr = new FileRetrieval;
         $fr->setUrl('http://www.test.com/test1/test2/');
@@ -126,8 +129,13 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
         $content = $fr->retrieveFromRepo();
         $this->assertEquals($content, $fileContent);
 
-
-
+        // START: clearing
+        unlink($fileFullPath);
+        rmdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'www.test.com'.DIRECTORY_SEPARATOR.'test1'.DIRECTORY_SEPARATOR.'test2');
+        rmdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'www.test.com'.DIRECTORY_SEPARATOR.'test1');
+        rmdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'www.test.com');
+        rmdir($baseDir.'repo');
+        // END
 
     }
  
