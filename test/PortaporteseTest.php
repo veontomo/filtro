@@ -178,8 +178,12 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 			. 'ambosessi automuniti in possesso di diploma si offre '
 			. 'rimborso spese + provvigioni per candidarsi inviare curriculum vitae '
 			. 'a rm.cinecittaest@immobiliarewl.it', $result[0]->content);
-		echo '-->'.$result[0]->date.'<--';
-		
+		$this->assertContains('/rubriche/Lavoro/Lavoro_qualificato/m-ricerchiamo-agenti'
+			. '-immobiliari-0ID2013063085335?tipo=offerte&numero=75&latstart=41.8966'
+			. '&lngstart=12.494&zoomstart=10', $result[0]->url);
+		// $this->assertContains("abcd", "abcd");
+
+	
 	}
 
 }

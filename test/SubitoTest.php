@@ -67,6 +67,17 @@ class SubitoTest extends PHPUnit_Framework_TestCase
 
  	}
 
+ 	public function testUrlPatternGetter(){
+ 		$subito = new Subito;
+ 		$this->assertEquals($subito->urlPattern(), '?th=PLACEHOLDER1&o=PLACEHOLDER2');
+ 	}
+
+ 	public function testUrlGetter(){
+ 		$subito = new Subito;
+ 		$subito->setUrl("some/test");
+ 		$this->assertEquals($subito->url(), 'some/test');
+ 	}
+
 
  	public function testPageContent(){
  		$startInfo = $this->createExternalUrl('webImitation2');
