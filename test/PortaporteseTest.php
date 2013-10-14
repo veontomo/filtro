@@ -79,13 +79,6 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
  		$this->assertEquals('m-usCPLACEHOLDER1&pagPLACEHOLDER2', $pp->urlPattern());
  	}
 
- 	public function testRepoDirSetterGetter(){
- 		$pp = new Portaportese;
- 		$this->assertTrue(method_exists('Portaportese', 'setRepoDir'));
- 		$pp->setRepoDir('f:/a/b/c/d/');
- 		$this->assertEquals('f:/a/b/c/d/', $pp->RepoDir());
- 	}
-
 
  	public function testTimeMax(){
  		$pp = new Portaportese;
@@ -132,17 +125,7 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 	}  
 
 
-	public function testLocalPath(){
-		$pp = new Portaportese;
-		$pp->setUrl("http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/");
-		$this->assertEquals('portaportese/rubriche/Lavoro/Lavoro_qualificato/m-usC72&pag4', $pp->localPath('m-usC72&pag4'));
-		$this->assertEquals('portaportese/rubriche/Lavoro/Lavoro_qualificato/m-usC72&pag1', $pp->localPath('m-usC72'));
 
-		$pp = new Portaportese;
-		$pp->setUrl("http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/");
-		$this->assertEquals('portaportese/rubriche/Lavoro/Lavoro_qualificato/m-usC71&pag1', $pp->localPath('m-usC71'));
-		$this->assertEquals('portaportese/rubriche/Lavoro/Lavoro_qualificato/m-usC71&pag1', $pp->localPath('m-usC71&pag1'));
-	}
 
 	public function testPageContent(){
 		$startInfo = $this->createExternalUrl('webImitationPortaportese');

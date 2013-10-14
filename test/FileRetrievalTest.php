@@ -1,7 +1,6 @@
 <?php
 require_once DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'FileRetrieval.php';
 
-
 class FileRetrievalTest extends PHPUnit_Framework_TestCase
 {
     private function createExternalUrl($dirName){
@@ -70,17 +69,67 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
         $fileName = $startInfo['filename']; 
 
         $retr = new FileRetrieval;
-        $retr->url = "http://localhost/filtro/webImitation3/".$fileName;
+        $retr->setUrl("http://localhost/filtro/webImitation3/".$fileName);
         $page = $retr->retrieveFromWeb("http://localhost/filtro/webImitation3/".$fileName);
         $this->assertEquals($fileContent, $page);
 
         $retr2 = new FileRetrieval;
-        $retr2->url = "http://localhost/filtro/webImitation3/".$fileName;
+        $retr2->setUrl("http://localhost/filtro/webImitation3/".$fileName);
         $page2 = $retr2->retrieveFromWeb();
         $this->assertEquals($fileContent, $page2);
         $this->removeExternalUrl(array('dirname' => 'webImitation3', 'filename' => $fileName));
     }
 
+    public function testRepoDirSetterGetter(){
+        $this->assertTrue(method_exists('FileRetrieval', 'setRepoDir'));
+        $f = new FileRetrieval;
+        $f->setRepoDir('f:/a/b/c/d/');
+        $this->assertEquals('f:/a/b/c/d/', $f->RepoDir());
+    }
+
+
+    public function testLocalPath(){
+        $DS = DIRECTORY_SEPARATOR;
+        $pp = new FileRetrieval;
+        $pp->setUrl('http://www.portaportese.it/rubriche/Lavoro/test.page');
+        $this->assertEquals('www.portaportese.it'.$DS.'rubriche'.$DS.'Lavoro'.$DS.'test.page', $pp->localPath());
+        $this->assertEquals('http://www.portaportese.it/rubriche/Lavoro/test.page', $pp->url());
+
+        $pp = new FileRetrieval;
+        $pp->setUrl('http://www.portaportese.it/rubriche/Lavoro/');
+        $this->assertEquals('www.portaportese.it'.$DS.'rubriche'.$DS.'Lavoro'.$DS.'default', $pp->localPath());
+        $this->assertEquals('http://www.portaportese.it/rubriche/Lavoro/', $pp->url());
+
+        $pp = new FileRetrieval;
+        $pp->setUrl('http://www.portaportese.it/rubriche/Lavoro/page?a=1&b=2');
+        $this->assertEquals('www.portaportese.it'.$DS.'rubriche'.$DS.'Lavoro'.$DS.'pageQa=1&b=2', $pp->localPath());
+        $this->assertEquals('http://www.portaportese.it/rubriche/Lavoro/page?a=1&b=2', $pp->url());
+    }
+    /**
+    * @group current
+    */
+ 
+    public function testGetFromRepo(){
+        $baseDir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
+        mkdir($baseDir.'repo');
+        mkdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'test1');
+        mkdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'test1'.DIRECTORY_SEPARATOR.'test2');
+        $fileContent = __CLASS__.' '. date('d M Y H:i', time());
+        $fileFullPath = $baseDir.'repo'.DIRECTORY_SEPARATOR.'test1'
+            .DIRECTORY_SEPARATOR.'test2'.DIRECTORY_SEPARATOR.'default';
+        $this->assertEquals(file_put_contents($fileFullPath, $fileContent), 
+            strlen($fileContent));
+
+        $fr = new FileRetrieval;
+        $fr->setUrl('http://www.test.com/test1/test2/');
+        $fr->setRepoDir(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'repo'.DIRECTORY_SEPARATOR);
+        $content = $fr->retrieveFromRepo();
+        $this->assertEquals($content, $fileContent);
+
+
+
+
+    }
  
 }
 ?>

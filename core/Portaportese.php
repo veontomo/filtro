@@ -11,61 +11,19 @@ require_once 'Ad.php';
 */
 class Portaportese implements AdProvider{
 	/**
-	* @var 	String $url url of the 'entry page'
+	* @var 	string $url url of the 'entry page'
 	*/
 	private $url;
 
 	/**
-	* @var 	String $urlPattern a pattern to parametrize all pages inside the 'entry page'
+	* @var 	string $urlPattern a pattern to parametrize all pages inside the 'entry page'
 	*/
 	private $urlPattern = 'm-usCPLACEHOLDER1&pagPLACEHOLDER2';
 
-	/**
-	* @var 	String $repoDir		absolute path to the repository 
-	* directory in which local versions of the retrieved pages should be stored
-	*/
-	private $repoDir;
 
 
 	/**
-	* Setter for the repository directory
-	* @param String $repoDir 	absolute path to the repository directory
-	* @return void
-	*/
-	public function setRepoDir($repoDir){
-			$this->repoDir = $repoDir;
-	}
-
-	/**
-	* Getter for the repository directory
-	* @param  	void
-	* @return 	String 	absolute path to the repository
-	*/
-	public function repoDir(){
-		return $this->repoDir;
-	}
-
-
-	/**
-	* full path to a local copy of an external url
-	* @var String $page
-	* @example if $this->url is "http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/",
-	* then localCopy("m-usC72&pag4") should be 
-	* "portaportese/rubriche/Lavoro/Lavoro_qualificato/m-usC72&pag4"
-	*/
-	public function localPath($page){
-		$urlInfo = parse_url($this->url);
-		if(strpos($page,'&pag') === false){
-			$page .= '&pag1';
-		}
-		$host = 'portaportese';
-		return $host.$urlInfo['path'].$page;
-	}
-
-
-
-	/**
-	* @var 		String 	$page url of the specific page inside 'entry page'
+	* @var 		string 	$page url of the specific page inside 'entry page'
 	* @example	if for the 'entry page' $url is 'http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/'
 	* then $page might be equal to 'm-usC72&pag4', so that complete url of the page is 
 	* 'http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/m-usC72&pag4'
@@ -74,13 +32,13 @@ class Portaportese implements AdProvider{
 
 	/** 
 	* the max value of the ad publication time. Default value is set to now.
-	* @var Integer  the earliest possible time of the publication of ad. 
+	* @var integer  the earliest possible time of the publication of ad. 
 	*/
 	private $timeMax;
 
 	/** 
 	* the min value of the ad publication time. Default value is set to 1 hour before now.
-	* @var Integer  the latest possible time of the publication of ad. 
+	* @var integer  the latest possible time of the publication of ad. 
 	*/
 	private $timeMin;
 
@@ -96,7 +54,7 @@ class Portaportese implements AdProvider{
 	/**
 	* Getter for the url
 	* @param 	void
-	* @return 	String 		url for the 'entry page'
+	* @return 	string 		url for the 'entry page'
 	*/
 	public function url(){
 		return $this->url;
@@ -107,8 +65,8 @@ class Portaportese implements AdProvider{
 	* If the argument is a string, then it is transformed into an integer corresponding to the time format 
 	* and if this operation is successful, the timeMax is set to  that integer
 	* If the argument is an integer, the timeMax is set to this integer
-	* @param mixed $str String or Integer
-	* @return Boolean true if assignment is successeful, false - otherwise
+	* @param 	mixed 	$str 	string or integer
+	* @return 	boolean 		true if assignment is successeful, false - otherwise
 	*/
 	public function setTimeMax($arg){
 		if(is_int($arg)){
@@ -129,7 +87,7 @@ class Portaportese implements AdProvider{
 	/**
 	* Getter for the timeMax
 	* @param void
-	* @return Integer 	timeMax
+	* @return integer 	timeMax
 	*/
 	public function timeMax(){
 		return $this->timeMax;
@@ -140,8 +98,8 @@ class Portaportese implements AdProvider{
 	* If the argument is a string, then it is transformed into an integer corresponding to the time format 
 	* and if this operation is successful, the timeMin is set to  that integer
 	* If the argument is an integer, the timeMin is set to this integer
-	* @param mixed $str String or Integer
-	* @return Boolean true if assignment is successeful, false - otherwise
+	* @param mixed 		$str 	string or integer
+	* @return boolean 			true if assignment is successeful, false - otherwise
 	*/
 	public function setTimeMin($arg){
 		if(is_int($arg)){
@@ -160,8 +118,8 @@ class Portaportese implements AdProvider{
 
 	/**
 	* Getter for the timeMin
-	* @param void
-	* @return Integer 	timeMin
+	* @param 	void
+	* @return 	integer 	timeMin
 	*/
 	public function timeMin(){
 		return $this->timeMin;
@@ -169,8 +127,8 @@ class Portaportese implements AdProvider{
 
 	/**
 	* Setter for the url
-	* @param String  $url	url for the 'entry page'
-	* @return void
+	* @param 	string  $url	url for the 'entry page'
+	* @return 	void
 	*/
 	public function setUrl($url){
 		$this->url = $url;
@@ -178,8 +136,8 @@ class Portaportese implements AdProvider{
 
 	/**
 	* Getter for the urlPattern
-	* @param void
-	* @return String 	a pattern to parametrize all pages inside the 'entry page'
+	* @param 	void
+	* @return 	string 	a pattern to parametrize all pages inside the 'entry page'
 	*/
 	public function urlPattern(){
 		return $this->urlPattern;
@@ -188,17 +146,18 @@ class Portaportese implements AdProvider{
 	/**
 	* retrive all the advertisments from the "entry page" and forthcoming ones defined by the url pattern
 	* @param 	void
-	* @return 	Array 	an array each element of which is an instance of class Ad.
+	* @return 	array 	an array each element of which is an instance of class Ad.
 	*/
 	public function retrieveAds(){
-		return null;
+		if(file_exists());
+
 	}
 
 
 	/** 
 	* produces the content of the page which location is given by concatenation of $url and $page
-	* @param 	String 	$page 		url of the page parametrized by the $page in the bunch of $this->url  
-	* @return 	String 				content of the page given by $url
+	* @param 	string 	$page 		url of the page parametrized by the $page in the bunch of $this->url  
+	* @return 	string 				content of the page given by $url
 	* @uses 	FileRetrieval::retrieveFromWeb() to retrieve the content
 	*/
 	public function pageContent($page){
@@ -213,8 +172,8 @@ class Portaportese implements AdProvider{
 	/**
 	* Produces an array each element of which is an instance of Ad class
 	* @uses		Ads
-	* @param 	String 		$page 	url of the page parametrized by the $page in the bunch of $this->url
-	* @return 	Array 		an array each element of which is an instance of Ad class
+	* @param 	string 		$page 	url of the page parametrized by the $page in the bunch of $this->url
+	* @return 	array 		an array each element of which is an instance of Ad class
 	*/
 	public function retriveAdsOnePage($page){
 		$output = array();
