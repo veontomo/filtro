@@ -184,12 +184,6 @@ class Portaportese implements AdProvider{
 		$retr = new FileRetrieval;
 		$retr->setUrl($urlComplete);
 		$retr->setRepoDir(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'repository'.DIRECTORY_SEPARATOR);
-		if(is_dir(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'repository')){
-			echo "repository exists".PHP_EOL;
-		}else{
-			echo 'repository '.dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'repository does not exist!'.PHP_EOL;
-		}
-//		$content = $retr->retrieveFromWeb($urlComplete);
 		$content = $retr->lazyRetrieval();
 		if(!$content){
 			$content = ''; // if the output of lazyRetrieval is null or false, $content is an empty string

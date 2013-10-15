@@ -64,7 +64,10 @@ class FileRetrieval{
 	* @return void
 	*/
 	public function setRepoDir($repoDir){
-			$this->repoDir = $repoDir;
+		$this->repoDir = $repoDir;
+		if(!is_dir($repoDir)){
+			$this->log("Warning: the repostory folder does not exist. It's not crucial, but do not forget to create it!");
+		}
 	}
 
 	/**
