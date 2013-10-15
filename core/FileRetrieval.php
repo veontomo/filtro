@@ -112,7 +112,9 @@ class FileRetrieval{
 
 
 	/**
-	* Retrieves file from the repository.
+	* Retrieves the content of the file $this->localPath located in the repository.
+	* If the file does not exist, returns false.
+	* @return string|false content of the file or false if it does not exist.
 	*/
 	public function retrieveFromRepo(){
 		$fn = $this->repoDir.$this->localPath;
