@@ -149,8 +149,26 @@ class Portaportese implements AdProvider{
 	* @return 	array 	an array each element of which is an instance of class Ad.
 	*/
 	public function retrieveAds(){
-		
-
+		$counter1 = 75;
+		$counter2 = 1;
+		$ads = array();
+		do{
+			echo __METHOD__. ': counter2 = '.$counter2. PHP_EOL; 
+			$page = preg_replace(array('/PLACEHOLDER1/', '/PLACEHOLDER2/'), 
+				array($counter1, $counter2), $this->urlPattern);
+			echo 'passing '.$page. ' to the pageContent'.PHP_EOL;
+			$adsOnePage = $this->retrieveAdsOnePage($page);
+			// print_r($adsOnePage);
+			$counter2++;
+			if(is_array($adsOnePage) && !empty($adsOnePage)){
+				$ads = array_merge($ads, $adsOnePage);
+				$isEnough = false;
+			}else{
+				$isEnough = true;
+			}
+		}
+		while (!$isEnough);
+		return $ads;
 	}
 
 
@@ -161,9 +179,21 @@ class Portaportese implements AdProvider{
 	* @uses 	FileRetrieval::retrieveFromWeb() to retrieve the content
 	*/
 	public function pageContent($page){
+		echo __METHOD__. ': recieved $page = '.$page.' with implicit $url '.$this->url.PHP_EOL;
 		$urlComplete = $this->url.$page;
 		$retr = new FileRetrieval;
-		$content = $retr->retrieveFromWeb($urlComplete);
+		$retr->setUrl($urlComplete);
+		$retr->setRepoDir(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'repository'.DIRECTORY_SEPARATOR);
+		if(is_dir(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'repository')){
+			echo "repository exists".PHP_EOL;
+		}else{
+			echo 'repository '.dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'repository does not exist!'.PHP_EOL;
+		}
+//		$content = $retr->retrieveFromWeb($urlComplete);
+		$content = $retr->lazyRetrieval();
+		if(!$content){
+			$content = ''; // if the output of lazyRetrieval is null or false, $content is an empty string
+		}
 		return $content;
 	}
 
@@ -175,9 +205,10 @@ class Portaportese implements AdProvider{
 	* @param 	string 		$page 	url of the page parametrized by the $page in the bunch of $this->url
 	* @return 	array 		an array each element of which is an instance of Ad class
 	*/
-	public function retriveAdsOnePage($page){
+	public function retrieveAdsOnePage($page){
 		$output = array();
 		$content =  $this->pageContent($page);
+		if(!$content){ return $output;}
 
 		$previousSetting = libxml_use_internal_errors(true);
 		$doc = new DOMDocument();

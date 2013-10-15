@@ -7,9 +7,10 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
 
     /**
     * Creates a folder named $dirName in the root folder, which is accessible by 
-    * http://localhost/filtro/webImitation3/filename
-    * where 'filename' is one of the keys of the return value of this function.
-    * Another key is 'content' - the content of the newly created file.
+    * http://localhost/filtro/$dirName
+    * In this folder it is created as well a file named $output['filename']
+    * where $output is a return value of this function. 
+    * Another key is of that array is 'content' - the content of the newly created file.
     * @return array() array('filename' => ..., 'content' => ...)
     */
     private function createExternalUrl($dirName){
@@ -106,6 +107,10 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(method_exists('FileRetrieval', 'retrieveFromWeb'));
     }
 
+
+    /** 
+    *  @group current
+    */
     public function testRetrieveFromWeb(){
         $startInfo = $this->createExternalUrl('webImitation3');
         $fileContent = $startInfo['content'];
@@ -190,9 +195,6 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
         $this->removeRepo('repo2');
     }
     
-    /**
-    * @group current
-    */
 
     public function testSaveInRepo(){
         $fr = $this->getmock('FileRetrieval', array('createDirInRepo'));
@@ -219,8 +221,6 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
 
         unlink(dirname(dirname(__FILE__)).DS.'repo7'.DS.'foo.bar');
         rmdir(dirname(dirname(__FILE__)).DS.'repo7');
-
-
     }
 
     public function testLazyRetrieval(){
@@ -277,9 +277,9 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue(dirname(dirname(__FILE__)).DS.'repo6'.DS));
         $fr->expects($this->any())
             ->method('localPath')
-            ->will($this->returnValue('a/b/c/d/index.html'));
+            ->will($this->returnValue('a'.DS.'b'.DS.'c'.DS.'d'.DS.'index.html'));
         $this->assertTrue(method_exists('FileRetrieval', 'createDirInRepo'));
-        $fr->createDirInRepo();
+        $this->assertTrue($fr->createDirInRepo());
         $this->assertTrue(is_dir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b'.DS.'c'.DS.'d'));
 
         // trying to create the folders that are already present in the repo 
@@ -293,28 +293,12 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
         // folders can not be created because it is already present a file with name 'c'
         file_put_contents(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b'.DS.'c', "dummy content");
 
-        $fr->createDirInRepo();
         $this->assertFalse($fr->createDirInRepo());
 
         unlink(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b'.DS.'c');
         rmdir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b');
         rmdir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a');
         rmdir(dirname(dirname(__FILE__)).DS.'repo6');
-
-        // if(rmdir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b'.DS.'c'.DS.'d')){
-        //     if(rmdir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b'.DS.'c')){
-        //         if(rmdir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b')){
-        //             if(rmdir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a')){
-        //                 if(rmdir(dirname(dirname(__FILE__)).DS.'repo6')){
-        //                     echo 'all tmp folders are removed';
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-
-
-
     }
  
 }

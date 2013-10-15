@@ -33,6 +33,8 @@ class FileRetrieval{
 
 	/**
 	* Setter of $url. Together with url, the path for storage of the url should be set.
+	* If the url is of the form "http://www.test.com/a/b/c", then local path will be "a\b\c" fow Windows and "a/b/c" for Unix
+	* (PHP constant DIRECTORY_SEPARATOR is used to delimiter the nested directories)
 	* @var string $url
 	* @return void
 	*/
@@ -143,6 +145,10 @@ class FileRetrieval{
 				file_put_contents($this->repoDir.$this->localPath, $content);
 				return true;
 			} catch (Exception $e) {
+				$traceInfo = debug_backtrace();
+				$callerFile = $traceInfo[0]['file'];
+				$lineNumber = $traceInfo[0]['line'];
+				$this->log($e->getMessage()."\nfirst call from file: $callerFile, line: $lineNumber\n");
 				return false;
 			}
 		}
@@ -154,7 +160,7 @@ class FileRetrieval{
 	* @return boolean true if the requested directory is present after running this function, false otherwise
 	*/
 	public function createDirInRepo(){
-		$pathInRepo = explode('/', dirname($this->localPath()));
+		$pathInRepo = explode(DIRECTORY_SEPARATOR, dirname($this->localPath()));
 		$len = count($pathInRepo);
 		for($i=0; $i < $len; $i++){
 			$dirName = $this->repoDir().implode(DIRECTORY_SEPARATOR, array_slice($pathInRepo, 0, $i+1));
@@ -163,15 +169,15 @@ class FileRetrieval{
 				mkdir($dirName);
 			}
 			catch(Exception $e){
+				$traceInfo = debug_backtrace();
+				$callerFile = $traceInfo[0]['file'];
+				$lineNumber = $traceInfo[0]['line'];
+				$this->log($e->getMessage()."\nfirst call from file: $callerFile, line: $lineNumber\n");
 				return false;
 			};
 		}
 		return true;
 	}
-
-
-	
-
 
 	/**
 	* Returns a content of $this->url. 
@@ -188,8 +194,27 @@ class FileRetrieval{
 			$this->saveInRepo($content);
 			return $content;
 		}
+	}
 
-
+	/**
+	* Writes info in the log file. 
+	* @var string 	$content 	message to put into the log file 
+	* @return void
+	*/
+	private function log($content){
+		$targetDir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'logs';
+		// if the folder does not exist and there is no file with this name, then create the folder
+		if(!is_dir($targetDir) && !file_exists($targetDir)){
+			mkdir($targetDir);
+		}
+		$traceInfo = debug_backtrace();
+		$callerFile = $traceInfo[0]['file'];
+		$lineNumber = $traceInfo[0]['line'];
+		$infoToWrite = date('Y d M H:i:s ', time())."\nFile: $callerFile, line: $lineNumber\n"
+			. $content."\n\n";
+		$fileName = $targetDir.DIRECTORY_SEPARATOR.'log-'.basename(__FILE__,'.php');
+		file_put_contents($fileName, $infoToWrite, FILE_APPEND);
+		
 	}
 
 }

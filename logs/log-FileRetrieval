@@ -1,0 +1,42 @@
+2013 15 Oct 23:33:12 
+File: F:\Sito\filtro\core\FileRetrieval.php, line : 151
+file_put_contents(): Filename cannot be empty
+first call from file: F:\Sito\filtro\test\FileRetrievalTest.php, line : 220
+
+
+2013 15 Oct 23:38:28 
+File: F:\Sito\filtro\core\FileRetrieval.php, line: 151
+file_put_contents(): Filename cannot be empty
+first call from file: F:\Sito\filtro\test\FileRetrievalTest.php, line: 220
+
+
+2013 15 Oct 23:38:30 
+File: F:\Sito\filtro\core\FileRetrieval.php, line: 175
+mkdir(): File exists
+first call from file: F:\Sito\filtro\test\FileRetrievalTest.php, line: 296
+
+
+2013 15 Oct 23:38:50 
+File: F:\Sito\filtro\core\FileRetrieval.php, line: 151
+file_put_contents(): Filename cannot be empty
+first call from file: F:\Sito\filtro\test\FileRetrievalTest.php, line: 220
+
+
+2013 15 Oct 23:38:51 
+File: F:\Sito\filtro\core\FileRetrieval.php, line: 175
+mkdir(): File exists
+first call from file: F:\Sito\filtro\test\FileRetrievalTest.php, line: 296
+
+
+2013 15 Oct 23:39:14 
+File: F:\Sito\filtro\core\FileRetrieval.php, line: 151
+file_put_contents(): Filename cannot be empty
+first call from file: F:\Sito\filtro\test\FileRetrievalTest.php, line: 220
+
+
+2013 15 Oct 23:39:15 
+File: F:\Sito\filtro\core\FileRetrieval.php, line: 175
+mkdir(): File exists
+first call from file: F:\Sito\filtro\test\FileRetrievalTest.php, line: 296
+
+

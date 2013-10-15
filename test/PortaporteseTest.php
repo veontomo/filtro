@@ -143,13 +143,13 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 		$savedAdDir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR
 			.'portaportese'.DIRECTORY_SEPARATOR;
 		$this->assertTrue(is_dir($savedAdDir) && 
-						  file_exists($savedAdDir.'m-usC75&pag2.htm'), 
+						  file_exists($savedAdDir.'m-usC75&pag2'), 
 			'In order to make the test start: '.PHP_EOL
 			.'save a page with advertisements from '
-			.'www.portaportese.it in the folder resources/portaportese/ with a name "m-usC75&pag2.htm"'.PHP_EOL);
+			.'www.portaportese.it in the folder resources/portaportese/ with a name "m-usC75&pag2"'.PHP_EOL);
 		$pp = new Portaportese;
 		$pp->setUrl('http://localhost/filtro/resources/portaportese/');
-		$result = $pp->retriveAdsOnePage('m-usC75&pag2.htm');
+		$result = $pp->retrieveAdsOnePage('m-usC75&pag2');
 		$this->assertEquals('array', gettype($result));
 		$this->assertFalse(empty($result));
 		$this->assertEquals(11, count($result));
@@ -169,5 +169,11 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 	
 	}
 
+	public function testRetrieveAds(){
+		$pp = new Portaportese;
+		$pp->setUrl('http://localhost/filtro/resources/portaportese/');
+		$result = $pp->retrieveAds();
+		$this->assertTrue(!empty($result));
+	}
 }
 ?>
