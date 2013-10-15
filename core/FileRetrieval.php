@@ -137,8 +137,16 @@ class FileRetrieval{
 	* Saves the string in the repository
 	* @return boolean true if the content was saved successefully, false otherwise
 	*/
-	private function saveInRepo($content){
-		return (bool) file_put_contents($this->repoDir.$this->localPath, $content);
+	public function saveInRepo($content){
+		if($this->createDirInRepo()){
+			try {
+				file_put_contents($this->repoDir.$this->localPath, $content);
+				return true;
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -146,7 +154,6 @@ class FileRetrieval{
 	* @return boolean true if the requested directory is present after running this function, false otherwise
 	*/
 	public function createDirInRepo(){
-		echo 'Trying to create dir ' . $this->localPath() . ' in the repo '. $this->repoDir() . PHP_EOL;
 		$pathInRepo = explode('/', dirname($this->localPath()));
 		$len = count($pathInRepo);
 		for($i=0; $i < $len; $i++){

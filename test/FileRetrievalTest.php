@@ -190,6 +190,38 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
         $this->removeRepo('repo2');
     }
     
+    /**
+    * @group current
+    */
+
+    public function testSaveInRepo(){
+        $fr = $this->getmock('FileRetrieval', array('createDirInRepo'));
+        $fr->expects($this->any())
+            ->method('createDirInRepo')
+            ->will($this->returnValue(false));
+        $this->assertFalse($fr->saveInRepo("anything"));
+
+        // trying to save into a file that exists: 'repo7/foo.bar'
+        mkdir(dirname(dirname(__FILE__)).DS.'repo7');
+        file_put_contents(dirname(dirname(__FILE__)).DS.'repo7'.DS.'foo.bar', 'dummy content');
+
+        $fr = $this->getmock('FileRetrieval', array('createDirInRepo', 'repoDir', 'localPath'));
+        $fr->expects($this->any())
+            ->method('createDirInRepo')
+            ->will($this->returnValue(true));
+        $fr->expects($this->any())
+            ->method('repoDir')
+            ->will($this->returnValue(dirname(dirname(__FILE__)).DS.'repo7'.DS));
+        $fr->expects($this->any())
+            ->method('localPath')
+            ->will($this->returnValue('foo.bar'));
+        $this->assertFalse($fr->saveInRepo("anything"));
+
+        unlink(dirname(dirname(__FILE__)).DS.'repo7'.DS.'foo.bar');
+        rmdir(dirname(dirname(__FILE__)).DS.'repo7');
+
+
+    }
 
     public function testLazyRetrieval(){
         $this->assertTrue(method_exists('FileRetrieval', 'lazyRetrieval'));
@@ -236,10 +268,6 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
     }
      
 
-    /**
-    * @group current
-    * 
-    */
     public function testCreateDir(){
         // the repo is empty
         mkdir(dirname(dirname(__FILE__)).DS.'repo6');
