@@ -144,7 +144,7 @@ class Portaportese implements AdProvider{
 	}
 
 	/**
-	* retrive all the advertisments from the "entry page" and forthcoming ones defined by the url pattern
+	* retrieve all the advertisments from the "entry page" and forthcoming ones defined by the url pattern
 	* @param 	void
 	* @return 	array 	an array each element of which is an instance of class Ad.
 	*/

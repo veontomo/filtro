@@ -238,18 +238,54 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
 
     /**
     * @group current
+    * 
     */
     public function testCreateDir(){
+        // the repo is empty
+        mkdir(dirname(dirname(__FILE__)).DS.'repo6');
         $fr = $this->getmock('FileRetrieval', array('localPath', 'repoDir'));
         $fr->expects($this->any())
             ->method('repoDir')
-            ->will($this->returnValue(dirname(dirname(__FILE__)).DS.'repo6'));
+            ->will($this->returnValue(dirname(dirname(__FILE__)).DS.'repo6'.DS));
         $fr->expects($this->any())
             ->method('localPath')
-            ->will($this->returnValue('a/b/c/d/'));
- 
-        $fr->createDir();
+            ->will($this->returnValue('a/b/c/d/index.html'));
+        $this->assertTrue(method_exists('FileRetrieval', 'createDirInRepo'));
+        $fr->createDirInRepo();
         $this->assertTrue(is_dir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b'.DS.'c'.DS.'d'));
+
+        // trying to create the folders that are already present in the repo 
+        $this->assertTrue($fr->createDirInRepo());
+        $this->assertTrue(is_dir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b'.DS.'c'.DS.'d'));
+
+
+        rmdir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b'.DS.'c'.DS.'d');
+        rmdir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b'.DS.'c');
+        // trying to create a set of nested dirs 'a/b/c/d/' in the case when one of the 
+        // folders can not be created because it is already present a file with name 'c'
+        file_put_contents(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b'.DS.'c', "dummy content");
+
+        $fr->createDirInRepo();
+        $this->assertFalse($fr->createDirInRepo());
+
+        unlink(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b'.DS.'c');
+        rmdir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b');
+        rmdir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a');
+        rmdir(dirname(dirname(__FILE__)).DS.'repo6');
+
+        // if(rmdir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b'.DS.'c'.DS.'d')){
+        //     if(rmdir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b'.DS.'c')){
+        //         if(rmdir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b')){
+        //             if(rmdir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a')){
+        //                 if(rmdir(dirname(dirname(__FILE__)).DS.'repo6')){
+        //                     echo 'all tmp folders are removed';
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+
+
 
     }
  

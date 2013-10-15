@@ -146,9 +146,10 @@ class FileRetrieval{
 	* @return boolean true if the requested directory is present after running this function, false otherwise
 	*/
 	public function createDirInRepo(){
-		$pathInRepo = explode('/', $this->localPath());
+		echo 'Trying to create dir ' . $this->localPath() . ' in the repo '. $this->repoDir() . PHP_EOL;
+		$pathInRepo = explode('/', dirname($this->localPath()));
 		$len = count($pathInRepo);
-		for($i=0; $i<count($fullPath); $i++){
+		for($i=0; $i < $len; $i++){
 			$dirName = $this->repoDir().implode(DIRECTORY_SEPARATOR, array_slice($pathInRepo, 0, $i+1));
 			if(is_dir($dirName)){continue;}
 			try{
