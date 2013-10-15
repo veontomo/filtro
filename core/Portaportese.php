@@ -149,7 +149,7 @@ class Portaportese implements AdProvider{
 	* @return 	array 	an array each element of which is an instance of class Ad.
 	*/
 	public function retrieveAds(){
-		if(file_exists());
+		
 
 	}
 

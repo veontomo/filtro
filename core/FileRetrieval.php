@@ -118,14 +118,70 @@ class FileRetrieval{
 	*/
 	public function retrieveFromRepo(){
 		$fn = $this->repoDir.$this->localPath;
-		echo __CLASS__.':  '.$fn;
-		if(file_exists($fn)){
+		if($this->localCopyExists()){
 			return file_get_contents($fn);
-		}
-		else{
-			echo "file $fn does not exist!";
+		}else{
 			return false;
 		}
+	}
+
+	/**
+	* Checks whether the local copy exists in the repository
+	* @return boolean true if the local copy of $this->url is present in the repository, false otherwise
+	*/
+	public function localCopyExists(){
+		return file_exists($this->repoDir().$this->localPath());
+	}
+
+	/**
+	* Saves the string in the repository
+	* @return boolean true if the content was saved successefully, false otherwise
+	*/
+	private function saveInRepo($content){
+		return (bool) file_put_contents($this->repoDir.$this->localPath, $content);
+	}
+
+	/**
+	* Creates (eventually nested) directories $this->localPath inside the repository
+	* @return boolean true if the requested directory is present after running this function, false otherwise
+	*/
+	public function createDirInRepo(){
+		$pathInRepo = explode('/', $this->localPath());
+		$len = count($pathInRepo);
+		for($i=0; $i<count($fullPath); $i++){
+			$dirName = $this->repoDir().implode(DIRECTORY_SEPARATOR, array_slice($pathInRepo, 0, $i+1));
+			if(is_dir($dirName)){continue;}
+			try{
+				mkdir($dirName);
+			}
+			catch(Exception $e){
+				return false;
+			};
+		}
+		return true;
+	}
+
+
+	
+
+
+	/**
+	* Returns a content of $this->url. 
+	* If the corresponding file is present in the repo, returns the content of that file, otherwise
+	* retrieves it from web and saves the copy of that file in the repository. If none of these 
+	* operations succeed, returns false.
+	* @return string|false content of $this->url
+	*/
+	public function lazyRetrieval(){
+		if($this->localCopyExists()){
+			return $this->retrieveFromRepo();
+		}else{
+			$content = $this->retrieveFromWeb();
+			$this->saveInRepo($content);
+			return $content;
+		}
+
+
 	}
 
 }

@@ -1,10 +1,19 @@
 <?php
-require_once DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'FileRetrieval.php';
+define('DS', DIRECTORY_SEPARATOR);
+require_once DS.'..'.DS.'core'.DS.'FileRetrieval.php';
 
 class FileRetrievalTest extends PHPUnit_Framework_TestCase
 {
+
+    /**
+    * Creates a folder named $dirName in the root folder, which is accessible by 
+    * http://localhost/filtro/webImitation3/filename
+    * where 'filename' is one of the keys of the return value of this function.
+    * Another key is 'content' - the content of the newly created file.
+    * @return array() array('filename' => ..., 'content' => ...)
+    */
     private function createExternalUrl($dirName){
-        $dirPath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.$dirName;
+        $dirPath = dirname(dirname(__FILE__)).DS.$dirName;
         if(!is_dir($dirPath) ) {
             try{
                 mkdir($dirPath);
@@ -18,7 +27,7 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
                     ". $dirPath exists!  Prefer not to touch exiting directory!", 1);
         }
         $fileName = 'test'.date("Y-d-M-H-i-s", time());
-        $filePath = $dirPath.DIRECTORY_SEPARATOR.$fileName;
+        $filePath = $dirPath.DS.$fileName;
         $content = __METHOD__. date(" Y d M H:i:s ", time());
         if(file_put_contents($filePath, $content)){
             echo PHP_EOL.'File '.$filePath. ' is created.';
@@ -34,8 +43,8 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
         $dirName = $arr['dirname'];
         $fileName = $arr['filename'];
 
-        $dirPath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.$dirName;
-        $filePath = $dirPath.DIRECTORY_SEPARATOR.$fileName;
+        $dirPath = dirname(dirname(__FILE__)).DS.$dirName;
+        $filePath = $dirPath.DS.$fileName;
         if(file_exists($filePath)){
             try{
                 unlink($filePath);
@@ -56,6 +65,40 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
         }else{
             echo PHP_EOL.'Attention: no such directory! Are you sure you are using it correctly?'.PHP_EOL;
         }
+    }
+
+    /**
+    * 1. In root folder, creates the repository named $repoName.
+    * 2. In the above folder creates nested other folder: www.test.it/test1/
+    * 3. In the above folder creates a file "foo.bar" 
+    * @return string the content of the file $repoName/www.test.it/test1/foo.bar
+    */
+    private function createRepo($repoName){
+        $baseDir = dirname(dirname(__FILE__)).DS;
+        mkdir($baseDir.$repoName);
+        mkdir($baseDir.$repoName.DS.'www.test.com');
+        mkdir($baseDir.$repoName.DS.'www.test.com'.DS.'test1');
+        $fileContent = __METHOD__.' '. date('d M Y H:i', time());
+        $fileFullPath = $baseDir.$repoName.DS.'www.test.com'
+            .DS.'test1'.DS.'foo.bar';
+        $this->assertEquals(file_put_contents($fileFullPath, $fileContent), 
+            strlen($fileContent));
+        return $fileContent;
+    }
+
+    /**
+    * Removes the folder $repoName containing this file: www.test.it/test1/foo.bar
+    */
+    private function removeRepo($repoName){
+        $baseDir = dirname(dirname(__FILE__)).DS;
+        $fileFullPath = $baseDir.$repoName.DS.'www.test.com'
+            .DS.'test1'.DS.'foo.bar';
+        unlink($fileFullPath);
+        rmdir($baseDir.$repoName.DS.'www.test.com'.DS.'test1');
+        rmdir($baseDir.$repoName.DS.'www.test.com');
+        rmdir($baseDir.$repoName);
+        
+ 
     }
 
     public function testPresenceOfProperties(){
@@ -89,7 +132,7 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
 
 
     public function testLocalPath(){
-        $DS = DIRECTORY_SEPARATOR;
+        $DS = DS;
         $pp = new FileRetrieval;
         $pp->setUrl('http://www.portaportese.it/rubriche/Lavoro/test.page');
         $this->assertEquals('www.portaportese.it'.$DS.'rubriche'.$DS.'Lavoro'.$DS.'test.page', $pp->localPath());
@@ -105,37 +148,108 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('www.portaportese.it'.$DS.'rubriche'.$DS.'Lavoro'.$DS.'pageQa=1&b=2', $pp->localPath());
         $this->assertEquals('http://www.portaportese.it/rubriche/Lavoro/page?a=1&b=2', $pp->url());
     }
-    /**
-    * @group current
-    */
- 
-    public function testGetFromRepo(){
-        // START: creating a local copy of a file corresponding to $this->url
-        $baseDir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
-        mkdir($baseDir.'repo');
-        mkdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'www.test.com');
-        mkdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'www.test.com'.DIRECTORY_SEPARATOR.'test1');
-        mkdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'www.test.com'.DIRECTORY_SEPARATOR.'test1'.DIRECTORY_SEPARATOR.'test2');
-        $fileContent = __CLASS__.' '. date('d M Y H:i', time());
-        $fileFullPath = $baseDir.'repo'.DIRECTORY_SEPARATOR.'www.test.com'
-            .DIRECTORY_SEPARATOR.'test1'.DIRECTORY_SEPARATOR.'test2'.DIRECTORY_SEPARATOR.'default';
-        $this->assertEquals(file_put_contents($fileFullPath, $fileContent), 
-            strlen($fileContent));
-        // END
 
+
+
+    public function testRetrieveFromRepo(){
+        $fileContent = $this->createRepo('repo3');
+  
         $fr = new FileRetrieval;
-        $fr->setUrl('http://www.test.com/test1/test2/');
-        $fr->setRepoDir(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'repo'.DIRECTORY_SEPARATOR);
+        $fr->setUrl('http://www.test.com/test1/foo.bar');
+        $fr->setRepoDir(dirname(dirname(__FILE__)).DS.'repo3'.DS);
         $content = $fr->retrieveFromRepo();
         $this->assertEquals($content, $fileContent);
 
-        // START: clearing
-        unlink($fileFullPath);
-        rmdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'www.test.com'.DIRECTORY_SEPARATOR.'test1'.DIRECTORY_SEPARATOR.'test2');
-        rmdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'www.test.com'.DIRECTORY_SEPARATOR.'test1');
-        rmdir($baseDir.'repo'.DIRECTORY_SEPARATOR.'www.test.com');
-        rmdir($baseDir.'repo');
-        // END
+
+        $fr = new FileRetrieval;
+        $fr->setUrl('http://www.test.com/test1/doesnotexist');
+        $fr->setRepoDir(dirname(dirname(__FILE__)).DS.'repo3'.DS);
+        $this->assertFalse($fr->retrieveFromRepo());
+
+        $this->removeRepo('repo3');
+
+    }
+
+
+
+    public function testLocalCopyExists(){
+        $this->assertTrue(method_exists('FileRetrieval', 'localCopyExists'));
+
+        $this->createRepo('repo2');
+
+        $fr = new FileRetrieval;
+        $fr->setUrl('http://www.test.com/test1/foo.bar');
+        $fr->setRepoDir(dirname(dirname(__FILE__)).DS.'repo2'.DS);
+        $this->assertTrue($fr->localCopyExists());
+
+        $fr = new FileRetrieval;
+        $fr->setUrl('http://www.test.com/test1/doesnotexist.html');
+        $fr->setRepoDir(dirname(dirname(__FILE__)).DS.'repo2'.DS);
+        $this->assertFalse($fr->localCopyExists());
+
+        $this->removeRepo('repo2');
+    }
+    
+
+    public function testLazyRetrieval(){
+        $this->assertTrue(method_exists('FileRetrieval', 'lazyRetrieval'));
+        $fileContent = $this->createRepo('repo4');
+        // retrieves url which local copy exists
+        $fr = new FileRetrieval;
+        $fr->setUrl('http://www.test.com/test1/foo.bar');
+        $fr->setRepoDir(dirname(dirname(__FILE__)).DS.'repo4'.DS);
+        $this->assertTrue($fr->localCopyExists());
+        $this->assertEquals($fileContent, $fr->lazyRetrieval());
+        $this->removeRepo('repo4');
+
+        //retrieves url which local copy does not exist
+        // first, imitate url 
+        $startInfo = $this->createExternalUrl('webImitation4');
+        $fileContent = $startInfo['content'];
+        $fileName = $startInfo['filename']; 
+
+        // prepare to retrieve from the imitated url
+        $fr = new FileRetrieval;
+        $fr->setUrl("http://localhost/filtro/webImitation4/".$fileName);
+        $fr->setRepoDir(dirname(dirname(__FILE__)).DS.'repo5'.DS);
+
+        // create dirs to save in the repo
+        mkdir(dirname(dirname(__FILE__)).DS.'repo5');
+        mkdir(dirname(dirname(__FILE__)).DS.'repo5'.DS.'localhost');
+        mkdir(dirname(dirname(__FILE__)).DS.'repo5'.DS.'localhost'.DS.'filtro');
+        mkdir(dirname(dirname(__FILE__)).DS.'repo5'.DS.'localhost'
+            .DS.'filtro'.DS.'webImitation4');
+
+        $this->assertEquals($fr->lazyRetrieval(), $fileContent);
+        $this->assertTrue(file_exists(dirname(dirname(__FILE__)).DS.'repo5'.DS.'localhost'
+            .DS.'filtro'.DS.'webImitation4'.DS.$fileName));
+
+        unlink(dirname(dirname(__FILE__)).DS.'repo5'.DS.'localhost'.DS.'filtro'.DS.'webImitation4'.DS.$fileName);
+        rmdir(dirname(dirname(__FILE__)).DS.'repo5'.DS.'localhost'.DS.'filtro'.DS.'webImitation4');
+        rmdir(dirname(dirname(__FILE__)).DS.'repo5'.DS.'localhost'.DS.'filtro');
+        rmdir(dirname(dirname(__FILE__)).DS.'repo5'.DS.'localhost');
+        rmdir(dirname(dirname(__FILE__)).DS.'repo5');
+
+        $this->removeExternalUrl(array('dirname' => 'webImitation4', 'filename' => $fileName));
+
+ 
+    }
+     
+
+    /**
+    * @group current
+    */
+    public function testCreateDir(){
+        $fr = $this->getmock('FileRetrieval', array('localPath', 'repoDir'));
+        $fr->expects($this->any())
+            ->method('repoDir')
+            ->will($this->returnValue(dirname(dirname(__FILE__)).DS.'repo6'));
+        $fr->expects($this->any())
+            ->method('localPath')
+            ->will($this->returnValue('a/b/c/d/'));
+ 
+        $fr->createDir();
+        $this->assertTrue(is_dir(dirname(dirname(__FILE__)).DS.'repo6'.DS.'a'.DS.'b'.DS.'c'.DS.'d'));
 
     }
  
