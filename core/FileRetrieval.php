@@ -1,7 +1,7 @@
 <?php
 /** Retrieves files from web 
 * 
-* @author A.shcherbakov
+* @author A.Shcherbakov
 * @author veontomo@gmail.com
 * @version 0.0.1
 */
