@@ -1,0 +1,40 @@
+2013 16 Oct 14:50:03 
+File: F:\Sito\filtro\core\FileRetrieval.php, line: 69
+Warning: the repostory folder does not exist. It's not crucial, but do not forget to create it!
+
+2013 16 Oct 14:50:03 
+File: F:\Sito\filtro\core\FileRetrieval.php, line: 155
+file_put_contents(): Filename cannot be empty
+first call from file: F:\Sito\filtro\test\FileRetrievalTest.php, line: 220
+
+
+2013 16 Oct 14:50:03 
+File: F:\Sito\filtro\core\FileRetrieval.php, line: 69
+Warning: the repostory folder does not exist. It's not crucial, but do not forget to create it!
+
+2013 16 Oct 14:50:05 
+File: F:\Sito\filtro\core\FileRetrieval.php, line: 179
+mkdir(): File exists
+first call from file: F:\Sito\filtro\test\FileRetrievalTest.php, line: 296
+
+
+2013 16 Oct 14:50:42 
+File: F:\Sito\filtro\core\FileRetrieval.php, line: 69
+Warning: the repostory folder does not exist. It's not crucial, but do not forget to create it!
+
+2013 16 Oct 14:50:42 
+File: F:\Sito\filtro\core\FileRetrieval.php, line: 155
+file_put_contents(): Filename cannot be empty
+first call from file: F:\Sito\filtro\test\FileRetrievalTest.php, line: 220
+
+
+2013 16 Oct 14:50:42 
+File: F:\Sito\filtro\core\FileRetrieval.php, line: 69
+Warning: the repostory folder does not exist. It's not crucial, but do not forget to create it!
+
+2013 16 Oct 14:50:44 
+File: F:\Sito\filtro\core\FileRetrieval.php, line: 179
+mkdir(): File exists
+first call from file: F:\Sito\filtro\test\FileRetrievalTest.php, line: 296
+
+

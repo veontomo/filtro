@@ -139,9 +139,6 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 
 	}
 
-	/**
-	* @group current
-	*/
 	public function testRetriveAdsOnePage(){
 		$savedAdDir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR
 			.'portaportese'.DIRECTORY_SEPARATOR;
@@ -167,11 +164,10 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 		$this->assertContains('/rubriche/Lavoro/Lavoro_qualificato/m-ricerchiamo-agenti'
 			. '-immobiliari-0ID2013063085335?tipo=offerte&numero=75&latstart=41.8966'
 			. '&lngstart=12.494&zoomstart=10', $result[0]->url);
-		// $this->assertContains("abcd", "abcd");
 
-		$this->assertEquals('ETICA SI specialist ricerca agenti immobiliari con esperienza '
-			.'da inserire in organico il nostro obiettivo è la tua crescita professionale '
-			.'ed economica avrai massima libertà operativa aggiornamento professionale continuo '
+		$this->assertContains('ETICA SI specialist ricerca agenti immobiliari con esperienza '
+			.'da inserire in organico il nostro obiettivo è la tua crescita professionale ', $result[4]->content);
+		$this->assertContains('operativa aggiornamento professionale continuo '
 			.'e piani provvigionali dal 50 % all\' 80 %. contattaci!', $result[4]->content);
 
 	
@@ -188,7 +184,6 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 		// check that all elements of the array are of Ad class
 		foreach ($result as $ad) {
 			$this->assertEquals('Ad', get_class($ad));
-			echo substr($ad->content, 0, 30).PHP_EOL;
 		}
 
 		// selective check of some ads
@@ -196,6 +191,11 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($ad1->content, 'AGENTE IMMOBILIARE Sei sicuro che le tue qualita\' '
 			. 'siano davvero riconosciute utilizzate e apprezzate Non perdere l occasione di '
 			. 'conoscere come farlo al meglio. Per info e colloquio ozanam@ferrariemeriziola.it');
+
+		$ad2 = $result[12];
+		$this->assertEquals($ad2->content, 'AZIENDA ATTIVA AREA ROMA RICERCA 5 IMPIEGATI/E WEB '
+			.'ANCHE INESPERTI PER AMPLIAMENTO ORGANICO PROPRIA SEDE SI RICHIEDE DIPLOMA '
+			.'SUPERIORE MAX 30 ANNI DISPONIBILITA\' IMMEDIATA PER APPUNTAMENTO DALLE ORE 9 ALLE 14');
 		}
 }
 ?>

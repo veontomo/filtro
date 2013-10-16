@@ -208,14 +208,12 @@ class Portaportese implements AdProvider{
 
 		$ads = $xpath->query("//*/div[@class='ris mod']");
 		foreach ($ads as $ad) {
-			echo 'Consider node: '. substr(trim($ad->nodeValue), 0, 20) . PHP_EOL;
 			$adCurrent = new Ad;
 			$dates = array();
 			$dateNodes = $xpath->query('div/div/span[@class="data"]', $ad);
 			// it is supposed to be just one date in the ad, so if others are present, neglect them
 			if($dateNodes->length > 0){
 				$adCurrent->date = $dateNodes->item(0)->nodeValue;
-				echo "\t Date revealed: ". $adCurrent->date . PHP_EOL;
 			}
 
 			$descrNodes = $xpath->query('div/div[@class="primary"]', $ad);
@@ -223,7 +221,6 @@ class Portaportese implements AdProvider{
 			if($descrNodes->length > 0){
 				$descrNode = $descrNodes->item(0);
 				$adCurrent->content = trim(preg_replace('/(\s)+/', ' ', $descrNode->nodeValue));
-				echo "\t Content revealed: ". substr($adCurrent->content, 0, 10) . PHP_EOL;
 				$linkNodes = $descrNode->getElementsByTagName('a');
 				if($linkNodes->length > 0){
 					$adCurrent->url = $this->url.$linkNodes->item(0)->getAttribute('href');
