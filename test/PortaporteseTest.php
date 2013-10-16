@@ -139,6 +139,9 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 
 	}
 
+	/**
+	* @group current
+	*/
 	public function testRetriveAdsOnePage(){
 		$savedAdDir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR
 			.'portaportese'.DIRECTORY_SEPARATOR;
@@ -166,6 +169,11 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 			. '&lngstart=12.494&zoomstart=10', $result[0]->url);
 		// $this->assertContains("abcd", "abcd");
 
+		$this->assertEquals('ETICA SI specialist ricerca agenti immobiliari con esperienza '
+			.'da inserire in organico il nostro obiettivo è la tua crescita professionale '
+			.'ed economica avrai massima libertà operativa aggiornamento professionale continuo '
+			.'e piani provvigionali dal 50 % all\' 80 %. contattaci!', $result[4]->content);
+
 	
 	}
 
@@ -174,6 +182,20 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 		$pp->setUrl('http://localhost/filtro/resources/portaportese/');
 		$result = $pp->retrieveAds();
 		$this->assertTrue(!empty($result));
-	}
+		// six proper pages and one empty page with ads are present in the web imitation folder
+		// each of them contains 11 ads
+		$this->assertEquals(count($result), 66); 
+		// check that all elements of the array are of Ad class
+		foreach ($result as $ad) {
+			$this->assertEquals('Ad', get_class($ad));
+			echo substr($ad->content, 0, 30).PHP_EOL;
+		}
+
+		// selective check of some ads
+		$ad1 = $result[5];
+		$this->assertEquals($ad1->content, 'AGENTE IMMOBILIARE Sei sicuro che le tue qualita\' '
+			. 'siano davvero riconosciute utilizzate e apprezzate Non perdere l occasione di '
+			. 'conoscere come farlo al meglio. Per info e colloquio ozanam@ferrariemeriziola.it');
+		}
 }
 ?>

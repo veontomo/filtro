@@ -139,8 +139,9 @@ class FileRetrieval{
 	}
 
 	/**
-	* Saves the string in the repository
-	* @return boolean true if the content was saved successefully, false otherwise
+	* Saves the string into a file in the repository with a name given by attrribute localPath
+	* @param	string 	$content string to save into a file in the repository 
+	* @return 	boolean true if the content was saved successefully, false otherwise
 	*/
 	public function saveInRepo($content){
 		if($this->createDirInRepo()){
@@ -183,11 +184,11 @@ class FileRetrieval{
 	}
 
 	/**
-	* Returns a content of $this->url. 
+	* Returns the content of the file which url is given by attribute url. 
 	* If the corresponding file is present in the repo, returns the content of that file, otherwise
 	* retrieves it from web and saves the copy of that file in the repository. If none of these 
 	* operations succeed, returns false.
-	* @return string|false content of $this->url
+	* @return string|false content of file which url is given by the attribute url
 	*/
 	public function lazyRetrieval(){
 		if($this->localCopyExists()){
@@ -201,7 +202,8 @@ class FileRetrieval{
 
 	/**
 	* Writes info in the log file. 
-	* @var string 	$content 	message to put into the log file 
+	* For this class, the log file name is chosen to be FileRetrieval.log and is located in the directory "logs"
+	* @param string 	$content 	message to put into the log file 
 	* @return void
 	*/
 	private function log($content){
@@ -215,7 +217,7 @@ class FileRetrieval{
 		$lineNumber = $traceInfo[0]['line'];
 		$infoToWrite = date('Y d M H:i:s ', time())."\nFile: $callerFile, line: $lineNumber\n"
 			. $content."\n\n";
-		$fileName = $targetDir.DIRECTORY_SEPARATOR.'log-'.basename(__FILE__,'.php');
+		$fileName = $targetDir.DIRECTORY_SEPARATOR.basename(__FILE__,'.php').'.log';
 		file_put_contents($fileName, $infoToWrite, FILE_APPEND);
 		
 	}

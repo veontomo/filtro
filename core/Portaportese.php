@@ -153,12 +153,9 @@ class Portaportese implements AdProvider{
 		$counter2 = 1;
 		$ads = array();
 		do{
-			echo __METHOD__. ': counter2 = '.$counter2. PHP_EOL; 
 			$page = preg_replace(array('/PLACEHOLDER1/', '/PLACEHOLDER2/'), 
 				array($counter1, $counter2), $this->urlPattern);
-			echo 'passing '.$page. ' to the pageContent'.PHP_EOL;
 			$adsOnePage = $this->retrieveAdsOnePage($page);
-			// print_r($adsOnePage);
 			$counter2++;
 			if(is_array($adsOnePage) && !empty($adsOnePage)){
 				$ads = array_merge($ads, $adsOnePage);
@@ -173,13 +170,12 @@ class Portaportese implements AdProvider{
 
 
 	/** 
-	* produces the content of the page which location is given by concatenation of $url and $page
+	* Produces the content of the page which location is given by concatenation of $url and $page
 	* @param 	string 	$page 		url of the page parametrized by the $page in the bunch of $this->url  
 	* @return 	string 				content of the page given by $url
 	* @uses 	FileRetrieval::retrieveFromWeb() to retrieve the content
 	*/
 	public function pageContent($page){
-		echo __METHOD__. ': recieved $page = '.$page.' with implicit $url '.$this->url.PHP_EOL;
 		$urlComplete = $this->url.$page;
 		$retr = new FileRetrieval;
 		$retr->setUrl($urlComplete);
@@ -212,19 +208,22 @@ class Portaportese implements AdProvider{
 
 		$ads = $xpath->query("//*/div[@class='ris mod']");
 		foreach ($ads as $ad) {
+			echo 'Consider node: '. substr(trim($ad->nodeValue), 0, 20) . PHP_EOL;
 			$adCurrent = new Ad;
 			$dates = array();
-			$dateNodes = $xpath->query('//span[@class="data"]', $ad);
+			$dateNodes = $xpath->query('div/div/span[@class="data"]', $ad);
 			// it is supposed to be just one date in the ad, so if others are present, neglect them
 			if($dateNodes->length > 0){
 				$adCurrent->date = $dateNodes->item(0)->nodeValue;
+				echo "\t Date revealed: ". $adCurrent->date . PHP_EOL;
 			}
 
-			$descrNodes = $xpath->query('//div[@class="primary"]', $ad);
+			$descrNodes = $xpath->query('div/div[@class="primary"]', $ad);
 			// it is supposed to be just one description in the ad, so if others are present, neglect them
 			if($descrNodes->length > 0){
 				$descrNode = $descrNodes->item(0);
 				$adCurrent->content = trim(preg_replace('/(\s)+/', ' ', $descrNode->nodeValue));
+				echo "\t Content revealed: ". substr($adCurrent->content, 0, 10) . PHP_EOL;
 				$linkNodes = $descrNode->getElementsByTagName('a');
 				if($linkNodes->length > 0){
 					$adCurrent->url = $this->url.$linkNodes->item(0)->getAttribute('href');
