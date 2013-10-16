@@ -5,6 +5,8 @@ config/
 FirePHPCore/
 docs/
 webImitation/
+logs/
+repository/
 
 
 phpdoc-*.error.log
