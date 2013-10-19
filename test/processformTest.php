@@ -6,5 +6,36 @@ class ProcessFormTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(function_exists('retrieveAds'));
 	}
 
-	
+	public function testIncompleteInput(){
+		//$input = array('category' => 'lavoro', 'keywords' => '');
+		$input = array('keywords' => '');
+		$output = retrieveAds(json_encode($input));
+		$outputDecoded = json_decode($output, true);
+		$this->assertTrue(is_array($outputDecoded));
+		$this->assertTrue(array_key_exists('success', $outputDecoded));
+		$this->assertFalse($outputDecoded['success']);
+		$this->assertTrue(array_key_exists('message', $outputDecoded));
+	}
+
+	public function testFirstTry(){
+		$input = array('category' => 'lavoro', 'keywords' => 'Domestico');
+		$output = retrieveAds(json_encode($input));
+		$outputDecoded = json_decode($output, true);
+		$this->assertTrue(is_array($outputDecoded));
+		$this->assertTrue(array_key_exists('success', $outputDecoded));
+		$this->assertTrue($outputDecoded['success']);
+		$this->assertTrue(array_key_exists('result', $outputDecoded));
+		$this->assertTrue(is_array($outputDecoded['result']));
+		$this->assertFalse(empty($outputDecoded['result']));
+	}
+
+	public function testFunctionCalled(){
+		$input = array('category' => 'lavoro', 'keywords' => 'Domestico');
+		retrieveAds(json_encode($input));
+		
+
+	}
+
+
+
 }

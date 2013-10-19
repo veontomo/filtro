@@ -15,15 +15,12 @@ if(isset($_POST['submit'])){
 	fb('POST[submit] is set', FirePHP::INFO);
 	$category = htmlspecialchars($_POST['category']);
 	$keywords = htmlspecialchars($_POST['keywords']);
-	$timeMin = htmlspecialchars($_POST['timeMin']);
-	$timeMax = htmlspecialchars($_POST['timeMax']);
 
-	$inputData = array('category' => $category, 'keywords' => $keywords, 
-			'timeMin' => $timeMin, 'timeMax' => $timeMax);
+	$inputData = array('category' => $category, 'keywords' => $keywords);
 	require_once 'php/processform.php';
 
 	$outputData = retrieveAds(json_encode($inputData));
-	fb('POST[submit] is set', FirePHP::INFO);
+	// fb('retrieveAds output: '.$outputData, FirePHP::INFO);
 }
 ?>
 	<div id="header">
@@ -74,8 +71,20 @@ if(isset($_POST['submit'])){
 				<input type="submit" value="Controlla" name="submit" id="submit">
 			</form>
 			<div id="all-ads"> 
+			<?php
+			if(isset($outputData) && $outputData){
+				echo '<ol>';
+				foreach ($outputData as $ad) {
+					echo '<li>' . $ad->content . '</li>';
+				}
+				echo '</ol>';
+			}
+			?>
+
 			</div>
 		</div>
+
+
 	</div> <!-- end of main -->
 
 </body>

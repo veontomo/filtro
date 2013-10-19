@@ -70,10 +70,10 @@ class Subito implements AdProvider{
 	/**
 	* Setter for the timeMax
 	* If the argument is a string, then it is transformed into an integer corresponding to the time format 
-	* and if this operation is successful, the timeMax is set to  that integer
+	* and if this operation is successful, the timeMax is set to  that integer.
 	* If the argument is an integer, the timeMax is set to this integer
-	* @param mixed $str String or Integer
-	* @return Boolean true if assignment is successeful, false - otherwise
+	* @param 	string|integer 	$arg String or Integer
+	* @return 	boolean 	true if assignment is successeful, false - otherwise
 	*/
 	public function setTimeMax($arg){
 		if(is_int($arg)){
