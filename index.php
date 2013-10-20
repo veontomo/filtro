@@ -24,7 +24,7 @@ if(isset($_POST['submit'])){
 	$inputData = array('category' => $category, 'keywords' => $keywords, 'timeMax' => $timeMax, 'timeMin' => $timeMin);
 	require_once 'php/processform.php';
 	// fb('recieved data: '.json_encode($inputData), FirePHP::INFO);
-//	$outputData = retrieveAds(json_encode($inputData));
+	$outputData = retrieveAds(json_encode($inputData));
 	// fb('retrieveAds output: '.$outputData, FirePHP::INFO);
 }
 ?>
