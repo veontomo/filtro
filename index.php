@@ -1,6 +1,6 @@
 <?php
-require_once('FirePHPCore/fb.php');
-ob_start();
+//require_once('FirePHPCore/fb.php');
+// ob_start();
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,7 +23,7 @@ if(isset($_POST['submit'])){
 
 	$inputData = array('category' => $category, 'keywords' => $keywords, 'timeMax' => $timeMax, 'timeMin' => $timeMin);
 	require_once 'php/processform.php';
-	fb('recieved data: '.json_encode($inputData), FirePHP::INFO);
+	// fb('recieved data: '.json_encode($inputData), FirePHP::INFO);
 //	$outputData = retrieveAds(json_encode($inputData));
 	// fb('retrieveAds output: '.$outputData, FirePHP::INFO);
 }
@@ -33,7 +33,7 @@ if(isset($_POST['submit'])){
 			filtro subito
 		</p>
 	</div>
-	
+
 	<div id="main">
 		<div id="sidebar">
 			<div class="date">
@@ -66,17 +66,17 @@ if(isset($_POST['submit'])){
 
 				<label for="keywords">Parole chiavi:</label>
 				<input type="text" name="keywords" id="keywords" placeholder="inserisci le parole chiavi"><br />
-				
+
 				<label for="timeMax">Cominciando da:</label>
 				<input type="text" id="timeMax" name="timeMax" placeholder="ora">
 
-				
+
 				<label for="timeMin">Non pi&ugrave; vecchi di:</label>
 				<input type="text" id="timeMin" name="timeMin" value="">
-				
+
 				<input type="submit" value="Controlla" name="submit" id="submit">
 			</form>
-			<div id="all-ads"> 
+			<div id="all-ads">
 			<?php
 			if(isset($outputData) && $outputData){
 				echo '<ol>';
@@ -96,4 +96,4 @@ if(isset($_POST['submit'])){
 </body>
 
 
-</html> 
+</html>
