@@ -50,9 +50,22 @@ class AdTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($ad->containsAnyOf(""));
         $this->assertFalse($ad->containsAnyOf("Cercasii, kimono"));
         $this->assertFalse($ad->containsAnyOf("ente., old"));
+    }
 
 
-
+    public function testShowAsHtml(){
+        $ad = $this->getMock('Ad', array('date', 'url', 'content', 'author'));
+        // $ad->expects($this->once())->method('date')->will($this->returnValue('01 Sept 2013 20:23'));
+        // $ad->expects($this->once())->method('url') ->will($this->returnValue('www.million.com'));
+        // $ad->expects($this->once())->method('content')->will($this->returnValue('1000$/h for you'));
+        // $ad->expects($this->once())->method('author')->will($this->returnValue('B. Gates'));
+        $ad->date = '01 Sept 2013 20:23';
+        $ad->url = 'www.million.com';
+        $ad->content = '1000$/h for you';
+        $ad->author = 'B. Gates';
+        $this->assertTrue(method_exists('Ad', 'showAsHtml'));
+        $this->assertEquals($ad->showAsHtml(), 
+            '01 Sept 2013 20:23 <a href="www.million.com">1000$/h for you</a> B. Gates');
     }
 }
 ?>

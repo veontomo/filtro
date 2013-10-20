@@ -45,8 +45,8 @@ class Ad{
 	* check whether the ad contains at least one of the words in the string of comma separated string (case insensitive). 
 	* Empty string is supposed to be contained in all strings (including empty one).
 	* Empty string is supposed to contain only emtpy string.
-	* @param 	String 		$css 	string of comma separated words
-	* @return 	Boolean 	true if the content attribute contains at least one of the words in $css, false otherwise
+	* @param 	string 		$css 	string of comma separated words
+	* @return 	boolean 	true if the content attribute contains at least one of the words in $css, false otherwise
 	*
 	*/
 	public function containsAnyOf($css){
@@ -65,6 +65,14 @@ class Ad{
 		}
 		return $output;
 
+	}
+
+	/**
+	* Gives a string collecting all the info about the ad in an html form
+	* @return string 	html representation of the ad
+	*/
+	public function showAsHtml(){
+		return $this->date.' <a href="'.$this->url.'">'.$this->content.'</a> '.$this->author;
 	}
 
 }

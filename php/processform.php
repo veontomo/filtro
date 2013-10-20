@@ -12,22 +12,26 @@ function retrieveAds($str){
 	if(!array_key_exists('category', $input)){
 		return json_encode(array('success' => false, 'message' => 'Categoria mancata'));
 	}
+	$adsOutput = array();
 	$categ = $input['category'];
 	$urls = categoryToUrls($categ);
 	foreach ($urls as $provider => $urlArr) {
+		$adsCurrent = NULL; // reset the content of this variable to avoid duplicating data when looping
 		$Provider = ucfirst($provider);
 		$fnName = 'retrieveFrom'.$Provider;
 		if(function_exists($fnName)){
-			$ads = $fnName($urlArr);
+			$adsCurrent = $fnName($urlArr);
 		}else{
 			$info = date('Y d M H:i:s ', time()).__FUNCTION__.'unknown provider: '.$provider
 				.', function '.$fnName. ' does not exist.'."\n\n";
 			file_put_contents(dirname(__FILE__).DIRECTORY_SEPARATOR.'processform.log', $info, FILE_APPEND);
 		}
-
-		return $ads;
+		if(is_array($adsCurrent)){
+			$adsOutput = array_merge($adsOutput, $adsCurrent);
+		}
 
 	}
+	return $adsOutput;
 
 }
 
@@ -43,12 +47,12 @@ function categoryToUrls($categ){
 	switch ($categ) {
 	 	case 'lavoro':
 	 		$urls = array(
-	 			'subito' => array('http://www.subito.it/annunci-lazio/vendita/offerte-lavoro/'),
 	 			'portaportese' => array(
 	 				'http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/',
 	 				'http://www.portaportese.it/rubriche/Lavoro/Lavoro_generico/',
 	 				'http://www.portaportese.it/rubriche/Lavoro/Scuola_e_lezioni_private/'
-	 			)
+	 			),
+	 		'subito' => array('http://www.subito.it/annunci-lazio/vendita/offerte-lavoro/')
 	 		);
 	 		break;
 	 	default:
@@ -68,15 +72,27 @@ function retrieveFromSubito($urls){
 		$subito->setTimeMax(time());
 		$subito->setTimeMin('-1 day');
 		$adsCurrent = $subito->retrieveAds();
-		if(is_array($adsCurrent)){
+		if(is_array($adsCurrent) && !empty($adsCurrent)){
 			$output = array_merge($output, $adsCurrent);
 		}
 	}
-	file_put_contents(dirname(__FILE__).DIRECTORY_SEPARATOR.'processform.log', json_encode($output), FILE_APPEND);
 	return $output;
 }
 
 function retrieveFromPortaportese($urls){
+	require_once dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'Portaportese.php';
+	$output = array();
+
+	$pp = new Portaportese;
+	foreach ($urls as $url) {
+		$adsCurrent = NULL;
+		$pp->setUrl($url);
+		$adsCurrent = $pp->retrieveAds();
+		if(is_array($adsCurrent) && !empty($adsCurrent)){
+			$output = array_merge($output, $adsCurrent);
+		}
+	}
+	return $output;
 
 }
 

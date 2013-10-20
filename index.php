@@ -75,7 +75,7 @@ if(isset($_POST['submit'])){
 			if(isset($outputData) && $outputData){
 				echo '<ol>';
 				foreach ($outputData as $ad) {
-					echo '<li>' . $ad->content . '</li>';
+					echo '<li>' . $ad->showAsHtml() . '</li>';
 				}
 				echo '</ol>';
 			}
