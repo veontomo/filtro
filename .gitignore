@@ -7,7 +7,6 @@ docs/
 webImitation/
 logs/
 repository/www.*
-repository/localhost/*
 
 
 phpdoc-*.error.log
