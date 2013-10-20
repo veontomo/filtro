@@ -9,9 +9,10 @@
 */
 function retrieveAds($str){
 	$input = json_decode($str, true);
-	if(!array_key_exists('category', $input)){
+	if(!array_key_exists('category', $input) || empty($input['category'])){
 		return json_encode(array('success' => false, 'message' => 'Categoria mancata'));
 	}
+
 	$adsOutput = array();
 	$categ = $input['category'];
 	$urls = categoryToUrls($categ);
