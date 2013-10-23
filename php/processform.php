@@ -80,6 +80,14 @@ function retrieveFromSubito($urls){
 	return $output;
 }
 
+
+/**
+* @todo for each url connect to the site and find the list of available dates of publication.
+* For example, for http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/ on the left
+* there is a list <ul class="filterList"> which contains links to all available ads sorted by date:
+* <a href="/rubriche/Lavoro/Lavoro_qualificato/m-usC77">venerdì 18 ottobre 2013</a>
+*/
+
 function retrieveFromPortaportese($urls){
 	require_once dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'Portaportese.php';
 	$output = array();

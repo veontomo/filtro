@@ -12,11 +12,14 @@ require_once 'Ad.php';
 class Portaportese implements AdProvider{
 	/**
 	* @var 	string $url url of the 'entry page'
+	* @example 'http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/'
 	*/
 	private $url;
 
 	/**
 	* @var 	string $urlPattern a pattern to parametrize all pages inside the 'entry page'
+	* @example 'm-us75&pag5' corresponds to the second page (PLACEHOLDER2 = 5) in the pages
+	* published 18/10/2013 (PLACEHOLDER1 = 75)
 	*/
 	private $urlPattern = 'm-usCPLACEHOLDER1&pagPLACEHOLDER2';
 
@@ -230,6 +233,40 @@ class Portaportese implements AdProvider{
 		}
 
 		return $output;
+	}
+
+
+	/**
+	* connects to the url given by $this->url() and finds out the dates of publications
+	*/
+	public function retrieveDates(){
+		$retr = new FileRetrieval;
+		$retr->setUrl($this->url());
+		$content = $retr->retrieveFromWeb();
+
+
+		$previousSetting = libxml_use_internal_errors(true);
+		$doc = new DOMDocument();
+		$doc->loadHTML($content);
+		libxml_use_internal_errors($previousSetting); // set the initial value of libxml_use_internal_errors
+		$xpath = new DOMXpath($doc);
+
+		$ads = $xpath->query('//*/ul[@class="filterList"]/li');
+		
+		$output = array();
+		foreach ($ads as $ad) {
+			$links = $ad->getElementsByTagName('a');
+			if(!empty($links)){
+				$link = $links->item(0)->getAttribute('href');
+			}
+			$prefix = basename($link);
+			$output[$prefix] = $ad->nodeValue;
+		}
+		return $output;
+
+
+
+
 
 	}
 
