@@ -205,13 +205,13 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 			$savedAdDir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR
 				.'portaportese'.DIRECTORY_SEPARATOR;
 			$this->assertTrue(is_dir($savedAdDir) && 
-							  file_exists($savedAdDir.'default'), 
+							  file_exists($savedAdDir.'index.html'), 
 				'In order to make the test '.__METHOD__.'start, '
 				.'save an "entry page" (i.e. http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/) '
-				.'in the folder "resources/portaportese/" under the name "default".'.PHP_EOL);
+				.'in the folder "resources/portaportese/" under the name "index.html".'.PHP_EOL);
 			
 			$pp = new Portaportese;
-			$pp->setUrl('http://localhost/filtro/resources/portaportese/default');
+			$pp->setUrl('http://localhost/filtro/resources/portaportese/');
 			$dates = $pp->retrieveDates();
 			print_r($dates);
 			$this->assertTrue(is_array($dates));

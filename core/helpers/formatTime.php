@@ -13,8 +13,7 @@
 *	Ieri 14:03 		-> 11 Sep 2013 14:03 (time in past)
 *	Ieri14:03 		-> 11 Sep 2013 14:03 (time in past, no space)
 *	6 ago 20:21 	-> 6 Aug 2013 20:21  (time in past)
-* @todo elaborate this case: if today is 1 Jan 2014, then the date 20 Dic will be transformed into "20 Dic 2014 00:00"
-* while it must be "20 Dic 2013 00:00"
+*   martedì 16 ottobre 2013 -> 16 Oct 2013
 */
 function formatTime($str){
 	$today = date("d M");
@@ -24,6 +23,10 @@ function formatTime($str){
 		return date('d M Y H:i', strtotime($result));
 	}
 	$yesterday = date("d M", strtotime("-1 day"));
+	$monthEng = array('Jan', 'Feb', 'Mar', 
+		'Apr', 'May', 'Jun', 
+		'Jul', 'Aug', 'Sep', 
+		'Oct', 'Nov', 'Dec');
 	$pattern = array('/Oggi/i', '/Ieri/i', 
 		'/gen/i', '/feb/i', '/mar/i', 
 		'/apr/i', '/mag/i', '/giu/i', 
@@ -32,15 +35,18 @@ function formatTime($str){
 	$repl = array_map(function($arg){
 		return $arg.date(" Y");
 		}, 
-		array($today, $yesterday, 
-			'Jan', 'Feb', 'Mar', 
-			'Apr', 'May', 'Jun', 
-			'Jul', 'Aug', 'Sep', 
-			'Oct', 'Nov', 'Dec'));
+		array_merge(array($today, $yesterday), $monthEng)
+		);
 	$str2 = preg_replace($pattern, $repl, $str);
 	
 	$str3 =  preg_replace('/lunedì|martedì|mercoledì|giovedì|venerdì|sabato|domenica/', '', $str2);
-	$result = date("d M Y H:i", strtotime($str3));
+
+	$monthIt = array('/gennaio/i', '/febbraio/i', '/marzo/i', '/aprile/i',
+						'/maggio/i', '/giugno/i', '/luglio/i', '/agosto/i', 
+						'/settembre/i', '/ottobre/i', '/novembre/i', '/dicembre/i');
+
+	$str4 = preg_replace($monthIt, $monthEng, $str3);
+	$result = date("d M Y H:i", strtotime($str4));
 
 	if(strtotime($result)>time()){
 		$yearBefore = date("Y", strtotime($result))-1;
