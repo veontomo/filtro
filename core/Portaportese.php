@@ -2,6 +2,7 @@
 require_once 'AdProvider.php';
 require_once 'FileRetrieval.php';
 require_once 'Ad.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'formatTime.php';
 
 /**
 * Represents a specific case of AdProvider class corresponding to "Portaportese" page.
@@ -260,7 +261,10 @@ class Portaportese implements AdProvider{
 				$link = $links->item(0)->getAttribute('href');
 			}
 			$prefix = basename($link);
-			$output[$prefix] = $ad->nodeValue;
+			$time = $ad->nodeValue;
+			$timeFormatted = formatTime($time);
+			echo "time: $time, after formatting: $timeFormatted".PHP_EOL;
+			$output[$prefix] = formatTime($ad->nodeValue);
 		}
 		return $output;
 

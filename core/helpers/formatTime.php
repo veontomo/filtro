@@ -3,7 +3,9 @@
 * convert a date writen in italian into english into the following format:  d M Y H:i
 * transform human date string into a computer format 
 * @param String $str 
-* @return String Return a time formatted as "d M"  
+* @return String Return a time formatted as "d M Y H:i"
+* @author A.Shcherbakov
+* @version 0.0.2, 26 Oct 2013
 * @example if now is 10 Oct 2013 10:25, then formatTime must do the following:
 *   Oggi 01:48 		-> 10 Oct 2013 01:48 (time in past)
 *	Oggi 12:48 		-> 10 Oct 2013 12:48 (time in future, but if word "Oggi" is present, the year remains 2013)
@@ -15,7 +17,8 @@
 *	6 ago 20:21 	-> 6 Aug 2013 20:21  (time in past)
 *   martedì 16 ottobre 2013 -> 16 Oct 2013
 */
-function formatTime($str){
+function formatTime2($str){
+	echo "input: ".$str.PHP_EOL;
 	$today = date("d M");
 	$yearNow = date('Y');
 	if(preg_match('/oggi/i', $str)){
@@ -27,6 +30,10 @@ function formatTime($str){
 		'Apr', 'May', 'Jun', 
 		'Jul', 'Aug', 'Sep', 
 		'Oct', 'Nov', 'Dec');
+	$monthIt = array('/gennaio/i', '/febbraio/i', '/marzo/i', '/aprile/i',
+						'/maggio/i', '/giugno/i', '/luglio/i', '/agosto/i', 
+						'/settembre/i', '/ottobre/i', '/novembre/i', '/dicembre/i');
+
 	$pattern = array('/Oggi/i', '/Ieri/i', 
 		'/gen/i', '/feb/i', '/mar/i', 
 		'/apr/i', '/mag/i', '/giu/i', 
@@ -37,16 +44,18 @@ function formatTime($str){
 		}, 
 		array_merge(array($today, $yesterday), $monthEng)
 		);
-	$str2 = preg_replace($pattern, $repl, $str);
+
+	$str = preg_replace($monthIt, $monthEng, $str);
+	$str = preg_replace($pattern, $repl, $str);
+	echo "str2: ".$str.PHP_EOL;
 	
-	$str3 =  preg_replace('/lunedì|martedì|mercoledì|giovedì|venerdì|sabato|domenica/', '', $str2);
+	$str =  preg_replace('/lunedì|martedì|mercoledì|giovedì|venerdì|sabato|domenica/', '', $str);
+	echo "str3: ".$str.PHP_EOL;
 
-	$monthIt = array('/gennaio/i', '/febbraio/i', '/marzo/i', '/aprile/i',
-						'/maggio/i', '/giugno/i', '/luglio/i', '/agosto/i', 
-						'/settembre/i', '/ottobre/i', '/novembre/i', '/dicembre/i');
-
-	$str4 = preg_replace($monthIt, $monthEng, $str3);
-	$result = date("d M Y H:i", strtotime($str4));
+	
+	echo "str: ".$str.PHP_EOL;
+	$result = date("d M Y H:i", strtotime($str));
+	echo "result: ".$result.PHP_EOL;
 
 	if(strtotime($result)>time()){
 		$yearBefore = date("Y", strtotime($result))-1;
@@ -55,5 +64,55 @@ function formatTime($str){
 	return $result;
 }	
 
+
+function formatTime($str){
+	// elaborate "oggi", "ieri"
+	$today = date('d M');
+	$yearToday = date('Y');
+	$yesterday = date('d M', strtotime('-1 day'));
+	$yearYest = date('Y', strtotime('-1 day'));
+
+	if(preg_match('/oggi|ieri/i', $str)){
+		$output = preg_replace(array('/oggi/i', '/ieri/i'), 
+			array(" $today $yearToday ", " $yesterday $yearYest "),  $str);
+		return date('d M Y H:i', strtotime($output));
+	}
+
+	// drop days of week
+	$daysOfWeek = array('/luned(i|ì)/i', '/marted(i|ì)/i', '/mercoled(i|ì)/i', 
+						'/gioved(i|ì)/i', '/ven(erd(i|ì))?/i', '/sabato/i', '/domenica/i');
+	
+	$output = preg_replace($daysOfWeek, '', $str);
+
+	// whether four digits are present in the input string
+	$yearDetected = preg_match('/\d{4}/', $output);
+	// If the year is present in the input, $year is empty. 
+	// Otherwise,  $year is the current year.
+	$year = $yearDetected ? '' : ' '.$yearToday;
+
+	// converts month names form italian to english
+	$monthIt = array('/gen(naio)?/i', '/feb(braio)?/i', '/mar(zo)?/i', 
+		'/apr(ile)?/i',	'/mag(gio)?/i', '/giu(gno)?/i', 
+		'/lug(lio)?/i', '/ago(sto)?/i', '/set(tembre)?/i', 
+		'/ott(obre)?/i', '/nov(embre)?/i', '/dic(embre)?/i');
+	$monthEng = array('Jan'.$year, 'Feb'.$year, 'Mar'.$year, 
+			'Apr'.$year, 'May'.$year, 'Jun'.$year, 
+			'Jul'.$year, 'Aug'.$year, 'Sep'.$year, 
+			'Oct'.$year, 'Nov'.$year, 'Dec'.$year);
+	$output = preg_replace($monthIt, $monthEng, $output);
+
+	$output = date("d M Y H:i", strtotime($output));
+
+	$outputTime = strtotime($output);
+	// if the found time turns out to be in future and the 
+	// year was guessed (it was not present in the input), 
+	// then replace it by the previous year one
+	if($outputTime>time() && !$yearDetected){
+		$yearBefore = date('Y', strtotime("-1 year"));
+		$output = date("d M $yearBefore H:i", $outputTime);
+	}
+
+	return $output;
+}	
 
 ?>
