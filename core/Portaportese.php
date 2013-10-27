@@ -148,19 +148,34 @@ class Portaportese implements AdProvider{
 	}
 
 	/**
-	* retrieve all the advertisments from the "entry page" and forthcoming ones defined by the url pattern
+	* Retrieve all the advertisments for the time interval specified by $this->timeMax and $this->timeMin.
 	* @param 	void
 	* @return 	array 	an array each element of which is an instance of class Ad.
 	*/
 	public function retrieveAds(){
-		$counter1 = 75;
-		$counter2 = 1;
+		$pagesToRetrieve = $this->linksInDateRange();
+		$ads = array();
+		foreach ($pagesToRetrieve as $key => $value) {
+			$pageNumber = preg_replace('/m-usC/', '', $key);
+			$currentDateAds = $this->retrieveAdsFixedDate($pageNumber);
+			$ads = array_merge($ads, $currentDateAds);
+		}
+		return $ads;
+	}
+
+	/**
+	* Retrieve all the advertisments from the "entry page" and forthcoming ones defined by the url pattern
+	* @param 	integer 	$pageNumber  the first placeholder value that corresponds to the ads published at the same date 
+	* @return 	array 	an array each element of which is an instance of class Ad.
+	*/
+	public function retrieveAdsFixedDate($pageNumber){
+		$counter = 1;
 		$ads = array();
 		do{
 			$page = preg_replace(array('/PLACEHOLDER1/', '/PLACEHOLDER2/'), 
-				array($counter1, $counter2), $this->urlPattern);
+				array($pageNumber, $counter), $this->urlPattern);
 			$adsOnePage = $this->retrieveAdsOnePage($page);
-			$counter2++;
+			$counter++;
 			if(is_array($adsOnePage) && !empty($adsOnePage)){
 				$ads = array_merge($ads, $adsOnePage);
 				$isEnough = false;
@@ -171,7 +186,6 @@ class Portaportese implements AdProvider{
 		while (!$isEnough);
 		return $ads;
 	}
-
 
 	/** 
 	* Produces the content of the page which location is given by concatenation of $url and $page
@@ -271,16 +285,25 @@ class Portaportese implements AdProvider{
 	}
 
 	/**
-	* selects the links corresponding to the ads published within the range [$timeMin, $timeMax]
+	* Selects the links corresponding to the ads published within the range [$timeMin, $timeMax].
+	* @param integer|NULL $timeMin 	starting time (if is not set, $this->timeMin is used.)
+	* @param integer|NULL $timeMax 	ending time (if is not set, $this->timeMax is used.)
+	*
 	*/
-	public function linksInDateRange($timeMin, $timeMax){
+	public function linksInDateRange($timeMin = NULL, $timeMax = NULL){
+		if(!$timeMax) {
+			$timeMax = $this->timeMax;
+		}
+		if(!$timeMin) {
+			$timeMin = $this->timeMin;
+		}
+
 		$links = $this->retrieveDates();
 		$output = array_filter($links, function($timeStr) use ($timeMin, $timeMax){
 			$timeInt = strtotime($timeStr);
 			return (($timeInt >= $timeMin) && ($timeInt <= $timeMax));
 		});
 		return $output;
-
 	}
 
 }
