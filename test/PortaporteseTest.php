@@ -198,9 +198,6 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 			.'SUPERIORE MAX 30 ANNI DISPONIBILITA\' IMMEDIATA PER APPUNTAMENTO DALLE ORE 9 ALLE 14');
 		}
 
-		/**
-		* @group current
-		*/
 		public function testRetrieveDates(){
 			$savedAdDir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR
 				.'portaportese'.DIRECTORY_SEPARATOR;
@@ -219,8 +216,39 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 			$this->assertEquals($dates['m-usC78'], '22 Oct 2013 00:00');
 			$this->assertEquals($dates['m-usC68'], '17 Sep 2013 00:00');
 			$this->assertEquals($dates['m-usC72'], '01 Oct 2013 00:00');
+		}
+
+		/**
+		* @group current
+		*/
+		public function testSlice(){
+			$stub = array(	'm-usC78' => '22 Oct 2013 00:00', 'm-usC77' => '18 Oct 2013 00:00',
+					    	'm-usC76' => '15 Oct 2013 00:00', 'm-usC75' => '11 Oct 2013 00:00',
+						    'm-usC74' => '08 Oct 2013 00:00', 'm-usC73' => '04 Oct 2013 00:00',
+						    'm-usC72' => '01 Oct 2013 00:00', 'm-usC71' => '27 Sep 2013 00:00',
+						    'm-usC70' => '24 Sep 2013 00:00', 'm-usC69' => '20 Sep 2013 00:00',
+						    'm-usC68' => '17 Sep 2013 00:00');
+			$pp = $this->getMock('Portaportese', array('retrieveDates'));
+			$pp->expects($this->any())
+			    ->method('retrieveDates')
+			    ->will($this->returnValue($stub));
+
+			$expected1 = array('m-usC77' => '18 Oct 2013 00:00',
+					    	'm-usC76' => '15 Oct 2013 00:00', 'm-usC75' => '11 Oct 2013 00:00',
+						    'm-usC74' => '08 Oct 2013 00:00');
+			$actual1 = $pp->linksInDateRange(strtotime('07 Oct 2013 13:43'), strtotime('20 Oct 2013 14:45'));
+			$this->assertEquals($expected1, $actual1);
+
+			$expected2 = array(	'm-usC74' => '08 Oct 2013 00:00', 'm-usC73' => '04 Oct 2013 00:00',
+						    'm-usC72' => '01 Oct 2013 00:00', 'm-usC71' => '27 Sep 2013 00:00',
+						    'm-usC70' => '24 Sep 2013 00:00', 'm-usC69' => '20 Sep 2013 00:00');
+			$actual2 = $pp->linksInDateRange(strtotime('20 Sep 2013 00:00'), strtotime('08 Oct 2013 00:00'));
+			$this->assertEquals($expected2, $actual2);
+
+
 
 		}
+
 
 }
 ?>

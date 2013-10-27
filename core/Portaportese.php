@@ -238,13 +238,15 @@ class Portaportese implements AdProvider{
 
 
 	/**
-	* connects to the url given by $this->url() and finds out the dates of publications
+	* connects to the url given by $this->url() and finds out the dates of publications.
+	* @return array 	key => value pairs of the form  'm-usC73' => '04 Oct 2013 00:00'
+	* where 'm-usC73' is a final part of the url "/rubriche/Lavoro/Lavoro_qualificato/m-usC73"
+	* corresponding to ads published 04 Oct 2013.
 	*/
 	public function retrieveDates(){
 		$retr = new FileRetrieval;
 		$retr->setUrl($this->url());
 		$content = $retr->retrieveFromWeb();
-
 
 		$previousSetting = libxml_use_internal_errors(true);
 		$doc = new DOMDocument();
@@ -263,10 +265,22 @@ class Portaportese implements AdProvider{
 				$link = $links->item(0)->getAttribute('href');
 			}
 			$prefix = basename($link);
-			$time = formatTime($date->nodeValue);
-			$output[$prefix] = $time;
+			$output[$prefix] = formatTime($date->nodeValue);
 		}
 		return $output;
+	}
+
+	/**
+	* selects the links corresponding to the ads published within the range [$timeMin, $timeMax]
+	*/
+	public function linksInDateRange($timeMin, $timeMax){
+		$links = $this->retrieveDates();
+		$output = array_filter($links, function($timeStr) use ($timeMin, $timeMax){
+			$timeInt = strtotime($timeStr);
+			return (($timeInt >= $timeMin) && ($timeInt <= $timeMax));
+		});
+		return $output;
+
 	}
 
 }
