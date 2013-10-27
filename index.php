@@ -8,7 +8,6 @@ ob_start();
 	<title></title>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-
 	<script type="text/javascript" src="js/jquery.simple-dtpicker.js"></script>
 	<script type="text/javascript" src="js/scripts.js"></script>
 	<link type="text/css" href="css/jquery.simple-dtpicker.css" rel="stylesheet" />
@@ -21,7 +20,8 @@ if(isset($_POST['submit'])){
 	$category = isset($_POST['category']) ? htmlspecialchars($_POST['category']) : NULL;
 	$keywords = isset($_POST['keywords']) ? htmlspecialchars($_POST['keywords']) : "";
 
-	$inputData = array('category' => $category, 'keywords' => $keywords, 'timeMax' => $timeMax, 'timeMin' => $timeMin);
+	$inputData = array(	'category' => $category, 'keywords' => $keywords, 
+						'timeMax' =>  $timeMax,  'timeMin' =>  $timeMin);
 	require_once 'php/processform.php';
 	fb('recieved data: '.json_encode($inputData), FirePHP::INFO);
 //	$outputData = retrieveAds(json_encode($inputData));
