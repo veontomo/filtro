@@ -215,8 +215,10 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 			$dates = $pp->retrieveDates();
 			print_r($dates);
 			$this->assertTrue(is_array($dates));
-			$this->assertTrue(array_key_exists(strtotime('12 October 2013'), $dates));
-			$this->assertEquals($dates['12 October 2013'], 'm-usC78');
+			$this->assertTrue(array_key_exists('m-usC78', $dates));
+			$this->assertEquals($dates['m-usC78'], '22 Oct 2013 00:00');
+			$this->assertEquals($dates['m-usC68'], '17 Sep 2013 00:00');
+			$this->assertEquals($dates['m-usC72'], '01 Oct 2013 00:00');
 
 		}
 

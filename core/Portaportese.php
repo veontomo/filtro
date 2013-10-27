@@ -252,26 +252,21 @@ class Portaportese implements AdProvider{
 		libxml_use_internal_errors($previousSetting); // set the initial value of libxml_use_internal_errors
 		$xpath = new DOMXpath($doc);
 
-		$ads = $xpath->query('//*/ul[@class="filterList"]/li');
+		// the dates are items if an unordered list with class="filterList". One has to remove the first
+		// item in the list, because it corresponds to "Tutti", not to ads published in a specific date. 
+		$dates = $xpath->query('//*/ul[@class="filterList"]/li[position()>1]');
 		
 		$output = array();
-		foreach ($ads as $ad) {
-			$links = $ad->getElementsByTagName('a');
+		foreach ($dates as $date) {
+			$links = $date->getElementsByTagName('a');
 			if(!empty($links)){
 				$link = $links->item(0)->getAttribute('href');
 			}
 			$prefix = basename($link);
-			$time = $ad->nodeValue;
-			$timeFormatted = formatTime($time);
-			echo "time: $time, after formatting: $timeFormatted".PHP_EOL;
-			$output[$prefix] = formatTime($ad->nodeValue);
+			$time = formatTime($date->nodeValue);
+			$output[$prefix] = $time;
 		}
 		return $output;
-
-
-
-
-
 	}
 
 }

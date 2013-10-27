@@ -95,10 +95,11 @@ function formatTime($str){
 		'/apr(ile)?/i',	'/mag(gio)?/i', '/giu(gno)?/i', 
 		'/lug(lio)?/i', '/ago(sto)?/i', '/set(tembre)?/i', 
 		'/ott(obre)?/i', '/nov(embre)?/i', '/dic(embre)?/i');
-	$monthEng = array('Jan'.$year, 'Feb'.$year, 'Mar'.$year, 
-			'Apr'.$year, 'May'.$year, 'Jun'.$year, 
-			'Jul'.$year, 'Aug'.$year, 'Sep'.$year, 
-			'Oct'.$year, 'Nov'.$year, 'Dec'.$year);
+	$monthEng = array_map(function($var) use ($year) { return $var.$year;},
+		array('Jan', 'Feb', 'Mar', 
+			'Apr', 'May', 'Jun', 
+			'Jul', 'Aug', 'Sep', 
+			'Oct', 'Nov', 'Dec'));
 	$output = preg_replace($monthIt, $monthEng, $output);
 
 	$output = date("d M Y H:i", strtotime($output));
