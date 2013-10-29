@@ -24,13 +24,15 @@ if(isset($_POST['submit'])){
 						'timeMax' =>  $timeMax,  'timeMin' =>  $timeMin);
 	require_once 'php/processform.php';
 	fb('recieved data: '.json_encode($inputData), FirePHP::INFO);
-//	$outputData = retrieveAds(json_encode($inputData));
+	fb('timeMax = '.date('Y M d H:i', $timeMax));
+	fb('timeMin = '.date('Y M d H:i', $timeMin));
+	$outputData = retrieveAds($inputData);
 	// fb('retrieveAds output: '.$outputData, FirePHP::INFO);
 }
 ?>
 	<div id="header">
 		<p>
-			filtro subito
+			pescannunci
 		</p>
 	</div>
 	
@@ -44,7 +46,7 @@ if(isset($_POST['submit'])){
 		</div>
 		<div id="central">
 			<h1>
-				Filtra annunci
+				Pescannunci
 			</h1>
 			<form method="post">
 				<label for="category">Categoria:</label>
@@ -79,11 +81,14 @@ if(isset($_POST['submit'])){
 			<div id="all-ads"> 
 			<?php
 			if(isset($outputData) && $outputData){
-				echo '<ol>';
-				foreach ($outputData as $ad) {
-					echo '<li>' . $ad->showAsHtml() . '</li>';
+				if($outputData['success']){
+					$ads = $outputData['result'];
+					echo '<ol>';
+					foreach ($ads as $ad) {
+						echo '<li>' . $ad->showAsHtml() . '</li>';
+					}
+					echo '</ol>';
 				}
-				echo '</ol>';
 			}
 			?>
 

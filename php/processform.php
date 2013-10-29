@@ -4,13 +4,20 @@
 * The function produces an array of ads that satisfy the requirements: category, keywords, timeMin, timeMax.
 * @author A.Shcherbakov
 * @version 0.0.1
-* @param string 	$str 	json encoded hash with keys: category, keywords, timeMin, timeMax
+* @param string 	$str 	json encoded hash with keys: category, keywords, timeMin, timeMax. 
+* Both timeMin and timeMax are integers.
 * @return array 	array of ads
 */
-function retrieveAds($str){
-	$input = json_decode($str, true);
+function retrieveAds($input){
 	if(!array_key_exists('category', $input) || empty($input['category'])){
-		return json_encode(array('success' => false, 'message' => 'Categoria mancata'));
+		return array('success' => false, 'message' => 'Categoria mancata');
+	}
+	$timeMin = array_key_exists('timeMin', $input) ? $input['timeMin'] : strtotime('-1 hour');
+	$timeMax = array_key_exists('timeMax', $input) ? $input['timeMax'] : time();
+	$keywords = array_key_exists('keywords', $input) ? $input['keywords'] : '';
+
+	if($timeMax < $timeMin){
+		return array('success' => false, 'message' => 'Il tempo di inizio non pu&ograve; essere dopo quello di fine.');
 	}
 
 	$adsOutput = array();
@@ -21,7 +28,8 @@ function retrieveAds($str){
 		$Provider = ucfirst($provider);
 		$fnName = 'retrieveFrom'.$Provider;
 		if(function_exists($fnName)){
-			$adsCurrent = $fnName($urlArr);
+			$inputData = array('urlArr' => $urlArr, 'timeMin' => $timeMin, 'timeMax' => $timeMax);
+			$adsCurrent = $fnName($inputData);
 		}else{
 			$info = date('Y d M H:i:s ', time()).__FUNCTION__.'unknown provider: '.$provider
 				.', function '.$fnName. ' does not exist.'."\n\n";
@@ -32,7 +40,13 @@ function retrieveAds($str){
 		}
 
 	}
-	return $adsOutput;
+	$filteredAds = array();
+	foreach ($adsOutput as $ad) {
+		if($ad->containsAnyOf($keywords)){
+			$filteredAds[] = $ad;
+		}
+	}
+	return array('success' => true, 'result' => $filteredAds);
 
 }
 
@@ -56,6 +70,9 @@ function categoryToUrls($categ){
 	 		'subito' => array('http://www.subito.it/annunci-lazio/vendita/offerte-lavoro/')
 	 		);
 	 		break;
+	 	case 'arredamento':
+	 		$urls = array('subito' => array('http://www.subito.it/annunci-lazio/vendita/arredamento-casalinghi/'));
+	 		break;
 	 	default:
 			$urls = array();
 
@@ -64,14 +81,17 @@ function categoryToUrls($categ){
 }
 
 
-function retrieveFromSubito($urls){
+function retrieveFromSubito($inputData){
 	require_once dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'Subito.php';
+	$urls = $inputData['urlArr'];
+	$timeMax = $inputData['timeMax'];
+	$timeMin = $inputData['timeMin'];
 	$subito = new Subito;
 	$output = array();
 	foreach ($urls as $url) {
 		$subito->setUrl($url);
-		$subito->setTimeMax(time());
-		$subito->setTimeMin('-1 day');
+		$subito->setTimeMax($timeMax);
+		$subito->setTimeMin($timeMin);
 		$adsCurrent = $subito->retrieveAds();
 		if(is_array($adsCurrent) && !empty($adsCurrent)){
 			$output = array_merge($output, $adsCurrent);
@@ -88,14 +108,20 @@ function retrieveFromSubito($urls){
 * <a href="/rubriche/Lavoro/Lavoro_qualificato/m-usC77">venerdì 18 ottobre 2013</a>
 */
 
-function retrieveFromPortaportese($urls){
+function retrieveFromPortaportese($inputData){
 	require_once dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'Portaportese.php';
+	$urls = $inputData['urlArr'];
+	$timeMax = $inputData['timeMax'];
+	$timeMin = $inputData['timeMin'];
+
 	$output = array();
 
 	$pp = new Portaportese;
 	foreach ($urls as $url) {
 		$adsCurrent = NULL;
 		$pp->setUrl($url);
+		$pp->setTimeMax($timeMax);
+		$pp->setTimeMin($timeMin);
 		$adsCurrent = $pp->retrieveAds();
 		if(is_array($adsCurrent) && !empty($adsCurrent)){
 			$output = array_merge($output, $adsCurrent);

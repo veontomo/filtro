@@ -231,7 +231,7 @@ class Portaportese implements AdProvider{
 			$dateNodes = $xpath->query('div/div/span[@class="data"]', $ad);
 			// it is supposed to be just one date in the ad, so if others are present, neglect them
 			if($dateNodes->length > 0){
-				$adCurrent->date = $dateNodes->item(0)->nodeValue;
+				$adCurrent->date = formatTime($dateNodes->item(0)->nodeValue);
 			}
 
 			$descrNodes = $xpath->query('div/div[@class="primary"]', $ad);

@@ -38,6 +38,21 @@ class ProcessFormTest extends PHPUnit_Framework_TestCase
 
 	}
 
+	/**
+	* @group current
+	*/
+	public function testWrongTimes(){
+		$input = array('category' => 'lavoro', 'keywords' => 'Domestico', 'timeMin' => 1223, 'timeMax' => 21);
+		$output = retrieveAds(json_encode($input));
+		$outputDecoded = json_decode($output, true);
+		$this->assertTrue(is_array($outputDecoded));
+		$this->assertTrue(array_key_exists('success', $outputDecoded));
+		$this->assertFalse($outputDecoded['success']);
+		$this->assertTrue(array_key_exists('message', $outputDecoded));
+	}
+
+
+
 	public function testFirstTry(){
 		$input = array('category' => 'lavoro', 'keywords' => 'Domestico');
 		$output = retrieveAds(json_encode($input));
