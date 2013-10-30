@@ -66,13 +66,34 @@ function categoryToUrls($categ){
 	 				'http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/',
 	 				'http://www.portaportese.it/rubriche/Lavoro/Lavoro_generico/',
 	 				'http://www.portaportese.it/rubriche/Lavoro/Scuola_e_lezioni_private/'
-	 			),
-	 		'subito' => array('http://www.subito.it/annunci-lazio/vendita/offerte-lavoro/')
+	 				),
+	 			'subito' => array('http://www.subito.it/annunci-lazio/vendita/offerte-lavoro/')
 	 		);
 	 		break;
 	 	case 'arredamento':
 	 		$urls = array('subito' => array('http://www.subito.it/annunci-lazio/vendita/arredamento-casalinghi/'));
 	 		break;
+	 	case 'veicoli':
+	 		$urls = array(
+	 			'subito' => array(
+	 				'http://www.subito.it/annunci-lazio/vendita/auto/',
+		 			'http://www.subito.it/annunci-lazio/vendita/accessori-auto/',
+		 			'http://www.subito.it/annunci-lazio/vendita/moto-e-scooter/',
+		 			'http://www.subito.it/annunci-lazio/vendita/accessori-moto/',
+		 			'http://www.subito.it/annunci-lazio/vendita/caravan-e-camper/',
+		 			'http://www.subito.it/annunci-lazio/vendita/altri-veicoli/'),
+	 			'portaportese' => array(
+	 				'http://www.portaportese.it/rubriche/Veicoli/Auto_italiane/',
+	 				'http://www.portaportese.it/rubriche/Veicoli/Auto_straniere/',
+	 				'http://www.portaportese.it/rubriche/Veicoli/Fuoristrada/',
+	 				'http://www.portaportese.it/rubriche/Veicoli/Auto_d_epoca_Speciali/',
+	 				'http://www.portaportese.it/rubriche/Veicoli/Grandi_veicoli_e_da_lavoro/',
+	 				'http://www.portaportese.it/rubriche/Veicoli/Moto/',
+	 				'http://www.portaportese.it/rubriche/Veicoli/Bici/',
+	 				'http://www.portaportese.it/rubriche/Veicoli/Accessori_ricambi/'
+	 				)
+	 		);
+			break;
 	 	default:
 			$urls = array();
 

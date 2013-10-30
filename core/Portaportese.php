@@ -24,7 +24,10 @@ class Portaportese implements AdProvider{
 	*/
 	private $urlPattern = 'm-usCPLACEHOLDER1&pagPLACEHOLDER2';
 
-
+	/**
+	* @var string 	provider domain name 
+	*/
+	private $providerUrl = 'http://www.portaportese.it';
 
 	/**
 	* @var 		string 	$page url of the specific page inside 'entry page'
@@ -238,10 +241,10 @@ class Portaportese implements AdProvider{
 			// it is supposed to be just one description in the ad, so if others are present, neglect them
 			if($descrNodes->length > 0){
 				$descrNode = $descrNodes->item(0);
-				$adCurrent->content = trim(preg_replace('/(\s)+/', ' ', $descrNode->nodeValue));
+				$adCurrent->content = htmlentities(trim(preg_replace('/(\s)+/', ' ', $descrNode->nodeValue)));
 				$linkNodes = $descrNode->getElementsByTagName('a');
 				if($linkNodes->length > 0){
-					$adCurrent->url = $this->url.$linkNodes->item(0)->getAttribute('href');
+					$adCurrent->url = $this->providerUrl.$linkNodes->item(0)->getAttribute('href');
 				}
 			}
 			$output[] = $adCurrent;

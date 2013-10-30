@@ -72,7 +72,7 @@ class Ad{
 	* @return string 	html representation of the ad
 	*/
 	public function showAsHtml(){
-		return $this->date.' <a href="'.$this->url.'">'.$this->content.'</a> '.$this->author;
+		return $this->date.' <a href="'.$this->url.'" target="_blank">'.$this->content.'</a> '.$this->author;
 	}
 
 }

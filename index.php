@@ -48,33 +48,35 @@ if(isset($_POST['submit'])){
 			<h1>
 				Pescannunci
 			</h1>
+			<?php
+			$categ = array('scegli categoria' => '', 'offerte di lavoro' => 'lavoro', 
+				'arredamento' => 'arredamento', 'auto e moto' => 'veicoli');
+			?>
 			<form method="post">
 				<label for="category">Categoria:</label>
 				<select name="category" id="category">
-					<option value=''>
-						scegli categoria
-					</option>
-					<option value='lavoro'>
-						offerte di lavoro
-					</option>
-					<option value='arredamento'>
-						arredamento
-					</option>
-					<option value='veicoli'>
-						auto e moto
-					</option>
+				<?php
+				foreach ($categ as $key => $value) {
+					$selected = (isset($_POST['category']) && ($value==$_POST['category'])) ? " selected" : "";
+					echo "<option value=\"$value\"$selected>$key</option>";
+				}
+				?>
 				</select>
 				<br />
 
 				<label for="keywords">Parole chiavi:</label>
-				<input type="text" name="keywords" id="keywords" placeholder="inserisci le parole chiavi"><br />
+				<?php
+					$keywordsTag = isset($_POST['keywords']) ?  'value="'.htmlspecialchars($_POST['keywords']).'"' : 'placeholder="inserisci le parole chiavi"';
+				?>
+				<input type="text" name="keywords" id="keywords" <?php echo $keywordsTag;?>><br />
 				
-				<label for="timeMax">Cominciando da:</label>
-				<input type="text" id="timeMax" name="timeMax" placeholder="ora">
+				<label for="timeMin">A:</label>
+				<input type="text" id="timeMin" name="timeMin" placeholder="<?php echo date('Y-m-d H:i', strtotime('-1 hour'));?>">
+
+				<label for="timeMax">Da:</label>
+				<input type="text" id="timeMax" name="timeMax" placeholder="<?php echo date('Y-m-d H:i', time());?>">
 
 				
-				<label for="timeMin">Non pi&ugrave; vecchi di:</label>
-				<input type="text" id="timeMin" name="timeMin" value="">
 				
 				<input type="submit" value="Controlla" name="submit" id="submit">
 			</form>
