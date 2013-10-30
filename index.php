@@ -1,6 +1,6 @@
 <?php
-require_once('FirePHPCore/fb.php');
-ob_start();
+//require_once('FirePHPCore/fb.php');
+// ob_start();
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,7 +35,7 @@ if(isset($_POST['submit'])){
 			pescannunci
 		</p>
 	</div>
-	
+
 	<div id="main">
 		<div id="sidebar">
 			<div class="date">
@@ -77,10 +77,9 @@ if(isset($_POST['submit'])){
 				<input type="text" id="timeMax" name="timeMax" placeholder="<?php echo date('Y-m-d H:i', time());?>">
 
 				
-				
 				<input type="submit" value="Controlla" name="submit" id="submit">
 			</form>
-			<div id="all-ads"> 
+			<div id="all-ads">
 			<?php
 			if(isset($outputData) && $outputData){
 				if($outputData['success']){
@@ -103,4 +102,4 @@ if(isset($_POST['submit'])){
 </body>
 
 
-</html> 
+</html>
