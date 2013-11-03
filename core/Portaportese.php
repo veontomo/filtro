@@ -184,10 +184,25 @@ class Portaportese implements AdProvider{
 				$isEnough = false;
 			}else{
 				$isEnough = true;
+				//  !!! 
+				// $this->dropFromRepo($page);
 			}
 		}
 		while (!$isEnough);
 		return $ads;
+	}
+
+
+	/**
+	* Removes a previously saved page from the repository
+	* @param string 	$page url of the page which local version should be removed from the repo 
+	*/
+	public function dropFromRepo($page){
+		$urlComplete = $this->url.$page;
+		$retr = new FileRetrieval;
+		$retr->setUrl($urlComplete);
+		$retr->setRepoDir(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'repository'.DIRECTORY_SEPARATOR);
+		$retr->
 	}
 
 	/** 
