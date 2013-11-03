@@ -256,7 +256,7 @@ class Portaportese implements AdProvider{
 			// it is supposed to be just one description in the ad, so if others are present, neglect them
 			if($descrNodes->length > 0){
 				$descrNode = $descrNodes->item(0);
-				$adCurrent->content = htmlentities(trim(preg_replace('/(\s)+/', ' ', $descrNode->nodeValue)));
+				$adCurrent->content = trim(preg_replace('/(\s)+/', ' ', htmlentities($descrNode->nodeValue)));
 				$linkNodes = $descrNode->getElementsByTagName('a');
 				if($linkNodes->length > 0){
 					$adCurrent->url = $this->providerUrl.$linkNodes->item(0)->getAttribute('href');

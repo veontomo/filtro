@@ -17,52 +17,52 @@
 *	6 ago 20:21 	-> 6 Aug 2013 20:21  (time in past)
 *   martedì 16 ottobre 2013 -> 16 Oct 2013
 */
-function formatTime2($str){
-	echo "input: ".$str.PHP_EOL;
-	$today = date("d M");
-	$yearNow = date('Y');
-	if(preg_match('/oggi/i', $str)){
-		$result = preg_replace('/oggi/i', $today.' '.$yearNow.' ', $str);
-		return date('d M Y H:i', strtotime($result));
-	}
-	$yesterday = date("d M", strtotime("-1 day"));
-	$monthEng = array('Jan', 'Feb', 'Mar', 
-		'Apr', 'May', 'Jun', 
-		'Jul', 'Aug', 'Sep', 
-		'Oct', 'Nov', 'Dec');
-	$monthIt = array('/gennaio/i', '/febbraio/i', '/marzo/i', '/aprile/i',
-						'/maggio/i', '/giugno/i', '/luglio/i', '/agosto/i', 
-						'/settembre/i', '/ottobre/i', '/novembre/i', '/dicembre/i');
+// function formatTime2($str){
+// 	echo "input: ".$str.PHP_EOL;
+// 	$today = date("d M");
+// 	$yearNow = date('Y');
+// 	if(preg_match('/oggi/i', $str)){
+// 		$result = preg_replace('/oggi/i', $today.' '.$yearNow.' ', $str);
+// 		return date('d M Y H:i', strtotime($result));
+// 	}
+// 	$yesterday = date("d M", strtotime("-1 day"));
+// 	$monthEng = array('Jan', 'Feb', 'Mar', 
+// 		'Apr', 'May', 'Jun', 
+// 		'Jul', 'Aug', 'Sep', 
+// 		'Oct', 'Nov', 'Dec');
+// 	$monthIt = array('/gennaio/i', '/febbraio/i', '/marzo/i', '/aprile/i',
+// 						'/maggio/i', '/giugno/i', '/luglio/i', '/agosto/i', 
+// 						'/settembre/i', '/ottobre/i', '/novembre/i', '/dicembre/i');
 
-	$pattern = array('/Oggi/i', '/Ieri/i', 
-		'/gen/i', '/feb/i', '/mar/i', 
-		'/apr/i', '/mag/i', '/giu/i', 
-		'/lug/i', '/ago/i', '/set/i', 
-		'/ott/i', '/nov/i', '/dic/i');
-	$repl = array_map(function($arg){
-		return $arg.date(" Y");
-		}, 
-		array_merge(array($today, $yesterday), $monthEng)
-		);
+// 	$pattern = array('/Oggi/i', '/Ieri/i', 
+// 		'/gen/i', '/feb/i', '/mar/i', 
+// 		'/apr/i', '/mag/i', '/giu/i', 
+// 		'/lug/i', '/ago/i', '/set/i', 
+// 		'/ott/i', '/nov/i', '/dic/i');
+// 	$repl = array_map(function($arg){
+// 		return $arg.date(" Y");
+// 		}, 
+// 		array_merge(array($today, $yesterday), $monthEng)
+// 		);
 
-	$str = preg_replace($monthIt, $monthEng, $str);
-	$str = preg_replace($pattern, $repl, $str);
-	echo "str2: ".$str.PHP_EOL;
+// 	$str = preg_replace($monthIt, $monthEng, $str);
+// 	$str = preg_replace($pattern, $repl, $str);
+// 	echo "str2: ".$str.PHP_EOL;
 	
-	$str =  preg_replace('/lunedì|martedì|mercoledì|giovedì|venerdì|sabato|domenica/', '', $str);
-	echo "str3: ".$str.PHP_EOL;
+// 	$str =  preg_replace('/lunedì|martedì|mercoledì|giovedì|venerdì|sabato|domenica/', '', $str);
+// 	echo "str3: ".$str.PHP_EOL;
 
 	
-	echo "str: ".$str.PHP_EOL;
-	$result = date("d M Y H:i", strtotime($str));
-	echo "result: ".$result.PHP_EOL;
+// 	echo "str: ".$str.PHP_EOL;
+// 	$result = date("d M Y H:i", strtotime($str));
+// 	echo "result: ".$result.PHP_EOL;
 
-	if(strtotime($result)>time()){
-		$yearBefore = date("Y", strtotime($result))-1;
-		$result = date("d M $yearBefore H:i", strtotime($result));
-	}
-	return $result;
-}	
+// 	if(strtotime($result)>time()){
+// 		$yearBefore = date("Y", strtotime($result))-1;
+// 		$result = date("d M $yearBefore H:i", strtotime($result));
+// 	}
+// 	return $result;
+// }	
 
 
 function formatTime($str){

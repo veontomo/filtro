@@ -38,6 +38,8 @@ class SubitoTest extends PHPUnit_Framework_TestCase
 		if(file_exists($filePath)){
 			try{
 				unlink($filePath);
+				sleep(1); // wait 1 sec to give the system some time to remove the files physically
+				          // without this pause the system may found this file even if it is supposed to be removed
 				echo PHP_EOL.'File '.$filePath. ' is removed.';
 			}catch(Exception $e){
 				throw new Exception('File '.$filePath. ' is NOT removed: '.$e->getMessage(), 1);
@@ -168,7 +170,7 @@ class SubitoTest extends PHPUnit_Framework_TestCase
  		$this->assertEquals('Dialogatori Save the children contratto garantito', $result[48]->content);
  		$this->assertEquals($yesterday.' 18:00', $result[48]->date);
 
- 		$this->assertEquals('Agenti e consulenti alla vendita retribuzione 12.000 €', $result[3]->content);
+ 		$this->assertEquals('Agenti e consulenti alla vendita retribuzione 12.000 &euro;', $result[3]->content);
  		$this->assertEquals($today.' 08:39', $result[3]->date);
  	}
 

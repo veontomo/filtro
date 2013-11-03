@@ -65,7 +65,7 @@ class AdTest extends PHPUnit_Framework_TestCase
         $ad->author = 'B. Gates';
         $this->assertTrue(method_exists('Ad', 'showAsHtml'));
         $this->assertEquals($ad->showAsHtml(), 
-            '01 Sept 2013 20:23 <a href="www.million.com">1000$/h for you</a> B. Gates');
+            '01 Sept 2013 20:23 <a href="www.million.com" target="_blank">1000$/h for you</a> B. Gates');
     }
 }
 ?>

@@ -11,29 +11,25 @@ class ProcessFormTest extends PHPUnit_Framework_TestCase
 	*/
 	public function testIncompleteInput(){
 		$input = array('keywords' => ''); // key 'category' is not present
-		$output = retrieveAds(json_encode($input));
-		$outputDecoded = json_decode($output, true);
-		$this->assertTrue(is_array($outputDecoded));
-		$this->assertTrue(array_key_exists('success', $outputDecoded));
-		$this->assertFalse($outputDecoded['success']);
-		$this->assertTrue(array_key_exists('message', $outputDecoded));
+		$output = retrieveAds($input);
+		$this->assertTrue(is_array($output));
+		$this->assertTrue(array_key_exists('success', $output));
+		$this->assertFalse($output['success']);
+		$this->assertTrue(array_key_exists('message', $output));
 
 
 		$input = array('keywords' => '', 'category' => ''); // key 'category' is present, but its value is empty
-		$output = retrieveAds(json_encode($input));
-		$outputDecoded = json_decode($output, true);
-		$this->assertTrue(is_array($outputDecoded));
-		$this->assertTrue(array_key_exists('success', $outputDecoded));
-		$this->assertFalse($outputDecoded['success']);
-		$this->assertTrue(array_key_exists('message', $outputDecoded));
+		$output = retrieveAds($input);
+		$this->assertTrue(is_array($output));
+		$this->assertTrue(array_key_exists('success', $output));
+		$this->assertFalse($output['success']);
+		$this->assertTrue(array_key_exists('message', $output));
 
 		$input = array('keywords' => '', 'category' => NULL); // key 'category' is present, but its value is NULL
-		$output = retrieveAds(json_encode($input));
-		$outputDecoded = json_decode($output, true);
-		$this->assertTrue(is_array($outputDecoded));
-		$this->assertTrue(array_key_exists('success', $outputDecoded));
-		$this->assertFalse($outputDecoded['success']);
-		$this->assertTrue(array_key_exists('message', $outputDecoded));
+		$this->assertTrue(is_array($output));
+		$this->assertTrue(array_key_exists('success', $output));
+		$this->assertFalse($output['success']);
+		$this->assertTrue(array_key_exists('message', $output));
 
 
 	}
@@ -41,36 +37,34 @@ class ProcessFormTest extends PHPUnit_Framework_TestCase
 	/**
 	* @group current
 	*/
-	public function testWrongTimes(){
+	public function testWrongDates(){
 		$input = array('category' => 'lavoro', 'keywords' => 'Domestico', 'timeMin' => 1223, 'timeMax' => 21);
-		$output = retrieveAds(json_encode($input));
-		$outputDecoded = json_decode($output, true);
-		$this->assertTrue(is_array($outputDecoded));
-		$this->assertTrue(array_key_exists('success', $outputDecoded));
-		$this->assertFalse($outputDecoded['success']);
-		$this->assertTrue(array_key_exists('message', $outputDecoded));
+		$output = retrieveAds($input);
+		$this->assertTrue(is_array($output));
+		$this->assertTrue(array_key_exists('success', $output));
+		$this->assertFalse($output['success']);
+		$this->assertTrue(array_key_exists('message', $output));
 	}
 
 
 
-	public function testFirstTry(){
-		$input = array('category' => 'lavoro', 'keywords' => 'Domestico');
-		$output = retrieveAds(json_encode($input));
-		$outputDecoded = json_decode($output, true);
-		$this->assertTrue(is_array($outputDecoded));
-		$this->assertTrue(array_key_exists('success', $outputDecoded));
-		$this->assertTrue($outputDecoded['success']);
-		$this->assertTrue(array_key_exists('result', $outputDecoded));
-		$this->assertTrue(is_array($outputDecoded['result']));
-		$this->assertFalse(empty($outputDecoded['result']));
-	}
+	// public function testFirstTry(){
+	// 	$input = array('category' => 'lavoro', 'keywords' => 'Domestico');
+	// 	$output = retrieveAds($input);
+	// 	$this->assertTrue(is_array($output));
+	// 	$this->assertTrue(array_key_exists('success', $output));
+	// 	$this->assertTrue($output['success']);
+	// 	$this->assertTrue(array_key_exists('result', $output));
+	// 	$this->assertTrue(is_array($output['result']));
+	// 	$this->assertFalse(empty($output['result']));
+	// }
 
-	public function testFunctionCalled(){
-		$input = array('category' => 'lavoro', 'keywords' => 'Domestico');
-		retrieveAds(json_encode($input));
+	// public function testFunctionCalled(){
+	// 	$input = array('category' => 'lavoro', 'keywords' => 'Domestico');
+	// 	retrieveAds($input);
 		
 
-	}
+	// }
 
 
 

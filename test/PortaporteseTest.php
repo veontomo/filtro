@@ -138,6 +138,9 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 		$this->removeExternalUrl(array('dirname' => 'webImitationPortaportese', 'filename' => $fileName));
 
 	}
+	/**
+	* @group current
+	*/
 
 	public function testRetriveAdsOnePage(){
 		$savedAdDir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR
@@ -166,7 +169,7 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 			. '&lngstart=12.494&zoomstart=10', $result[0]->url);
 
 		$this->assertContains('ETICA SI specialist ricerca agenti immobiliari con esperienza '
-			.'da inserire in organico il nostro obiettivo è la tua crescita professionale ', $result[4]->content);
+			.'da inserire in organico il nostro obiettivo &egrave; la tua crescita professionale ', $result[4]->content);
 		$this->assertContains('operativa aggiornamento professionale continuo '
 			.'e piani provvigionali dal 50 % all\' 80 %. contattaci!', $result[4]->content);
 
@@ -212,7 +215,6 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 			$pp = new Portaportese;
 			$pp->setUrl('http://localhost/filtro/resources/portaportese/');
 			$dates = $pp->retrieveDates();
-			print_r($dates);
 			$this->assertTrue(is_array($dates));
 			$this->assertTrue(array_key_exists('m-usC78', $dates));
 			$this->assertEquals($dates['m-usC78'], '22 Oct 2013 00:00');
