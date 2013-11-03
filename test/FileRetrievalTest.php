@@ -49,6 +49,8 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
         if(file_exists($filePath)){
             try{
                 unlink($filePath);
+                sleep(1); // wait 1 sec to give the system some time to remove the files physically
+                          // without this pause the system may found this file even if it is supposed to be removed
                 echo PHP_EOL.'File '.$filePath. ' is removed.';
             }catch(Exception $e){
                 throw new Exception('File '.$filePath. ' is NOT removed: '.$e->getMessage(), 1);
@@ -92,8 +94,7 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
     */
     private function removeRepo($repoName){
         $baseDir = dirname(dirname(__FILE__)).DS;
-        $fileFullPath = $baseDir.$repoName.DS.'www.test.com'
-            .DS.'test1'.DS.'foo.bar';
+        $fileFullPath = $baseDir.$repoName.DS.'www.test.com'.DS.'test1'.DS.'foo.bar';
         unlink($fileFullPath);
         rmdir($baseDir.$repoName.DS.'www.test.com'.DS.'test1');
         rmdir($baseDir.$repoName.DS.'www.test.com');
@@ -117,10 +118,34 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
         // the location of the repo directory is imposed upon initialization
         $retr2 = new FileRetrieval('abcd');
         $this->assertEquals('abcd', $retr2->repoDir());
-
-
     }
 
+
+    public function testEraseFromRepo(){
+        $this->createRepo('repository1');
+
+        $fr = new FileRetrieval;
+        $fr->setRepoDir(dirname(dirname(__FILE__)).DS.'repository1'.DS);
+        $fr->setUrl('http://www.test.com/test1/foo.bar');
+        $this->assertTrue(file_exists(dirname(dirname(__FILE__)).DS.'repository1'
+            .DS.'www.test.com'.DS.'test1'.DS.'foo.bar'));
+        // erase existing page in the repo
+        $this->assertTrue($fr->eraseFromRepo());
+        $this->assertFalse(file_exists(dirname(dirname(__FILE__)).DS.'repository1'
+             .DS.'www.test.com'.DS.'test1'.DS.'foo.bar'));
+
+        // erase NON existing page in the repo
+        $fr->setUrl('http://www.test.com/test1/non-existing-file-in-repo.bar');
+        $this->assertTrue($fr->eraseFromRepo());
+        $this->assertFalse(file_exists(dirname(dirname(__FILE__)).DS.'repository1'
+             .DS.'www.test.com'.DS.'test1'.DS.'foo.bar'));
+
+        // re-creates the file foo.bar in order to be able to remove the repo
+        file_put_contents(dirname(dirname(__FILE__)).DS.'repository1'.DS.'www.test.com'
+            .DS.'test1'.DS.'foo.bar', '');
+        $this->removeRepo('repository1');
+
+    }
 
     public function testRetrieveFromWeb(){
         $startInfo = $this->createExternalUrl('webImitation3');

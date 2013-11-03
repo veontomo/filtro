@@ -172,13 +172,25 @@ class FileRetrieval{
 	}
 
 	/**
-	* Erase the file from repo
+	* Erases the file from repo
+	* @return boolean 	true, if after the execution of the method the page is not present in the repository
+	* 					false, if after the execution of the method the page is present in the repository
 	* 
 	*/
 	public function eraseFromRepo(){
 		if(file_exists($this->repoDir.$this->localPath)){
-			unlink($thi->repoDir.$this->localPath);
+			try {
+				unlink($this->repoDir.$this->localPath);
+				return true;
+			} catch (Exception $e) {
+				$traceInfo = debug_backtrace();
+				$callerFile = $traceInfo[0]['file'];
+				$lineNumber = $traceInfo[0]['line'];
+				$this->log($e->getMessage()."\nfirst call from file: $callerFile, line: $lineNumber\n");
+				return false;
+			}
 		}
+		return true;
 	}
 
 
