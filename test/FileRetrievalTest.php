@@ -98,19 +98,30 @@ class FileRetrievalTest extends PHPUnit_Framework_TestCase
         rmdir($baseDir.$repoName.DS.'www.test.com'.DS.'test1');
         rmdir($baseDir.$repoName.DS.'www.test.com');
         rmdir($baseDir.$repoName);
-        
- 
     }
+
+
 
     public function testPresenceOfProperties(){
         $this->assertClassHasAttribute('url', 'FileRetrieval');
         $this->assertTrue(method_exists('FileRetrieval', 'retrieveFromWeb'));
     }
 
+    public function testRepoIsSet(){
+        // the default value for the location of the repo is taken (from the constructor)
+        $retr = new FileRetrieval();
+        $this->assertEquals(realpath(dirname(dirname(__FILE__)).DS.'repository'.DS), $retr->repoDir());
+        // the location of the repo is set implicitely
+        $retr->setRepoDir('xyz');
+        $this->assertEquals('xyz', $retr->repoDir());
+        // the location of the repo directory is imposed upon initialization
+        $retr2 = new FileRetrieval('abcd');
+        $this->assertEquals('abcd', $retr2->repoDir());
 
-    /** 
-    *  @group current
-    */
+
+    }
+
+
     public function testRetrieveFromWeb(){
         $startInfo = $this->createExternalUrl('webImitation3');
         $fileContent = $startInfo['content'];

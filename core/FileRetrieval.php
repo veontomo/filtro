@@ -6,6 +6,17 @@
 * @version 0.0.1
 */
 class FileRetrieval{
+	
+	/**
+	* When an the instance of the class is initialized, it is set automatically the repository folder
+	* in which the local versions of the downloaded files are to be stored. Setting of the repo folder
+	* is delegated to the setRepoDir method.
+	*/
+	public function __construct($repo=NULL){
+		$repoName = $repo ? $repo : realpath(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'repository'.DIRECTORY_SEPARATOR);
+		$this->setRepoDir($repoName);
+	}
+
 	/**
 	* @var String $url url of the file to retrieve
 	*/
@@ -30,6 +41,7 @@ class FileRetrieval{
 	public function url(){
 		return $this->url;
 	}
+
 
 	/**
 	* Setter of $url. Together with url, the path for storage of the url should be set.
@@ -158,6 +170,17 @@ class FileRetrieval{
 		}
 		return false;
 	}
+
+	/**
+	* Erase the file from repo
+	* 
+	*/
+	public function eraseFromRepo(){
+		if(file_exists($this->repoDir.$this->localPath)){
+			unlink($thi->repoDir.$this->localPath);
+		}
+	}
+
 
 	/**
 	* Creates (eventually nested) directories $this->localPath inside the repository
