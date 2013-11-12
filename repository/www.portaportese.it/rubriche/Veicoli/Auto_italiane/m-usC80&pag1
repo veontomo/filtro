@@ -1,0 +1,1237 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it" lang="it">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	
+	<meta name="description" content="Auto italiane, vendita auto nuove e usate. Alfa, Fiat, Lancia, Autobianchi...Porta Portese ý il sito numero uno di annunci gratuiti per Roma e Lazio." />
+	
+	
+	
+	<meta name="robots" content="index,follow" />
+	
+
+	<meta name="distribution" content="global" />
+	<title>Porta Portese annunci gratuiti - il primo portale di annunci per Roma e Lazio </title>
+	
+	
+	
+	<!-- system stylesheets -->
+	<link rel="stylesheet" href="/css/reset.min.css?v=4620310" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/system.min.css?v=4620310" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/content.min.css?v=4620310" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/skins.min.css?v=4620310" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css?v=4620310" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/miopp.min.css?v=4620310" type="text/css" media="screen" title="no title" charset="utf-8" />
+	
+	
+	<!-- jQuery UI stylesheets -->
+	<link rel="stylesheet" href="/css/jquery.ui.core.min.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/jquery.ui.slider.min.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/jquery.ui.theme.min.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/slider.min.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+	
+	
+	
+	
+	<!--[if IE]>
+		<link charset="utf-8" media="screen" type="text/css" href="/css/ie.min.css" rel="stylesheet"/>
+	<![endif]-->
+
+	<!--[if IE 7]>
+		<link charset="utf-8" media="screen" type="text/css" href="/css/ie7.min.css" rel="stylesheet"/>
+	<![endif]-->
+	
+	<!--[if IE 6]>
+		<link charset="utf-8" media="screen" type="text/css" href="/css/ie6.min.css" rel="stylesheet"/>
+	<![endif]-->
+	
+	<!--[if IE 9]>
+		<link charset="utf-8" media="screen" type="text/css" href="/css/ie9.min.css" rel="stylesheet"/>
+	<![endif]-->
+	
+	
+	
+	
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/placeholders.min.js"></script>
+	<!--
+	<script src="/js/swfobject_modified.min.js" type="text/javascript"></script>
+	<script src="/js/extensible-banner.min.js" type="text/javascript"></script>
+	-->
+	
+	<!-- serve per il salva annuncio e per miopp -->
+	<script src="/js/newpopup2.min.js" type="text/javascript"></script>
+	
+	<!-- jQuery UI -->
+	<script src="/js/jquery-ui-1.9.2.custom.min.js" type="text/javascript"></script>
+	<script src="/js/selectdropdown.js" type="text/javascript"></script>
+	<script type="text/javascript">$(document).ready(function() {
+		Placeholders.init({
+			hideOnFocus: true
+		});
+	});</script>
+
+	<script type="text/javascript">
+	$(document).ready(function(){$(".navList").hover(function(){$(this).addClass("sfhover")},function(){$(this).removeClass("sfhover")})});
+	</script>
+	
+	
+	<script type="text/javascript">
+	$(document).ready(function(){$(".ris").hover(function(){$(this).addClass("sel")},function(){$(this).removeClass("sel")})});
+	</script>
+	
+
+	<script type="text/javascript">
+		$(function() {
+			// slider price
+			$( "#slider-price" ).slider({
+				range: true,
+				min: 0,
+				max: 20000,
+				values: [ 0, 20000 ],
+				step: 500,
+				vecchiovaldx: 0,
+				slide: function( event, ui ) {
+					$( "#amt-price-min" ).val( " " + ui.values[ 0 ] ); 
+					$( "#amt-price-max" ).val( " " + ui.values[ 1 ] );
+				},
+				stop: function( event, ui ) {
+					$( "#sform" ).submit();
+				}
+			});
+			$( "#amt-price-min" ).val( $( "#slider-price" ).slider( "values", 0 ) + " \u20AC" );
+			$( "#amt-price-max" ).val( "+" + $( "#slider-price" ).slider( "values", 1 ) + " \u20AC" );
+			// slider date
+			$( "#slider-date" ).slider({
+				range: true,
+				min: 2000,
+				max: 2013,
+				values: [ 2000, 2013 ],
+				step: 1,
+				slide: function( event, ui ) {
+					$( "#amt-date-min" ).val( ui.values[ 0 ] ); 
+					$( "#amt-date-max" ).val( ui.values[ 1 ] );
+				},
+				stop: function( event, ui ) {
+					$( "#sform" ).submit();
+				}
+			});
+			$( "#amt-date-min" ).val( "<" + $( "#slider-date" ).slider( "values", 0 ) );
+			$( "#amt-date-max" ).val( $( "#slider-date" ).slider( "values", 1 ) );
+			
+			// locali
+			$( "#slider-beds" ).slider({
+				range: true,
+				min: 0,
+				max: 0,
+				values: [ 0, 0 ],
+				step: 0,
+				slide: function( event, ui ) {
+					$( "#amt-beds-min" ).val( ui.values[ 0 ] ); 
+					$( "#amt-beds-max" ).val( ui.values[ 1 ] );
+				},
+				stop: function( event, ui ) {
+					$( "#sform" ).submit();
+				}
+			});
+			$( "#amt-beds-min" ).val( $( "#slider-beds" ).slider( "values", 0 ) );
+			$( "#amt-beds-max" ).val( "+" + $( "#slider-beds" ).slider( "values", 1 ) );
+			
+			$( ".slider-wrapper input" ).focus(function(){
+				$(this).attr("value", "");
+			});
+			
+			// metri quadri
+			$( "#slider-mq" ).slider({
+				range: true,
+				min: 0,
+				max: 0,
+				values: [ 0, 0 ],
+				step: 0,
+				slide: function( event, ui ) {
+					$( "#amt-mq-min" ).val( ui.values[ 0 ] ); 
+					$( "#amt-mq-max" ).val( ui.values[ 1 ] );
+				},
+				stop: function( event, ui ) {
+					$( "#sform" ).submit();
+				}
+			});
+			$( "#amt-mq-min" ).val( $( "#slider-mq" ).slider( "values", 0 ) );
+			$( "#amt-mq-max" ).val( "+" + $( "#slider-mq" ).slider( "values", 1 ) );
+			
+			$( ".slider-wrapper input" ).focus(function(){
+				$(this).attr("value", "");
+			});
+
+			// km 
+			$( "#slider-km" ).slider({
+				range: true,
+				min: 0,
+				max: 200000,
+				values: [ 0, 200000 ],
+				step: 5000,
+				slide: function( event, ui ) {
+					$( "#amt-km-min" ).val( ui.values[ 0 ] ); 
+					$( "#amt-km-max" ).val( ui.values[ 1 ] );
+				},
+				stop: function( event, ui ) {
+					$( "#sform" ).submit();
+				}
+			});
+			$( "#amt-km-min" ).val( $( "#slider-km" ).slider( "values", 0 ) );
+			$( "#amt-km-max" ).val( "+" + $( "#slider-km" ).slider( "values", 1 ) );
+			
+			$( ".slider-wrapper input" ).focus(function(){
+				$(this).attr("value", "");
+			});
+			
+			// end funcion
+		});
+	</script>
+	
+	
+	
+	
+
+	<script src="http://partner.googleadservices.com/gampad/google_service.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	  GS_googleAddAdSenseService("ca-pub-2764532987805199");
+	  GS_googleEnableAllServices();
+	</script>
+	<script type="text/javascript">
+	// GA_googleAddSlot("ca-pub-2764532987805199", "top_0_DA");
+	
+	// LISTA 
+	  GA_googleAddSlot("ca-pub-2764532987805199", "hat_0_DA");
+	  GA_googleAddSlot("ca-pub-2764532987805199", "lista1_0_DA");
+	  GA_googleAddSlot("ca-pub-2764532987805199", "lista2_0_DA");
+	  GA_googleAddSlot("ca-pub-2764532987805199", "listaR_0_DA");
+	  GA_googleAddSlot("ca-pub-2764532987805199", "listaP_0_DA");
+	  GA_googleAddSlot("ca-pub-2764532987805199", "listaM_0_DA");
+	GA_googleAddSlot("ca-pub-2764532987805199", "listaM_L_0_DA");
+	
+	</script>
+	<script type="text/javascript">
+	  GA_googleFetchAds();
+	</script>
+
+	
+	
+	
+	
+	<script src="http://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+	google.load('maps', '3', {
+		other_params: 'key=AIzaSyB39RViIKRw7tnd60STRDN4Eeo40jS5Fkc&sensor=false' 
+	});
+	</script>
+    
+ <script src="http://www.mapquestapi.com/sdk/js/v7.0.s/mqa.toolkit.js?key=Fmjtd%7Cluubnu622d%2Cbw%3Do5-9uy294"></script>
+
+	<script type="text/javascript">
+	
+	   MQA.EventUtil.observe(window, 'load', function() {
+	
+	     /*Create an object for options*/
+	     var options={
+	       elt:document.getElementById('filtermap'),        /*ID of element on the page where you want the map added*/
+	       zoom: 10, 														/*initial zoom level of map*/
+	       latLng:{lat:41.8966, lng:12.494},   /*center of map in latitude/longitude*/
+         bestFitMargin:0,                          /*margin offset from the map viewport when applying a bestfit on shapes*/
+         zoomOnDoubleClick:true,                    /*zoom in when double-clicking on map*/
+	       mtype:'osm'                                /*map type (map)*/
+	     };
+	
+	     /*Construct an instance of MQA.TileMap with the options object*/
+	     window.mappina = new MQA.TileMap(options);
+	     
+	     MQA.withModule('smallzoom', function() {
+	            mappina.addControl(
+	              new MQA.SmallZoom(),
+	              new MQA.MapCornerPlacement(MQA.MapCorner.TOP_LEFT, new MQA.Size(5,5))
+	            );
+	     });       
+	            
+	     /*Hook up event listeners*/
+	     MQA.EventManager.addListener(mappina, 'moveend', eventRaised);
+	     MQA.EventManager.addListener(mappina, 'dragend', eventRaised);
+	     MQA.EventManager.addListener(mappina, 'zoomend', eventRaised);
+	
+	     /*Write out events to events div to help visualize*/
+	     function eventRaised(evt) {
+	    	 document.getElementById('sform').latstart.value=roundit(mappina.getCenter().getLatitude());
+	    	 document.getElementById('sform').lngstart.value=roundit(mappina.getCenter().getLongitude());
+	    	 document.getElementById('sform').zoomstart.value=mappina.getZoomLevel();
+	    	 document.getElementById('sform').nelat.value=roundit(mappina.getBounds().ul.lat); // UL.lat & LR.lng
+	    	 document.getElementById('sform').nelng.value=roundit(mappina.getBounds().lr.lng);
+	    	 document.getElementById('sform').swlat.value=roundit(mappina.getBounds().lr.lat);
+	    	 document.getElementById('sform').swlng.value=roundit(mappina.getBounds().ul.lng);
+	     }
+	   });
+	</script>
+	
+	
+	
+	
+
+	<script type="text/javascript">
+		function roundit(x) {
+		return Math.round(x * 1000000)/1000000;
+	}
+	</script>
+	
+	
+	
+	
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-866200-2']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+	
+</head>
+<body>
+	<div id="divDescription" class="clDescriptionCont"><!--Empty div--></div>
+	
+	<div id="listing" class="page mobile">
+	
+		<div class="mod head brand lp">
+			<div class="inner">
+				<div class="line">
+					<div class="unit size1of2">
+						<h1 class="logo" title="Porta Portese annunci gratuiti - il primo portale di annunci per Roma e Lazio"><a title="Porta Portese annunci gratuiti - il primo portale di annunci per Roma e Lazio" href="/">Porta Portese annunci gratuiti - il primo portale di annunci per Roma e Lazio</a></h1>
+					</div><!-- .unit unitExt size1of2 -->
+					<div class="unit size1of2 lastUnit">
+							<div class="cercaHome">
+							<script type="text/javascript">
+							function ctrlsearchgl(){
+							 alert(searchglobal.value);
+							 if (searchglobal.value == 'Cosa stai cercando?')
+							 {return false}else{return true}
+							}
+							</script>
+								<form method="get" name="sformglobal" action="/" onsubmit="if (searchglobal.value == 'Cosa stai cercando?') return false;">
+									<p><input class="keywords" type="text" id="searchglobal" name="searchglobal" placeholder="Cosa stai cercando?" value="" /></p>
+									<p><button class="btn btn-warning btn-mini" type="submit">Cerca in PortaPortese <i class="icon-arrow-right icon-white"></i></button></p>
+								</form>
+							</div><!-- .cercaHome -->
+							<p class="h6 tagline">241216 annunci</p>
+					</div><!-- .unit unitExt size1of2 -->
+				</div><!-- .line -->
+				<div class="line">
+					<div class="nav-wrapper">
+						<ul id="nav"><!-- primo livello -->
+							<li class="nav">
+								<a>Rubriche</a>
+								<ul class="nav"><!-- secondo livello -->
+									<li class="navList">
+										<a href="/rubriche/Immobiliare/" title="annunci gratuiti - Porta Portese Immobiliare">Immobiliare</a>
+										<ul>
+											<li><a href="/rubriche/Immobiliare/Ville_e_appartamenti_(Roma)/">Ville e appartamenti (Roma)</a></li>
+											<li><a href="/rubriche/Immobiliare/Terreni/">Terreni</a></li>
+											<li><a href="/rubriche/Immobiliare/Locali/">Locali</a></li>
+											<li><a href="/rubriche/Immobiliare/Affitto_-_Subaffitto/">Affitto - Subaffitto</a></li>
+											<li><a href="/rubriche/Immobiliare/Affitti_stagionali/">Affitti stagionali</a></li>
+											<li><a href="/rubriche/Immobiliare/Cessione_aziende/">Cessione aziende</a></li>
+											<li><a href="/rubriche/Immobiliare/Finanziamento_societa/">Finanziamento societ&agrave;</a></li>
+											<li><a href="/rubriche/Immobiliare/Ville_e_appartamenti_(fuori_Roma)/">Ville e appartamenti (fuori Roma)</a></li>
+										</ul>
+									</li>
+									<li class="navList">
+										<a href="/rubriche/Veicoli/" title="annunci gratuiti - Porta Portese Veicoli">Veicoli</a>
+										<ul>
+											<li><a href="/rubriche/Veicoli/Auto_italiane/">Auto italiane</a></li>
+											<li><a href="/rubriche/Veicoli/Auto_straniere/">Auto straniere</a></li>
+											<li><a href="/rubriche/Veicoli/Grandi_veicoli_e_da_lavoro/">Grandi veicoli e da lavoro</a></li>
+											<li><a href="/rubriche/Veicoli/Moto/">Moto</a></li>
+											<li><a href="/rubriche/Veicoli/Bici/">Bici</a></li>
+											<li><a href="/rubriche/Veicoli/Accessori_ricambi/">Accessori ricambi</a></li>
+											<li><a href="/rubriche/Veicoli/Auto_d_epoca_Speciali/">Auto d'epoca Speciali</a></li>
+											<li><a href="/rubriche/Veicoli/Fuoristrada/">Fuoristrada</a></li>
+										</ul>
+									</li>
+									<li class="navList">
+										<a href="/rubriche/Lavoro/" title="annunci gratuiti - Porta Portese Lavoro">Lavoro</a>
+										<ul>
+											<li><a href="/rubriche/Lavoro/Lavoro_qualificato/">Lavoro qualificato</a></li>
+											<li><a href="/rubriche/Lavoro/Lavoro_generico/">Lavoro generico</a></li>
+											<li><a href="/rubriche/Lavoro/Attrezzature_e_arredamento_negozi_uffici/">Attrezzature e arredamento negozi uffici</a></li>
+											<li><a href="/rubriche/Lavoro/Scuola_e_lezioni_private/">Scuola e lezioni private</a></li>
+											<li><a href="/rubriche/Lavoro/Prestazioni_varie/">Prestazioni varie</a></li>
+											<li><a href="/rubriche/Lavoro/Riparazioni_varie/">Riparazioni varie</a></li>
+											<li><a style="color:#FF7500" href="/lavoro/">Sfoglia speciale lavoro del Marted&igrave;</a></li>
+										</ul>
+									</li>
+									<li class="navList">
+										<a href="/rubriche/Hobbies/" title="annunci gratuiti - Porta Portese Hobbies">Hobbies</a>
+										<ul>
+											<li><a href="/rubriche/Hobbies/HiFi/">HiFi</a></li>
+											<li><a href="/rubriche/Hobbies/Strumenti_musicali/">Strumenti musicali</a></li>
+											<li><a href="/rubriche/Hobbies/Dischi_Nastri/">Dischi Nastri</a></li>
+											<li><a href="/rubriche/Hobbies/Foto_Cine_Ottica/">Foto Cine Ottica</a></li>
+											<li><a href="/rubriche/Hobbies/Informatica-Telefonia/">Informatica-Telefonia</a></li>
+											<li><a href="/rubriche/Hobbies/Elettronica-Elettricita/">Elettronica-Elettricit&agrave;</a></li>
+											<li><a href="/rubriche/Hobbies/Collezionismo/">Collezionismo</a></li>
+											<li><a href="/rubriche/Hobbies/Modellismo_Giochi/">Modellismo Giochi</a></li>
+											<li><a href="/rubriche/Hobbies/Libri_Fumetti/">Libri Fumetti</a></li>
+											<li><a href="/rubriche/Hobbies/Tempo_Libero_Fai_da_te/">Tempo Libero Fai da te</a></li>
+											<li><a href="/rubriche/Hobbies/Attivita_artistiche/">Attivit&agrave; artistiche</a></li>
+											<li><a href="/rubriche/Hobbies/Viaggi_e_vacanze/">Viaggi e vacanze</a></li>
+											<li><a href="/rubriche/Hobbies/Varie/">Varie</a></li>
+										</ul>
+									</li>
+									<li class="navList">
+										<a href="/rubriche/Casa/" title="annunci gratuiti - Porta Portese Casa">Casa</a>
+										<ul>
+											<li><a href="/rubriche/Casa/Arredamento_Mobili/">Arredamento Mobili</a></li>
+											<li><a href="/rubriche/Casa/Antiquariato_Quadri/">Antiquariato Quadri</a></li>
+											<li><a href="/rubriche/Casa/Elettrodomestici_Utensili/">Elettrodomestici Utensili</a></li>
+											<li><a href="/rubriche/Casa/Sanitari_Profumeria/">Sanitari Profumeria</a></li>
+											<li><a href="/rubriche/Casa/Gioielli_Preziosi_Orologi/">Gioielli Preziosi Orologi</a></li>
+											<li><a href="/rubriche/Casa/Nursery/">Nursery</a></li>
+											<li><a href="/rubriche/Casa/Alimentari/">Alimentari</a></li>
+											<li><a href="/rubriche/Casa/Giardinaggio_Agricoltura/">Giardinaggio Agricoltura</a></li>
+											<li><a href="/rubriche/Casa/Fallimenti/">Fallimenti</a></li>
+										</ul>
+									</li>
+									<li class="navList">
+										<a href="/rubriche/Diporto/" title="annunci gratuiti - Porta Portese Diporto">Diporto</a>
+										<ul>
+											<li><a href="/rubriche/Diporto/Camping_Caravan/">Camping Caravan</a></li>
+											<li><a href="/rubriche/Diporto/Nautica/">Nautica</a></li>
+										</ul>
+									</li>
+									<li class="navList">
+										<a href="/rubriche/Animali/" title="annunci gratuiti - Porta Portese Animali">Animali</a>
+										<ul>
+											<li><a href="/rubriche/Animali/Vendita_Acquisto_Regalo/">Vendita Acquisto Regalo</a></li>
+											<li><a href="/rubriche/Animali/Attrezzature_e_accessori/">Attrezzature e accessori</a></li>
+										</ul>
+									</li>
+									<li><a href="/rubriche/Abbigliamento/" title="annunci gratuiti - Porta Portese Abbigliamento">Abbigliamento</a></li>
+									<li><a href="/rubriche/Sport/" title="annunci gratuiti - Porta Portese Sport">Sport</a></li>
+									<li><a href="/rubriche/Smarrimenti/" title="annunci gratuiti - Porta Portese Smarrimenti">Smarrimenti</a></li>
+									<li><a href="/rubriche/Messaggi/" title="annunci gratuiti - Porta Portese Messaggi">Messaggi</a></li>
+									<li><a href="/rubriche/Regali/" title="annunci gratuiti - Porta Portese Regali">Regali</a></li>
+								</ul><!-- fine secondo livello -->
+							</li>
+							<li><a href="/zone/miopp/">Inserisci il tuo annuncio</a></li>
+							
+							
+							<li><a onclick="openCentered('/appunti.jsp', 550, 480, 'Appunti', 'scrollbars=yes')">Salvati</a></li>
+							<li><a href="/zone/miopp/">Login</a></li>
+							<li class="contatti"><a href="/contatti/">Contatti</a></li>
+							<!-- <li class="frequenti"><a href="/ricerche-frequenti/">Ricerche frequenti</a></li> -->
+						</ul><!-- .nav fine primo livello -->
+					</div><!-- .nav-wrapper -->
+				</div><!-- .line -->
+				
+				</div><!-- .inner -->
+		</div><!-- .head -->
+		
+		<div class="body">
+			
+			<div class="line">
+				<div class="inner">
+			<div class="unit lastUnit size1of1">
+			
+			</div>
+			
+
+				<h2 title="PortaPortese veicoli" class="catHead veicoliHead">veicoli</h2>
+				
+				<div class="bc">
+					
+					<span><a href="/" title="Home">Home</a> &raquo; </span><span><a href="/rubriche/Veicoli/" title="Veicoli">Veicoli</a></span> &raquo; <span><a href="/rubriche/Veicoli/Auto_italiane/" title="Auto italiane"><strong>Auto italiane</strong></a></span> 
+					
+				</div><!-- .bc -->
+
+			
+					
+			<div class="main">
+			
+			
+			
+			<!-- ENTRYPOINT PRIMO BANNER  -->
+			<div class="bannerTop">
+				<script type="text/javascript">
+				  GA_googleFillSlot("hat_0_DA");
+				</script>
+			</div>
+			
+			
+			
+			<!-- INIZIALIZZAZIONI PAGINA LISTA ANNUNCI -->
+			<div class="ris-wrapper">
+				<div class="line nav-viste-ordina">
+					<div class="viste-lista-mappa">
+						
+						<a class="mobile" href="#filtri">Vai ai filtri</a>
+					</div><!-- .line .viste-lista-mappa -->
+
+		        <div class="ordinaPrezzo "><a href="/rubriche/Veicoli/Auto_italiane/m-usC80?to=ordinaPAsc">ordina</a></div>
+				</div><!-- .line .nav-viste-ordina -->
+
+				
+			
+		
+					<div class="ris mod pay">
+						<div onclick="location.href='/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-punto-12-8v-44kw-0ID2013080500085?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10'">
+							<div class="primary">
+								<h2 class="risTitle"><a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-punto-12-8v-44kw-0ID2013080500085?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10" title="FIAT PUNTO 1.2 8v 44kw">FIAT PUNTO 1.2 8v 44kw</a></h2>
+								<p> 5p febb. 2003 uniprò vende a 1300 euro non trattabile gomme nuove appena tagliandata no clima no servosterzo chiamare solo se interessati visibile a Torrimpietra sulla via Aurelia Stefano
+									
+										<!-- [+] -->
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-punto-12-8v-44kw-0ID2013080500085?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img src="/img/mail-icn.png" width="14" height="14" border="0"></a>
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-punto-12-8v-44kw-0ID2013080500085?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/cell-icn.png' border='0'></a>
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-punto-12-8v-44kw-0ID2013080500085?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/cell-icn.png' border='0'></a>
+									</p>
+							</div><!-- .primary -->
+							<div class="secondary">
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-punto-12-8v-44kw-0ID2013080500085?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img class="smallFoto" width="83" height="60" alt="FIAT PUNTO 1.2 8v 44kw foto 1" src="/dbaimages/imgm_61330655_1.jpg"></a>
+									
+								
+								annuncio live
+								
+							</div><!-- .secondary -->
+						</div>
+						<span class="prezzo">1.300 &euro;</span>
+						
+						<img class="save" src="/img/salva-off.png" alt="Inseriscilo negli appunti" border="0" name="IMGS2013080500085" onMouseUp="appuntalo2(event, this, 2013080500085);">
+						
+					</div><!-- .result -->
+					
+				
+
+					<div class="ris mod pay">
+						<div onclick="location.href='/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-panda-nuova-12-easy-0ID2013080500211?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10'">
+							<div class="primary">
+								<h2 class="risTitle"><a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-panda-nuova-12-easy-0ID2013080500211?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10" title="FIAT PANDA nuova 1.2 Easy">FIAT PANDA nuova 1.2 Easy</a></h2>
+								<p> benzina km 0 vari colori bianca grigio beige accessiorate con climatizzatore ruota di scorta fasce paracolpi radio cd mp3 immatricolate 5 2013 da E 9400 + pp + bollo a E 9600 + pp + bollo finanz. Sava fino a 72 mesi
+									
+										<!-- [+] -->
+									
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-panda-nuova-12-easy-0ID2013080500211?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/cell-icn.png' border='0'></a>
+									
+									</p>
+							</div><!-- .primary -->
+							<div class="secondary">
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-panda-nuova-12-easy-0ID2013080500211?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img class="smallFoto" width="83" height="60" alt="FIAT PANDA nuova 1.2 Easy foto 1" src="/dbaimages/imgm_61353346_1.jpg"></a>
+									
+								
+								annuncio live
+								
+							</div><!-- .secondary -->
+						</div>
+						<span class="prezzo">9.400 &euro;</span>
+						
+						<img class="save" src="/img/salva-off.png" alt="Inseriscilo negli appunti" border="0" name="IMGS2013080500211" onMouseUp="appuntalo2(event, this, 2013080500211);">
+						
+					</div><!-- .result -->
+					
+				
+
+					<div class="ris mod">
+						<div onclick="location.href='/rubriche/Veicoli/Auto_italiane/Alfa-Romeo/m-alfa-mito-13jtdm-90cv-0ID2013079053182?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10'">
+							<div class="primary">
+								<h2 class="risTitle"><a href="/rubriche/Veicoli/Auto_italiane/Alfa-Romeo/m-alfa-mito-13jtdm-90cv-0ID2013079053182?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10" title="ALFA MITO 1.3JTDm 90cv">ALFA MITO 1.3JTDm 90cv</a></h2>
+								<p> distinctive anno 2009 full optional cerchi 18" sensori parcheggio come nuova unipro grigio scuro garanzia 12 mesi importo finanziabile E 8500
+									
+										<!-- [+] -->
+									
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Alfa-Romeo/m-alfa-mito-13jtdm-90cv-0ID2013079053182?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/tel-icn.png' border='0'></a>
+									
+									</p>
+							</div><!-- .primary -->
+							<div class="secondary">
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Alfa-Romeo/m-alfa-mito-13jtdm-90cv-0ID2013079053182?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img class="smallFoto" width="83" height="60" alt="ALFA MITO 1.3JTDm 90cv foto 1" src="/dbaimages/imgm_61360161_1.jpg"></a>
+									
+								
+								<span class="data">martedì 29 Ott</span>
+								
+							</div><!-- .secondary -->
+						</div>
+						<span class="prezzo">8.500 &euro;</span>
+						
+						<img class="save" src="/img/salva-off.png" alt="Inseriscilo negli appunti" border="0" name="IMGS2013079053182" onMouseUp="appuntalo2(event, this, 2013079053182);">
+						
+					</div><!-- .result -->
+					
+				
+
+					<div class="ris mod">
+						<div onclick="location.href='/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-punto-classic-0ID2013070037333?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10'">
+							<div class="primary">
+								<h2 class="risTitle"><a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-punto-classic-0ID2013070037333?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10" title="FIAT punto classic">FIAT punto classic</a></h2>
+								<p> 1.3 mjt 16v 3p anno2008 bianca airbag alza cristalli elettr. a.c. servosterzo city stereo c.d. chiusura centr. specchietti elettr. in tinta volante reg. in altezza gommata tagliandata buone condizioni garanzia 12mesi km115000 euro3900
+									
+										<!-- [+] -->
+									
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-punto-classic-0ID2013070037333?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/cell-icn.png' border='0'></a>
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-punto-classic-0ID2013070037333?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/tel-icn.png' border='0'></a>
+									</p>
+							</div><!-- .primary -->
+							<div class="secondary">
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-punto-classic-0ID2013070037333?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img class="smallFoto" width="83" height="60" alt="FIAT punto classic foto 1" src="/dbaimages/imgm_61331908_1.jpg"></a>
+									
+								
+								<span class="data">martedì 29 Ott</span>
+								
+							</div><!-- .secondary -->
+						</div>
+						<span class="prezzo">3.900 &euro;</span>
+						
+						<img class="save" src="/img/salva-off.png" alt="Inseriscilo negli appunti" border="0" name="IMGS2013070037333" onMouseUp="appuntalo2(event, this, 2013070037333);">
+						
+					</div><!-- .result -->
+					
+				
+<div class="bannerMid"><script type="text/javascript">GA_googleFillSlot("lista1_0_DA");</script></div>
+						
+					<div class="ris mod">
+						<div onclick="location.href='/rubriche/Veicoli/Auto_italiane/Lancia/m-lancia-delta-integrale-0ID2013068037062?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10'">
+							<div class="primary">
+								<h2 class="risTitle"><a href="/rubriche/Veicoli/Auto_italiane/Lancia/m-lancia-delta-integrale-0ID2013068037062?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10" title="LANCIA delta integrale">LANCIA delta integrale</a></h2>
+								<p> 205 cv colore giallo benzina 11/1992 km 5.000 motore rifatto cerchi in lega interni in pelle nera fendinebbia ottimo stato E 25.000 piu' pp
+									
+										<!-- [+] -->
+									
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Lancia/m-lancia-delta-integrale-0ID2013068037062?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/cell-icn.png' border='0'></a>
+									<a href="/rubriche/Veicoli/Auto_italiane/Lancia/m-lancia-delta-integrale-0ID2013068037062?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/tel-icn.png' border='0'></a>
+									</p>
+							</div><!-- .primary -->
+							<div class="secondary">
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Lancia/m-lancia-delta-integrale-0ID2013068037062?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img class="smallFoto" width="83" height="60" alt="LANCIA delta integrale foto 1" src="/dbaimages/imgm_61359740_1.jpg"></a>
+									
+								
+								<span class="data">martedì 29 Ott</span>
+								
+							</div><!-- .secondary -->
+						</div>
+						<span class="prezzo">25.000 &euro;</span>
+						
+						<img class="save" src="/img/salva-off.png" alt="Inseriscilo negli appunti" border="0" name="IMGS2013068037062" onMouseUp="appuntalo2(event, this, 2013068037062);">
+						
+					</div><!-- .result -->
+					
+				
+
+					<div class="ris mod">
+						<div onclick="location.href='/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-12-edizione-america-esemplare-0ID2013078037038?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10'">
+							<div class="primary">
+								<h2 class="risTitle"><a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-12-edizione-america-esemplare-0ID2013078037038?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10" title="FIAT 500 1.2 Edizione"AMERICA"esemplare">FIAT 500 1.2 Edizione"AMERICA"esemplare</a></h2>
+								<p> N°152 su 500.06/2012 Euro5 km 40.000 Interni Bicolore Rosso/Bianco Plancia Cruscotto Bianca Cerchi Diamantati 16" Servosterzo CITY Climatizzatore manuale Stereo CD/Mp3 Chrome Pack esterno Stickers AMERICA laterali e molto altro E 8.900
+									
+										<!-- [+] -->
+									
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-12-edizione-america-esemplare-0ID2013078037038?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/tel-icn.png' border='0'></a>
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-12-edizione-america-esemplare-0ID2013078037038?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/cell-icn.png' border='0'></a>
+									</p>
+							</div><!-- .primary -->
+							<div class="secondary">
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-12-edizione-america-esemplare-0ID2013078037038?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img class="smallFoto" width="83" height="60" alt="FIAT 500 1.2 Edizione"AMERICA"esemplare foto 1" src="/dbaimages/imgm_61343566_1.jpg"></a>
+									
+								
+								<span class="data">martedì 29 Ott</span>
+								
+							</div><!-- .secondary -->
+						</div>
+						<span class="prezzo">8.900 &euro;</span>
+						
+						<img class="save" src="/img/salva-off.png" alt="Inseriscilo negli appunti" border="0" name="IMGS2013078037038" onMouseUp="appuntalo2(event, this, 2013078037038);">
+						
+					</div><!-- .result -->
+					
+				
+
+					<div class="ris mod">
+						<div onclick="location.href='/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-grande-punto-12-gpl-dynamic-0ID2013072037618?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10'">
+							<div class="primary">
+								<h2 class="risTitle"><a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-grande-punto-12-gpl-dynamic-0ID2013072037618?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10" title="FIAT GRANDE PUNTO 1.2 Gpl Dynamic">FIAT GRANDE PUNTO 1.2 Gpl Dynamic</a></h2>
+								<p> 5 Porte EURO4 Km 64.000 unico proprietario aria condizionata stereo CD/Mp3 Uscita AUX/USB servosterzo City computer di bordo specchi con regolazione elettrica airbags vetri elettrici immobilizer chiusure centralizzate gommata E.7.500
+									
+										<!-- [+] -->
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-grande-punto-12-gpl-dynamic-0ID2013072037618?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img src="/img/mail-icn.png" width="14" height="14" border="0"></a>
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-grande-punto-12-gpl-dynamic-0ID2013072037618?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/tel-icn.png' border='0'></a>
+									
+									</p>
+							</div><!-- .primary -->
+							<div class="secondary">
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-grande-punto-12-gpl-dynamic-0ID2013072037618?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img class="smallFoto" width="83" height="60" alt="FIAT GRANDE PUNTO 1.2 Gpl Dynamic foto 1" src="/dbaimages/imgm_61327180_1.jpg"></a>
+									
+								
+								<span class="data">martedì 29 Ott</span>
+								
+							</div><!-- .secondary -->
+						</div>
+						<span class="prezzo">7.500 &euro;</span>
+						
+						<img class="save" src="/img/salva-off.png" alt="Inseriscilo negli appunti" border="0" name="IMGS2013072037618" onMouseUp="appuntalo2(event, this, 2013072037618);">
+						
+					</div><!-- .result -->
+					
+				
+
+					<div class="ris mod">
+						<div onclick="location.href='/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-panda-750-e-1200-0ID2013078036751?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10'">
+							<div class="primary">
+								<h2 class="risTitle"><a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-panda-750-e-1200-0ID2013078036751?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10" title="FIAT Panda 750 E 1200">FIAT Panda 750 E 1200</a></h2>
+								<p> ottime condizioni!! Lettore stereo con porta USB nuovo impianto GPL tagliandata formula vista e piaciuta visibile per ogni verifica presso il nostro punto vendita possibilita di finanziamento intero importo senza anticipo permutiamo usato con usato
+									
+										<!-- [+] -->
+									
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-panda-750-e-1200-0ID2013078036751?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/cell-icn.png' border='0'></a>
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-panda-750-e-1200-0ID2013078036751?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/cell-icn.png' border='0'></a>
+									</p>
+							</div><!-- .primary -->
+							<div class="secondary">
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-panda-750-e-1200-0ID2013078036751?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img class="smallFoto" width="83" height="60" alt="FIAT Panda 750 E 1200 foto 1" src="/dbaimages/imgm_61307673_1.jpg"></a>
+									
+								
+								<span class="data">martedì 29 Ott</span>
+								
+							</div><!-- .secondary -->
+						</div>
+						<span class="prezzo">n/d</span>
+						
+						<img class="save" src="/img/salva-off.png" alt="Inseriscilo negli appunti" border="0" name="IMGS2013078036751" onMouseUp="appuntalo2(event, this, 2013078036751);">
+						
+					</div><!-- .result -->
+					
+				
+<div class="bannerMid"><script type="text/javascript">GA_googleFillSlot("lista2_0_DA");</script></div>
+						
+					<div class="ris mod">
+						<div onclick="location.href='/rubriche/Veicoli/Auto_italiane/Alfa-Romeo/m-alfa-mito-14-105-cv-m-air-distinctive-0ID2013079053082?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10'">
+							<div class="primary">
+								<h2 class="risTitle"><a href="/rubriche/Veicoli/Auto_italiane/Alfa-Romeo/m-alfa-mito-14-105-cv-m-air-distinctive-0ID2013079053082?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10" title="ALFA MITO 1.4 105 CV M. AIR DISTINCTIVE">ALFA MITO 1.4 105 CV M. AIR DISTINCTIVE</a></h2>
+								<p> PREMIUM PACK PARCHEGGIATA NEL BOX. OTTIME CONDIZIONI COMPLETAMENTE ACCESSORIATA ACQUISTATA IN LEASING SI PUò RISCATTARE OPPURE SUBENTRARE SE IN POSSESSO DI PARTITA IVA. APRILE 2011. KM. 31.000 EURO 8900
+									
+										<!-- [+] -->
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Alfa-Romeo/m-alfa-mito-14-105-cv-m-air-distinctive-0ID2013079053082?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img src="/img/mail-icn.png" width="14" height="14" border="0"></a>
+									<a href="/rubriche/Veicoli/Auto_italiane/Alfa-Romeo/m-alfa-mito-14-105-cv-m-air-distinctive-0ID2013079053082?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/cell-icn.png' border='0'></a>
+									
+									</p>
+							</div><!-- .primary -->
+							<div class="secondary">
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Alfa-Romeo/m-alfa-mito-14-105-cv-m-air-distinctive-0ID2013079053082?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img class="smallFoto" width="83" height="60" alt="ALFA MITO 1.4 105 CV M. AIR DISTINCTIVE foto 1" src="/dbaimages/imgm_61353736_1.jpg"></a>
+									
+								
+								<span class="data">martedì 29 Ott</span>
+								
+							</div><!-- .secondary -->
+						</div>
+						<span class="prezzo">8.900 &euro;</span>
+						
+						<img class="save" src="/img/salva-off.png" alt="Inseriscilo negli appunti" border="0" name="IMGS2013079053082" onMouseUp="appuntalo2(event, this, 2013079053082);">
+						
+					</div><!-- .result -->
+					
+				
+
+					<div class="ris mod">
+						<div onclick="location.href='/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-c-abarth-0ID2013059046771?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10'">
+							<div class="primary">
+								<h2 class="risTitle"><a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-c-abarth-0ID2013059046771?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10" title="FIAT 500 C Abarth">FIAT 500 C Abarth</a></h2>
+								<p> automatica 140cv 07/11 Km 20.000 EURO5B Unipro Pari al nuovo Fendinebbia Sensori park Cappotta elettrica Cerchi in lega Lunotto in vetro Servosterzo city volante in pelle multifunzione Cambio automatico e F1 al volante Sedili sportivi permute garanzia12mesi E.16.900
+									
+										<!-- [+] -->
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-c-abarth-0ID2013059046771?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img src="/img/mail-icn.png" width="14" height="14" border="0"></a>
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-c-abarth-0ID2013059046771?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/tel-icn.png' border='0'></a>
+									
+									</p>
+							</div><!-- .primary -->
+							<div class="secondary">
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-c-abarth-0ID2013059046771?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img class="smallFoto" width="83" height="60" alt="FIAT 500 C Abarth foto 1" src="/dbaimages/imgm_61327179_1.jpg"></a>
+									
+								
+								<span class="data">martedì 29 Ott</span>
+								
+							</div><!-- .secondary -->
+						</div>
+						<span class="prezzo">16.900 &euro;</span>
+						
+						<img class="save" src="/img/salva-off.png" alt="Inseriscilo negli appunti" border="0" name="IMGS2013059046771" onMouseUp="appuntalo2(event, this, 2013059046771);">
+						
+					</div><!-- .result -->
+					
+				
+
+					<div class="ris mod">
+						<div onclick="location.href='/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-doblo-19-jtd-elx-anno-2002-0ID2013079053181?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10'">
+							<div class="primary">
+								<h2 class="risTitle"><a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-doblo-19-jtd-elx-anno-2002-0ID2013079053181?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10" title="FIAT DOBLO 1.9 jtd elx anno 2002">FIAT DOBLO 1.9 jtd elx anno 2002</a></h2>
+								<p> clima servo stereo cd buone condizioni importo finanziabile E 2950
+									
+										<!-- [+] -->
+									
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-doblo-19-jtd-elx-anno-2002-0ID2013079053181?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/tel-icn.png' border='0'></a>
+									
+									</p>
+							</div><!-- .primary -->
+							<div class="secondary">
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-doblo-19-jtd-elx-anno-2002-0ID2013079053181?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img class="smallFoto" width="83" height="60" alt="FIAT DOBLO 1.9 jtd elx anno 2002 foto 1" src="/dbaimages/imgm_61360181_1.jpg"></a>
+									
+								
+								<span class="data">martedì 29 Ott</span>
+								
+							</div><!-- .secondary -->
+						</div>
+						<span class="prezzo">2.950 &euro;</span>
+						
+						<img class="save" src="/img/salva-off.png" alt="Inseriscilo negli appunti" border="0" name="IMGS2013079053181" onMouseUp="appuntalo2(event, this, 2013079053181);">
+						
+					</div><!-- .result -->
+					
+				
+
+					<div class="ris mod">
+						<div onclick="location.href='/rubriche/Veicoli/Auto_italiane/Alfa-Romeo/m-alfa-159-19jtdm-anno-2005-0ID2013079053161?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10'">
+							<div class="primary">
+								<h2 class="risTitle"><a href="/rubriche/Veicoli/Auto_italiane/Alfa-Romeo/m-alfa-159-19jtdm-anno-2005-0ID2013079053161?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10" title="ALFA 159 1.9JTDm anno 2005">ALFA 159 1.9JTDm anno 2005</a></h2>
+								<p> full optional gancio traino distribuzione fatta sempre tagliandata ottime condizioni garanzia 12 mesi importo interamente finanziabile E 5900
+									
+										<!-- [+] -->
+									
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Alfa-Romeo/m-alfa-159-19jtdm-anno-2005-0ID2013079053161?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/tel-icn.png' border='0'></a>
+									
+									</p>
+							</div><!-- .primary -->
+							<div class="secondary">
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Alfa-Romeo/m-alfa-159-19jtdm-anno-2005-0ID2013079053161?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img class="smallFoto" width="83" height="60" alt="ALFA 159 1.9JTDm anno 2005 foto 1" src="/dbaimages/imgm_61360157_1.jpg"></a>
+									
+								
+								<span class="data">martedì 29 Ott</span>
+								
+							</div><!-- .secondary -->
+						</div>
+						<span class="prezzo">5.900 &euro;</span>
+						
+						<img class="save" src="/img/salva-off.png" alt="Inseriscilo negli appunti" border="0" name="IMGS2013079053161" onMouseUp="appuntalo2(event, this, 2013079053161);">
+						
+					</div><!-- .result -->
+					
+				
+
+					<div class="ris mod">
+						<div onclick="location.href='/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-abarth-0ID2013052033822?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10'">
+							<div class="primary">
+								<h2 class="risTitle"><a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-abarth-0ID2013052033822?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10" title="FIAT 500 abarth">FIAT 500 abarth</a></h2>
+								<p> anno 2009 colore bianco km 45.000tettino apribile clima comandi al volante cerchi in elga fari xeno sedili sportivi fendinebbia gommata nuova full optional E 11.500 piu' pp
+									
+										<!-- [+] -->
+									
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-abarth-0ID2013052033822?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/cell-icn.png' border='0'></a>
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-abarth-0ID2013052033822?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img width="14" height="14" SRC='/img/tel-icn.png' border='0'></a>
+									</p>
+							</div><!-- .primary -->
+							<div class="secondary">
+									
+									<a href="/rubriche/Veicoli/Auto_italiane/Fiat/m-fiat-500-abarth-0ID2013052033822?tipo=offerte&numero=80&latstart=41.8966&lngstart=12.494&zoomstart=10"><img class="smallFoto" width="83" height="60" alt="FIAT 500 abarth foto 1" src="/dbaimages/imgm_61359739_1.jpg"></a>
+									
+								
+								<span class="data">martedì 29 Ott</span>
+								
+							</div><!-- .secondary -->
+						</div>
+						<span class="prezzo">11.500 &euro;</span>
+						
+						<img class="save" src="/img/salva-off.png" alt="Inseriscilo negli appunti" border="0" name="IMGS2013052033822" onMouseUp="appuntalo2(event, this, 2013052033822);">
+						
+					</div><!-- .result -->
+					
+				
+
+
+	
+				<div class="line">
+					<div class="unit size1of1 lastUnit">
+				
+						<div class="pag">
+						
+							
+								
+								<span>pagina 1 di 66</span>
+
+
+								      
+								      <span>&lsaquo;&lsaquo;</span>
+								      
+								      
+									
+										<span><a class="selected">1</a></span>
+									
+										<span><a title="Pagina 2" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag2">2</a></span>
+									
+										<span><a title="Pagina 3" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag3">3</a></span>
+									
+										<span><a title="Pagina 4" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag4">4</a></span>
+									
+										<span><a title="Pagina 5" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag5">5</a></span>
+									
+										<span><a title="Pagina 6" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag6">6</a></span>
+									
+										<span><a title="Pagina 7" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag7">7</a></span>
+									
+										<span><a title="Pagina 8" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag8">8</a></span>
+									
+										<span><a title="Pagina 9" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag9">9</a></span>
+									
+										<span><a title="Pagina 10" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag10">10</a></span>
+									
+										<span><a title="Pagina 11" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag11">11</a></span>
+									
+										<span><a title="Pagina 12" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag12">12</a></span>
+									
+										<span><a title="Pagina 13" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag13">13</a></span>
+									
+										<span><a title="Pagina 14" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag14">14</a></span>
+									
+										<span><a title="Pagina 15" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag15">15</a></span>
+									
+										<span><a title="Pagina 16" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag16">16</a></span>
+									
+										<span><a title="Pagina 17" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag17">17</a></span>
+									
+										<span><a title="Pagina 18" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag18">18</a></span>
+									
+										<span><a title="Pagina 19" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag19">19</a></span>
+									
+										<span><a title="Pagina 20" href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag20">20</a></span>
+									
+									
+									
+								      
+								      <span><a href="/rubriche/Veicoli/Auto_italiane/m-usC80&pag2">&rsaquo;&rsaquo;</a></span> 
+								      
+							  
+							
+						
+						</div><!-- .pag -->
+					</div><!-- .unit lastUnit size1of1 -->
+				</div><!-- .line -->
+				
+				
+				</div><!-- .ris-wrapper -->
+				
+				
+				
+					<div class="ban-wrapper">
+						<div class="bannerRight">
+							<script type="text/javascript">
+							  GA_googleFillSlot("listaP_0_DA");
+							</script>
+						</div>
+						<div class="bannerRight">
+							<script type="text/javascript">
+							  GA_googleFillSlot("listaR_0_DA");
+							</script>
+						</div><!-- .bannerRight -->
+						<div class="bannerRight">
+							<script type="text/javascript">
+							  GA_googleFillSlot("listaM_0_DA");
+							</script>
+						</div><!-- .bannerRight -->
+					</div><!-- .banWrapper -->
+				
+				
+				
+
+			
+			</div><!-- .main -->
+			
+			
+				
+					<!-- VECCHIO FORM.JSPF -->
+						
+					
+					
+							<FORM METHOD="GET" NAME="sform" id="sform" ACTION="/ricercaredirect">
+							<INPUT NAME="kr" TYPE="hidden"  value="35">
+							<input type="hidden" name="mappa" value="">
+							
+								<div class="leftCol sideBar filtri">
+									<div class="sideBarInner">
+										<h3 class="h6">3532 annunci</h3>
+										
+										
+										<!-- inserisco form estesa -->
+										
+	
+										
+											
+											
+
+
+
+
+
+
+
+<h3 class="h6 filterSez">Tipologia</h3>
+<ul class="filterList selectdropdown">
+	<li><a title="Tutti" class="selected" href="/rubriche/Veicoli/Auto_italiane/m-usC80">Tutti</a></li>
+	<li><a title="utilitarie-city car"  href="/rubriche/Veicoli/Auto_italiane/m-gAAusC80">utilitarie-city car</a></li>
+	<li><a title="berline 3/5 porte"  href="/rubriche/Veicoli/Auto_italiane/m-gABusC80">berline 3/5 porte</a></li>
+	<li><a title="berline 2/4 porte"  href="/rubriche/Veicoli/Auto_italiane/m-gACusC80">berline 2/4 porte</a></li>
+	<li><a title="station wagon"  href="/rubriche/Veicoli/Auto_italiane/m-gAGusC80">station wagon</a></li>
+	<li><a title="coupè"  href="/rubriche/Veicoli/Auto_italiane/m-gAPusC80">coupè</a></li>
+	<li><a title="cabrio-spider"  href="/rubriche/Veicoli/Auto_italiane/m-gARusC80">cabrio-spider</a></li>
+	<li><a title="suv-crossover"  href="/rubriche/Veicoli/Auto_italiane/m-gAVusC80">suv-crossover</a></li>
+	<li><a title="multi spazio"  href="/rubriche/Veicoli/Auto_italiane/m-gAZusC80">multi spazio</a></li>
+	<li><a title="sportive"  href="/rubriche/Veicoli/Auto_italiane/m-gA0usC80">sportive</a></li>
+</ul>
+<input type="hidden" name="tipologiaauto" value=""><!--<br>-->
+											
+
+
+
+
+
+
+
+
+					<h3 class="h6 filterSez">marca</h3>
+					<ul class="filterList selectdropdown">
+						<li><a class="selected" href="/rubriche/Veicoli/Auto_italiane/m-usC80">Tutte</a></li>
+					
+				<li><a  href="/rubriche/Veicoli/Auto_italiane/Alfa-Romeo/m-usC80">Alfa Romeo                                        </a></li>
+				
+				<li><a  href="/rubriche/Veicoli/Auto_italiane/Autobianchi/m-usC80">Autobianchi                                       </a></li>
+				
+				<li><a  href="/rubriche/Veicoli/Auto_italiane/De-Tomaso/m-usC80">De Tomaso                                         </a></li>
+				
+				<li><a  href="/rubriche/Veicoli/Auto_italiane/Ferrari/m-usC80">Ferrari                                           </a></li>
+				
+				<li><a  href="/rubriche/Veicoli/Auto_italiane/Fiat/m-usC80">Fiat                                              </a></li>
+				
+				<li><a  href="/rubriche/Veicoli/Auto_italiane/Giannini/m-usC80">Giannini                                          </a></li>
+				
+				<li><a  href="/rubriche/Veicoli/Auto_italiane/Innocenti/m-usC80">Innocenti                                         </a></li>
+				
+				<li><a  href="/rubriche/Veicoli/Auto_italiane/Lamborghini/m-usC80">Lamborghini                                       </a></li>
+				
+				<li><a  href="/rubriche/Veicoli/Auto_italiane/Lancia/m-usC80">Lancia                                            </a></li>
+				
+				<li><a  href="/rubriche/Veicoli/Auto_italiane/Maserati/m-usC80">Maserati                                          </a></li>
+				
+				<li><a  href="/rubriche/Veicoli/Auto_italiane/Varie/m-usC80">Varie                                             </a></li>
+				
+</ul>
+<input type="hidden" name="sottorubrica" value="35">
+
+											
+											
+
+
+
+
+
+
+
+<h3 class="h6 filterSez">Alimentazione</h3>
+<ul class="filterList selectdropdown">
+	<li><a title="Tutti" class="selected" href="/rubriche/Veicoli/Auto_italiane/m-usC80">Tutti</a></li>
+	<li><a title="Benzina"  href="/rubriche/Veicoli/Auto_italiane/m-tABusC80">Benzina</a></li>
+	<li><a title="Diesel"  href="/rubriche/Veicoli/Auto_italiane/m-tADusC80">Diesel</a></li>
+	<li><a title="Gpl/Metano"  href="/rubriche/Veicoli/Auto_italiane/m-tAMusC80">Gpl/Metano</a></li>
+	<li><a title="Ibrida"  href="/rubriche/Veicoli/Auto_italiane/m-tAIusC80">Ibrida</a></li>
+</ul>
+<input type="hidden" name="alimentazioneauto" value="">
+											
+										
+										
+										<label for=""><h3 class="h6 filterSez">parole chiave</h3></label>
+										<input class="keywords" name="search" type="text" value="">
+										<div class="pulsante"><button class="btn btn-warning btn-mini" value="Cerca" type="submit">Cerca <i class="icon-search icon-white"></i></button></div><!-- .pulsante -->
+											
+										
+										<label for=""><h3 class="h6 filterSez">anno</h3></label>
+										<div class="slider-wrapper">
+											<p>
+												<input id="amt-date-min" class="left" type="text" name="annostart" />
+												<input id="amt-date-max" class="right" type="text" name="annoend" />
+											</p>
+											<div id="slider-date" class="slider"></div>
+										</div><!-- .slider-wrapper -->
+										
+													
+												
+										
+										<h3 class="h6 filterSez">prezzo</h3>
+										<div class="slider-wrapper">
+											<p>
+												<input id="amt-price-min" class="left" type="text" name="prezzomin" />
+												<input id="amt-price-max" class="right" type="text" name="prezzomax" />
+											</p>
+											<div id="slider-price" class="slider"></div>
+										</div><!-- .slider-wrapper -->
+										
+													
+										
+	
+										
+						           		
+						           		
+										
+										
+						           		<label for=""><h3 class="h6 filterSez">Km</h3></label>
+						           		<div class="slider-wrapper">
+						           			<p>
+						           				<input id="amt-km-min" class="left" type="text" name="kmmin" />
+						           				<input id="amt-km-max" class="right" type="text" name="kmmax" />
+						           			</p>
+						           			<div id="slider-km" class="slider"></div>
+						           		</div><!-- .slider-wrapper -->
+						           		
+						           		
+						           		
+						           		<h3 class="h6 filterSez">Filtri</h3>
+						           		<ul class="filterList filterFlags">
+						           			
+						           		</ul>
+						           		
+	
+										
+
+
+
+
+
+
+
+
+			<h3 class="h6 filterSez">Pubblicato:</h3>
+			<ul class="filterList">
+			<li><a  href="/rubriche/Veicoli/Auto_italiane/">Tutti</a></li>
+			<li><a class="selected" href="/rubriche/Veicoli/Auto_italiane/m-usC80">martedì 29 ottobre 2013</a></li><li><a  href="/rubriche/Veicoli/Auto_italiane/m-usC79">venerdì 25 ottobre 2013</a></li><li><a  href="/rubriche/Veicoli/Auto_italiane/m-usC78">martedì 22 ottobre 2013</a></li><li><a  href="/rubriche/Veicoli/Auto_italiane/m-usC77">venerdì 18 ottobre 2013</a></li><li><a  href="/rubriche/Veicoli/Auto_italiane/m-usC76">martedì 15 ottobre 2013</a></li><li><a  href="/rubriche/Veicoli/Auto_italiane/m-usC75">venerdì 11 ottobre 2013</a></li><li><a  href="/rubriche/Veicoli/Auto_italiane/m-usC74">martedì 8 ottobre 2013</a></li><li><a  href="/rubriche/Veicoli/Auto_italiane/m-usC73">venerdì 4 ottobre 2013</a></li><li><a  href="/rubriche/Veicoli/Auto_italiane/m-usC72">martedì 1 ottobre 2013</a></li><li><a  href="/rubriche/Veicoli/Auto_italiane/m-usC71">venerdì 27 settembre 2013</a></li><li><a  href="/rubriche/Veicoli/Auto_italiane/m-usC70">martedì 24 settembre 2013</a></li>
+</ul>
+<input type="hidden" name="numero" value="80">
+						           		<!--<br>-->
+										<span class="toggle">
+										<span class="offerte">
+										<a title="offerte" class="selected" href="/rubriche/Veicoli/Auto_italiane/m-usC80">Offerte</a>
+										</span>
+										|
+										<span class="richieste">
+										<a title="richieste"  href="/rubriche/Veicoli/Auto_italiane/m-richiesteusC80">Richieste</a>
+										</span>
+										</span>
+										<input type="hidden" name="tipo" value="offerte">
+										
+										
+									</div><!-- .sideBarInner -->
+									
+									
+									<div class="bannerLeft">
+										<script type="text/javascript">
+										  GA_googleFillSlot("listaM_L_0_DA");
+										</script>
+									</div><!-- .bannerLeft -->
+									
+								</div><!-- .leftCol -->
+							</FORM>
+					<!-- FINE VECCHIO FORM.JSPF -->
+				
+			
+				</div><!-- .inner -->
+			</div><!-- .line -->
+		</div><!-- .body -->
+		
+		<div class="push"></div><!-- .push -->
+		
+	</div><!-- .page -->
+		
+			
+				
+			
+		
+
+<div class="footer">
+	
+	<div class="mod foot auxiliary">
+		<p><!-- SLOT: 6 -->
+			
+				&copy; Copyright 2003-2013 PortaPortese.it -
+		 Tutti i diritti riservati. 
+		
+		
+		<br />IL NOSTRO NETWORK: <a href="http://www.secondamano.it" title="Annunci gratuiti su Secondamano il miglior sito di annunci gratuiti">Secondamano</a> | <a href="http://www.gliaffari.it" title="annunci liguria annunci auto liguria annunci genova annunci sanremo case liguria">Gliaffari.it</a> | <a href="http://www.bricabrac.it/" title="annunci napoli affitto napoli auto napoli moto napoli lavoro napoli annunci campania">BricaBrac</a> | <a href="http://www.settorefinanza.com" title="SettoreFinanza - Preventivi per mutui prestiti e cessioni del quinto">SettoreFinanza</a> | <a href="http://www.piubarche.it/" title="i migliori annunci di barche sono su piubarche.it">piubarche.it</a></p>
+	</div><!-- .foot -->
+
+	<div class="subFoot">
+		<div class="inner">
+			<div class="line">
+				<div class="unit size1of1">
+					<ul class="subNav">
+						<li><a href="/zone/miopp/" title="">login</a> &middot;</li>
+						<!-- <li><a href="" title="">mappa del sito</a> Â·</li> -->
+						<li><a href="/ricerche-frequenti/" title="">ricerche frequenti</a> &middot;</li>
+						<li><a href="/contatti/" title="">contatti</a></li>
+					</ul>
+				</div><!-- .unit lastUnit size1of1 -->
+			</div><!-- .line -->
+		</div><!-- .inner -->
+	</div><!-- .subFoot -->
+	
+</div><!-- .footer -->
+
+
+
+<script type="text/javascript">setPopup();</script>
+
+
+</body>
+</html>

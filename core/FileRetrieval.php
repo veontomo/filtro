@@ -105,8 +105,8 @@ class FileRetrieval{
 		$opts = array('http' =>
 		    array(
 		        'method'  => 'GET',
-		        'user_agent'  => "Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2) Gecko/20100301 Ubuntu/9.10 (karmic) Firefox/3.6",
-		        'header' => 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8, Host: www.portaportese.it'
+		        'user_agent'  => "MMozilla/5.0 (Windows NT 6.1; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0 FirePHP/0.7.4",
+		        'header' => 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8, Accept-language: it-IT,it;q=0.8,en-US;q=0.5,en;q=0.3, Host: www.portaportese.it'
 		    )
 		);
 		$context  = stream_context_create($opts);

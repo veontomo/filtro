@@ -82,9 +82,10 @@ if(isset($_POST['submit'])){
 			<div id="all-ads">
 			<?php
 			if(isset($outputData) && $outputData){
-				echo count($outputData) . ' annunci trovati<br />';
+				
 				if($outputData['success']){
 					$ads = $outputData['result'];
+					echo count($ads) . ' annunci trovati<br />';
 					echo '<ol>';
 					foreach ($ads as $ad) {
 						echo '<li>' . $ad->showAsHtml() . '</li>';

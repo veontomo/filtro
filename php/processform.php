@@ -14,7 +14,7 @@ function retrieveAds($input){
 	}
 	$timeMin = array_key_exists('timeMin', $input) ? $input['timeMin'] : strtotime('-1 hour');
 	$timeMax = array_key_exists('timeMax', $input) ? $input['timeMax'] : time();
-	$keywords = array_key_exists('keywords', $input) ? $input['keywords'] : '';
+	$keywords = array_key_exists('keywords', $input) ? htmlspecialchars($input['keywords']) : '';
 
 	if($timeMax < $timeMin){
 		return array('success' => false, 'message' => 'Il tempo di inizio non pu&ograve; essere dopo quello di fine.');
@@ -28,7 +28,10 @@ function retrieveAds($input){
 		$Provider = ucfirst($provider);
 		$fnName = 'retrieveFrom'.$Provider;
 		if(function_exists($fnName)){
-			$inputData = array('urlArr' => $urlArr, 'timeMin' => $timeMin, 'timeMax' => $timeMax);
+			$inputData = array('urlArr'    => $urlArr, 
+								'timeMin'  => $timeMin, 
+								'timeMax'  => $timeMax, 
+								'keywords' => $keywords);
 			$adsCurrent = $fnName($inputData);
 		}else{
 			$info = date('Y d M H:i:s ', time()).__FUNCTION__.'unknown provider: '.$provider
@@ -138,6 +141,7 @@ function retrieveFromPortaportese($inputData){
 	$output = array();
 
 	$pp = new Portaportese;
+	$pp->keywords = $inputData['keywords'];
 	foreach ($urls as $url) {
 		$adsCurrent = NULL;
 		$pp->setUrl($url);

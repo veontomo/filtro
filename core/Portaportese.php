@@ -51,11 +51,22 @@ class Portaportese implements AdProvider{
 
 
 	/**
+	* the keywords according to which the retrieved ads are supposed to be filtered out
+	* @example if it is equal to "php, programmat, scrivania", that the ads containing
+	* at least one of the strings "php", "programmat" or "scrivania" should pass through the filter.
+	* If it is set to the empty string, all ads should pass through the filter. 
+	* @var string the comma separated string of the keywords
+	*/
+	public $keywords;
+
+
+	/**
 	* Constructor: imposes the default value of the timeMax (current time) and timeMin (yesterday)
 	*/
 	public function __construct(){
 		$this->timeMax = time();
 		$this->timeMin = strtotime('-7 day');
+		$this->keywords = NULL;
 	}
 	
 	/**
@@ -180,12 +191,13 @@ class Portaportese implements AdProvider{
 			$adsOnePage = $this->retrieveAdsOnePage($page);
 			$counter++;
 			if(is_array($adsOnePage) && !empty($adsOnePage)){
+				$adsfiltered = array_filter($adsOnePage, function($ad){
+					return $ad->containsAnyOf($this->keywords);
+				});
 				$ads = array_merge($ads, $adsOnePage);
 				$isEnough = false;
 			}else{
 				$isEnough = true;
-				//  !!! 
-				// $this->dropFromRepo($page);
 			}
 		}
 		while (!$isEnough);
@@ -243,6 +255,14 @@ class Portaportese implements AdProvider{
 		$xpath = new DOMXpath($doc);
 
 		$ads = $xpath->query("//*/div[@class='ris mod']");
+		$this->log($ads->length . " ads are retrieved. \n");
+
+		// if no ads were found on the page, delete that page from the repo 	
+		if($ads->length == 0){
+			$this->eraseFromRepo($page);
+			$this->log("the file {$this->url}$page  is supposed to be deleted.\n");
+
+		};
 		foreach ($ads as $ad) {
 			$adCurrent = new Ad;
 			$dates = array();
@@ -323,6 +343,30 @@ class Portaportese implements AdProvider{
 		});
 		return $output;
 	}
+
+
+	/**
+	* Writes info in the log file. 
+	* For this class, the log file name is chosen to be Portaportese.log and is located in the directory "logs"
+	* @param string 	$content 	message to put into the log file 
+	* @return void
+	*/
+	private function log($content){
+		$targetDir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'logs';
+		// if the folder does not exist and there is no file with this name, then create the folder
+		if(!is_dir($targetDir) && !file_exists($targetDir)){
+			mkdir($targetDir);
+		}
+		$traceInfo = debug_backtrace();
+		$callerFile = $traceInfo[0]['file'];
+		$lineNumber = $traceInfo[0]['line'];
+		$infoToWrite = date('Y d M H:i:s ', time())."\nFile: $callerFile, line: $lineNumber\n"
+			. $content."\n\n";
+		$fileName = $targetDir.DIRECTORY_SEPARATOR.basename(__FILE__,'.php').'.log';
+		file_put_contents($fileName, $infoToWrite, FILE_APPEND);
+		
+	}
+
 
 }
 

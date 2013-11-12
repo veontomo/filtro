@@ -1,0 +1,764 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it" lang="it">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	
+	<meta name="description" content="Annunci lavoro - Lavoro qualificato, professionisti, tecnici specializzati...Porta Portese ý il sito numero uno di annunci gratuiti per Roma e Lazio." />
+	
+	
+	
+	<meta name="robots" content="index,follow" />
+	
+
+	<meta name="distribution" content="global" />
+	<title>Porta Portese annunci gratuiti - il primo portale di annunci per Roma e Lazio </title>
+	
+	
+	
+	<!-- system stylesheets -->
+	<link rel="stylesheet" href="/css/reset.min.css?v=4620310" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/system.min.css?v=4620310" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/content.min.css?v=4620310" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/skins.min.css?v=4620310" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css?v=4620310" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/miopp.min.css?v=4620310" type="text/css" media="screen" title="no title" charset="utf-8" />
+	
+	
+	<!-- jQuery UI stylesheets -->
+	<link rel="stylesheet" href="/css/jquery.ui.core.min.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/jquery.ui.slider.min.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/jquery.ui.theme.min.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="/css/slider.min.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+	
+	
+	
+	
+	<!--[if IE]>
+		<link charset="utf-8" media="screen" type="text/css" href="/css/ie.min.css" rel="stylesheet"/>
+	<![endif]-->
+
+	<!--[if IE 7]>
+		<link charset="utf-8" media="screen" type="text/css" href="/css/ie7.min.css" rel="stylesheet"/>
+	<![endif]-->
+	
+	<!--[if IE 6]>
+		<link charset="utf-8" media="screen" type="text/css" href="/css/ie6.min.css" rel="stylesheet"/>
+	<![endif]-->
+	
+	<!--[if IE 9]>
+		<link charset="utf-8" media="screen" type="text/css" href="/css/ie9.min.css" rel="stylesheet"/>
+	<![endif]-->
+	
+	
+	
+	
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/placeholders.min.js"></script>
+	<!--
+	<script src="/js/swfobject_modified.min.js" type="text/javascript"></script>
+	<script src="/js/extensible-banner.min.js" type="text/javascript"></script>
+	-->
+	
+	<!-- serve per il salva annuncio e per miopp -->
+	<script src="/js/newpopup2.min.js" type="text/javascript"></script>
+	
+	<!-- jQuery UI -->
+	<script src="/js/jquery-ui-1.9.2.custom.min.js" type="text/javascript"></script>
+	<script src="/js/selectdropdown.js" type="text/javascript"></script>
+	<script type="text/javascript">$(document).ready(function() {
+		Placeholders.init({
+			hideOnFocus: true
+		});
+	});</script>
+
+	<script type="text/javascript">
+	$(document).ready(function(){$(".navList").hover(function(){$(this).addClass("sfhover")},function(){$(this).removeClass("sfhover")})});
+	</script>
+	
+	
+	<script type="text/javascript">
+	$(document).ready(function(){$(".ris").hover(function(){$(this).addClass("sel")},function(){$(this).removeClass("sel")})});
+	</script>
+	
+
+	<script type="text/javascript">
+		$(function() {
+			// slider price
+			$( "#slider-price" ).slider({
+				range: true,
+				min: 0,
+				max: 2000,
+				values: [ 0, 2000 ],
+				step: 50,
+				vecchiovaldx: 0,
+				slide: function( event, ui ) {
+					$( "#amt-price-min" ).val( " " + ui.values[ 0 ] ); 
+					$( "#amt-price-max" ).val( " " + ui.values[ 1 ] );
+				},
+				stop: function( event, ui ) {
+					$( "#sform" ).submit();
+				}
+			});
+			$( "#amt-price-min" ).val( $( "#slider-price" ).slider( "values", 0 ) + " \u20AC" );
+			$( "#amt-price-max" ).val( "+" + $( "#slider-price" ).slider( "values", 1 ) + " \u20AC" );
+			// slider date
+			$( "#slider-date" ).slider({
+				range: true,
+				min: 2000,
+				max: 2013,
+				values: [ 2000, 2013 ],
+				step: 1,
+				slide: function( event, ui ) {
+					$( "#amt-date-min" ).val( ui.values[ 0 ] ); 
+					$( "#amt-date-max" ).val( ui.values[ 1 ] );
+				},
+				stop: function( event, ui ) {
+					$( "#sform" ).submit();
+				}
+			});
+			$( "#amt-date-min" ).val( "<" + $( "#slider-date" ).slider( "values", 0 ) );
+			$( "#amt-date-max" ).val( $( "#slider-date" ).slider( "values", 1 ) );
+			
+			// locali
+			$( "#slider-beds" ).slider({
+				range: true,
+				min: 0,
+				max: 0,
+				values: [ 0, 0 ],
+				step: 0,
+				slide: function( event, ui ) {
+					$( "#amt-beds-min" ).val( ui.values[ 0 ] ); 
+					$( "#amt-beds-max" ).val( ui.values[ 1 ] );
+				},
+				stop: function( event, ui ) {
+					$( "#sform" ).submit();
+				}
+			});
+			$( "#amt-beds-min" ).val( $( "#slider-beds" ).slider( "values", 0 ) );
+			$( "#amt-beds-max" ).val( "+" + $( "#slider-beds" ).slider( "values", 1 ) );
+			
+			$( ".slider-wrapper input" ).focus(function(){
+				$(this).attr("value", "");
+			});
+			
+			// metri quadri
+			$( "#slider-mq" ).slider({
+				range: true,
+				min: 0,
+				max: 0,
+				values: [ 0, 0 ],
+				step: 0,
+				slide: function( event, ui ) {
+					$( "#amt-mq-min" ).val( ui.values[ 0 ] ); 
+					$( "#amt-mq-max" ).val( ui.values[ 1 ] );
+				},
+				stop: function( event, ui ) {
+					$( "#sform" ).submit();
+				}
+			});
+			$( "#amt-mq-min" ).val( $( "#slider-mq" ).slider( "values", 0 ) );
+			$( "#amt-mq-max" ).val( "+" + $( "#slider-mq" ).slider( "values", 1 ) );
+			
+			$( ".slider-wrapper input" ).focus(function(){
+				$(this).attr("value", "");
+			});
+
+			// km 
+			$( "#slider-km" ).slider({
+				range: true,
+				min: 0,
+				max: 0,
+				values: [ 0, 0 ],
+				step: 0,
+				slide: function( event, ui ) {
+					$( "#amt-km-min" ).val( ui.values[ 0 ] ); 
+					$( "#amt-km-max" ).val( ui.values[ 1 ] );
+				},
+				stop: function( event, ui ) {
+					$( "#sform" ).submit();
+				}
+			});
+			$( "#amt-km-min" ).val( $( "#slider-km" ).slider( "values", 0 ) );
+			$( "#amt-km-max" ).val( "+" + $( "#slider-km" ).slider( "values", 1 ) );
+			
+			$( ".slider-wrapper input" ).focus(function(){
+				$(this).attr("value", "");
+			});
+			
+			// end funcion
+		});
+	</script>
+	
+	
+	
+	
+
+	<script src="http://partner.googleadservices.com/gampad/google_service.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	  GS_googleAddAdSenseService("ca-pub-2764532987805199");
+	  GS_googleEnableAllServices();
+	</script>
+	<script type="text/javascript">
+	// GA_googleAddSlot("ca-pub-2764532987805199", "top_0_FF");
+	
+	// LISTA 
+	  GA_googleAddSlot("ca-pub-2764532987805199", "hat_0_FF");
+	  GA_googleAddSlot("ca-pub-2764532987805199", "lista1_0_FF");
+	  GA_googleAddSlot("ca-pub-2764532987805199", "lista2_0_FF");
+	  GA_googleAddSlot("ca-pub-2764532987805199", "listaR_0_FF");
+	  GA_googleAddSlot("ca-pub-2764532987805199", "listaP_0_FF");
+	  GA_googleAddSlot("ca-pub-2764532987805199", "listaM_0_FF");
+	GA_googleAddSlot("ca-pub-2764532987805199", "listaM_L_0_FF");
+	
+	</script>
+	<script type="text/javascript">
+	  GA_googleFetchAds();
+	</script>
+
+	
+	
+	
+	
+	<script src="http://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+	google.load('maps', '3', {
+		other_params: 'key=AIzaSyB39RViIKRw7tnd60STRDN4Eeo40jS5Fkc&sensor=false' 
+	});
+	</script>
+    
+ <script src="http://www.mapquestapi.com/sdk/js/v7.0.s/mqa.toolkit.js?key=Fmjtd%7Cluubnu622d%2Cbw%3Do5-9uy294"></script>
+
+	<script type="text/javascript">
+	
+	   MQA.EventUtil.observe(window, 'load', function() {
+	
+	     /*Create an object for options*/
+	     var options={
+	       elt:document.getElementById('filtermap'),        /*ID of element on the page where you want the map added*/
+	       zoom: 10, 														/*initial zoom level of map*/
+	       latLng:{lat:41.8966, lng:12.494},   /*center of map in latitude/longitude*/
+         bestFitMargin:0,                          /*margin offset from the map viewport when applying a bestfit on shapes*/
+         zoomOnDoubleClick:true,                    /*zoom in when double-clicking on map*/
+	       mtype:'osm'                                /*map type (map)*/
+	     };
+	
+	     /*Construct an instance of MQA.TileMap with the options object*/
+	     window.mappina = new MQA.TileMap(options);
+	     
+	     MQA.withModule('smallzoom', function() {
+	            mappina.addControl(
+	              new MQA.SmallZoom(),
+	              new MQA.MapCornerPlacement(MQA.MapCorner.TOP_LEFT, new MQA.Size(5,5))
+	            );
+	     });       
+	            
+	     /*Hook up event listeners*/
+	     MQA.EventManager.addListener(mappina, 'moveend', eventRaised);
+	     MQA.EventManager.addListener(mappina, 'dragend', eventRaised);
+	     MQA.EventManager.addListener(mappina, 'zoomend', eventRaised);
+	
+	     /*Write out events to events div to help visualize*/
+	     function eventRaised(evt) {
+	    	 document.getElementById('sform').latstart.value=roundit(mappina.getCenter().getLatitude());
+	    	 document.getElementById('sform').lngstart.value=roundit(mappina.getCenter().getLongitude());
+	    	 document.getElementById('sform').zoomstart.value=mappina.getZoomLevel();
+	    	 document.getElementById('sform').nelat.value=roundit(mappina.getBounds().ul.lat); // UL.lat & LR.lng
+	    	 document.getElementById('sform').nelng.value=roundit(mappina.getBounds().lr.lng);
+	    	 document.getElementById('sform').swlat.value=roundit(mappina.getBounds().lr.lat);
+	    	 document.getElementById('sform').swlng.value=roundit(mappina.getBounds().ul.lng);
+	     }
+	   });
+	</script>
+	
+	
+	
+	
+
+	<script type="text/javascript">
+		function roundit(x) {
+		return Math.round(x * 1000000)/1000000;
+	}
+	</script>
+	
+	
+	
+	
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-866200-2']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+	
+</head>
+<body>
+	<div id="divDescription" class="clDescriptionCont"><!--Empty div--></div>
+	
+	<div id="listing" class="page mobile">
+	
+		<div class="mod head brand lp">
+			<div class="inner">
+				<div class="line">
+					<div class="unit size1of2">
+						<h1 class="logo" title="Porta Portese annunci gratuiti - il primo portale di annunci per Roma e Lazio"><a title="Porta Portese annunci gratuiti - il primo portale di annunci per Roma e Lazio" href="/">Porta Portese annunci gratuiti - il primo portale di annunci per Roma e Lazio</a></h1>
+					</div><!-- .unit unitExt size1of2 -->
+					<div class="unit size1of2 lastUnit">
+							<div class="cercaHome">
+							<script type="text/javascript">
+							function ctrlsearchgl(){
+							 alert(searchglobal.value);
+							 if (searchglobal.value == 'Cosa stai cercando?')
+							 {return false}else{return true}
+							}
+							</script>
+								<form method="get" name="sformglobal" action="/" onsubmit="if (searchglobal.value == 'Cosa stai cercando?') return false;">
+									<p><input class="keywords" type="text" id="searchglobal" name="searchglobal" placeholder="Cosa stai cercando?" value="" /></p>
+									<p><button class="btn btn-warning btn-mini" type="submit">Cerca in PortaPortese <i class="icon-arrow-right icon-white"></i></button></p>
+								</form>
+							</div><!-- .cercaHome -->
+							<p class="h6 tagline">259483 annunci</p>
+					</div><!-- .unit unitExt size1of2 -->
+				</div><!-- .line -->
+				<div class="line">
+					<div class="nav-wrapper">
+						<ul id="nav"><!-- primo livello -->
+							<li class="nav">
+								<a>Rubriche</a>
+								<ul class="nav"><!-- secondo livello -->
+									<li class="navList">
+										<a href="/rubriche/Immobiliare/" title="annunci gratuiti - Porta Portese Immobiliare">Immobiliare</a>
+										<ul>
+											<li><a href="/rubriche/Immobiliare/Ville_e_appartamenti_(Roma)/">Ville e appartamenti (Roma)</a></li>
+											<li><a href="/rubriche/Immobiliare/Terreni/">Terreni</a></li>
+											<li><a href="/rubriche/Immobiliare/Locali/">Locali</a></li>
+											<li><a href="/rubriche/Immobiliare/Affitto_-_Subaffitto/">Affitto - Subaffitto</a></li>
+											<li><a href="/rubriche/Immobiliare/Affitti_stagionali/">Affitti stagionali</a></li>
+											<li><a href="/rubriche/Immobiliare/Cessione_aziende/">Cessione aziende</a></li>
+											<li><a href="/rubriche/Immobiliare/Finanziamento_societa/">Finanziamento societ&agrave;</a></li>
+											<li><a href="/rubriche/Immobiliare/Ville_e_appartamenti_(fuori_Roma)/">Ville e appartamenti (fuori Roma)</a></li>
+										</ul>
+									</li>
+									<li class="navList">
+										<a href="/rubriche/Veicoli/" title="annunci gratuiti - Porta Portese Veicoli">Veicoli</a>
+										<ul>
+											<li><a href="/rubriche/Veicoli/Auto_italiane/">Auto italiane</a></li>
+											<li><a href="/rubriche/Veicoli/Auto_straniere/">Auto straniere</a></li>
+											<li><a href="/rubriche/Veicoli/Grandi_veicoli_e_da_lavoro/">Grandi veicoli e da lavoro</a></li>
+											<li><a href="/rubriche/Veicoli/Moto/">Moto</a></li>
+											<li><a href="/rubriche/Veicoli/Bici/">Bici</a></li>
+											<li><a href="/rubriche/Veicoli/Accessori_ricambi/">Accessori ricambi</a></li>
+											<li><a href="/rubriche/Veicoli/Auto_d_epoca_Speciali/">Auto d'epoca Speciali</a></li>
+											<li><a href="/rubriche/Veicoli/Fuoristrada/">Fuoristrada</a></li>
+										</ul>
+									</li>
+									<li class="navList">
+										<a href="/rubriche/Lavoro/" title="annunci gratuiti - Porta Portese Lavoro">Lavoro</a>
+										<ul>
+											<li><a href="/rubriche/Lavoro/Lavoro_qualificato/">Lavoro qualificato</a></li>
+											<li><a href="/rubriche/Lavoro/Lavoro_generico/">Lavoro generico</a></li>
+											<li><a href="/rubriche/Lavoro/Attrezzature_e_arredamento_negozi_uffici/">Attrezzature e arredamento negozi uffici</a></li>
+											<li><a href="/rubriche/Lavoro/Scuola_e_lezioni_private/">Scuola e lezioni private</a></li>
+											<li><a href="/rubriche/Lavoro/Prestazioni_varie/">Prestazioni varie</a></li>
+											<li><a href="/rubriche/Lavoro/Riparazioni_varie/">Riparazioni varie</a></li>
+											<li><a style="color:#FF7500" href="/lavoro/">Sfoglia speciale lavoro del Marted&igrave;</a></li>
+										</ul>
+									</li>
+									<li class="navList">
+										<a href="/rubriche/Hobbies/" title="annunci gratuiti - Porta Portese Hobbies">Hobbies</a>
+										<ul>
+											<li><a href="/rubriche/Hobbies/HiFi/">HiFi</a></li>
+											<li><a href="/rubriche/Hobbies/Strumenti_musicali/">Strumenti musicali</a></li>
+											<li><a href="/rubriche/Hobbies/Dischi_Nastri/">Dischi Nastri</a></li>
+											<li><a href="/rubriche/Hobbies/Foto_Cine_Ottica/">Foto Cine Ottica</a></li>
+											<li><a href="/rubriche/Hobbies/Informatica-Telefonia/">Informatica-Telefonia</a></li>
+											<li><a href="/rubriche/Hobbies/Elettronica-Elettricita/">Elettronica-Elettricit&agrave;</a></li>
+											<li><a href="/rubriche/Hobbies/Collezionismo/">Collezionismo</a></li>
+											<li><a href="/rubriche/Hobbies/Modellismo_Giochi/">Modellismo Giochi</a></li>
+											<li><a href="/rubriche/Hobbies/Libri_Fumetti/">Libri Fumetti</a></li>
+											<li><a href="/rubriche/Hobbies/Tempo_Libero_Fai_da_te/">Tempo Libero Fai da te</a></li>
+											<li><a href="/rubriche/Hobbies/Attivita_artistiche/">Attivit&agrave; artistiche</a></li>
+											<li><a href="/rubriche/Hobbies/Viaggi_e_vacanze/">Viaggi e vacanze</a></li>
+											<li><a href="/rubriche/Hobbies/Varie/">Varie</a></li>
+										</ul>
+									</li>
+									<li class="navList">
+										<a href="/rubriche/Casa/" title="annunci gratuiti - Porta Portese Casa">Casa</a>
+										<ul>
+											<li><a href="/rubriche/Casa/Arredamento_Mobili/">Arredamento Mobili</a></li>
+											<li><a href="/rubriche/Casa/Antiquariato_Quadri/">Antiquariato Quadri</a></li>
+											<li><a href="/rubriche/Casa/Elettrodomestici_Utensili/">Elettrodomestici Utensili</a></li>
+											<li><a href="/rubriche/Casa/Sanitari_Profumeria/">Sanitari Profumeria</a></li>
+											<li><a href="/rubriche/Casa/Gioielli_Preziosi_Orologi/">Gioielli Preziosi Orologi</a></li>
+											<li><a href="/rubriche/Casa/Nursery/">Nursery</a></li>
+											<li><a href="/rubriche/Casa/Alimentari/">Alimentari</a></li>
+											<li><a href="/rubriche/Casa/Giardinaggio_Agricoltura/">Giardinaggio Agricoltura</a></li>
+											<li><a href="/rubriche/Casa/Fallimenti/">Fallimenti</a></li>
+										</ul>
+									</li>
+									<li class="navList">
+										<a href="/rubriche/Diporto/" title="annunci gratuiti - Porta Portese Diporto">Diporto</a>
+										<ul>
+											<li><a href="/rubriche/Diporto/Camping_Caravan/">Camping Caravan</a></li>
+											<li><a href="/rubriche/Diporto/Nautica/">Nautica</a></li>
+										</ul>
+									</li>
+									<li class="navList">
+										<a href="/rubriche/Animali/" title="annunci gratuiti - Porta Portese Animali">Animali</a>
+										<ul>
+											<li><a href="/rubriche/Animali/Vendita_Acquisto_Regalo/">Vendita Acquisto Regalo</a></li>
+											<li><a href="/rubriche/Animali/Attrezzature_e_accessori/">Attrezzature e accessori</a></li>
+										</ul>
+									</li>
+									<li><a href="/rubriche/Abbigliamento/" title="annunci gratuiti - Porta Portese Abbigliamento">Abbigliamento</a></li>
+									<li><a href="/rubriche/Sport/" title="annunci gratuiti - Porta Portese Sport">Sport</a></li>
+									<li><a href="/rubriche/Smarrimenti/" title="annunci gratuiti - Porta Portese Smarrimenti">Smarrimenti</a></li>
+									<li><a href="/rubriche/Messaggi/" title="annunci gratuiti - Porta Portese Messaggi">Messaggi</a></li>
+									<li><a href="/rubriche/Regali/" title="annunci gratuiti - Porta Portese Regali">Regali</a></li>
+								</ul><!-- fine secondo livello -->
+							</li>
+							<li><a href="/zone/miopp/">Inserisci il tuo annuncio</a></li>
+							
+							
+							<li><a onclick="openCentered('/appunti.jsp', 550, 480, 'Appunti', 'scrollbars=yes')">Salvati</a></li>
+							<li><a href="/zone/miopp/">Login</a></li>
+							<li class="contatti"><a href="/contatti/">Contatti</a></li>
+							<!-- <li class="frequenti"><a href="/ricerche-frequenti/">Ricerche frequenti</a></li> -->
+						</ul><!-- .nav fine primo livello -->
+					</div><!-- .nav-wrapper -->
+				</div><!-- .line -->
+				
+				</div><!-- .inner -->
+		</div><!-- .head -->
+		
+		<div class="body">
+			
+			<div class="line">
+				<div class="inner">
+			<div class="unit lastUnit size1of1">
+			
+			</div>
+			
+
+				<h2 title="PortaPortese lavoro" class="catHead lavoroHead">lavoro</h2>
+				
+				<div class="bc">
+					
+					<span><a href="/" title="Home">Home</a> &raquo; </span><span><a href="/rubriche/Lavoro/" title="Lavoro">Lavoro</a></span> &raquo; <span><a href="/rubriche/Lavoro/Lavoro_qualificato/" title="Lavoro qualificato"><strong>Lavoro qualificato</strong></a></span> 
+					
+				</div><!-- .bc -->
+
+			
+					
+			<div class="main">
+			
+			
+			
+			<!-- ENTRYPOINT PRIMO BANNER  -->
+			<div class="bannerTop">
+				<script type="text/javascript">
+				  GA_googleFillSlot("hat_0_FF");
+				</script>
+			</div>
+			
+			
+			
+			<!-- INIZIALIZZAZIONI PAGINA LISTA ANNUNCI -->
+			<div class="ris-wrapper">
+				<div class="line nav-viste-ordina">
+					<div class="viste-lista-mappa">
+						
+						<a class="mobile" href="#filtri">Vai ai filtri</a>
+					</div><!-- .line .viste-lista-mappa -->
+
+		        <div class="ordinaPrezzo "><a href="/rubriche/Lavoro/Lavoro_qualificato/m-usC84?to=ordinaPAsc">ordina</a></div>
+				</div><!-- .line .nav-viste-ordina -->
+
+				
+			
+		
+					<div class="ris mod">
+						<div onclick="location.href='/rubriche/Lavoro/Lavoro_qualificato/m-zone-concept-azmultin-0ID2013082046041?tipo=offerte&numero=84&latstart=41.8966&lngstart=12.494&zoomstart=10'">
+							<div class="primary">
+								<h2 class="risTitle"><a href="/rubriche/Lavoro/Lavoro_qualificato/m-zone-concept-azmultin-0ID2013082046041?tipo=offerte&numero=84&latstart=41.8966&lngstart=12.494&zoomstart=10" title="Z.ONE Concept Az.Multin.">Z.ONE Concept Az.Multin.</a></h2>
+								<p> Leader settore parrucchieri selez. Agenti esperienza anche in settori similari Roma/Prov. Offresi contr. agenzia formaz. iniziale/contin. incentivi e provv. superiori alla media con portaf. clienti cv:d.diffusion@alice.it
+									
+									
+									<a href="/rubriche/Lavoro/Lavoro_qualificato/m-zone-concept-azmultin-0ID2013082046041?tipo=offerte&numero=84&latstart=41.8966&lngstart=12.494&zoomstart=10"><img src="/img/mail-icn.png" width="14" height="14" border="0"></a>
+									
+									
+									</p>
+							</div><!-- .primary -->
+							<div class="secondary">
+									
+								
+								<span class="data">martedì 12 Nov</span>
+								
+							</div><!-- .secondary -->
+						</div>
+						<span class="prezzo">n/d</span>
+						
+						<img class="save" src="/img/salva-off.png" alt="Inseriscilo negli appunti" border="0" name="IMGS2013082046041" onMouseUp="appuntalo2(event, this, 2013082046041);">
+						
+					</div><!-- .result -->
+					
+				
+<div class="bannerMid"><script type="text/javascript">GA_googleFillSlot("lista1_0_FF");</script></div>
+
+	
+				<div class="line">
+					<div class="unit size1of1 lastUnit">
+				
+						<div class="pag">
+						
+							
+								
+								<span>pagina 29 di 29</span>
+
+
+								      
+								      <span><a href="/rubriche/Lavoro/Lavoro_qualificato/m-usC84&pag28">&lsaquo;&lsaquo;</a></span> 
+								      
+								      
+									
+										<span><a title="Pagina 20" href="/rubriche/Lavoro/Lavoro_qualificato/m-usC84&pag20">20</a></span>
+									
+										<span><a title="Pagina 21" href="/rubriche/Lavoro/Lavoro_qualificato/m-usC84&pag21">21</a></span>
+									
+										<span><a title="Pagina 22" href="/rubriche/Lavoro/Lavoro_qualificato/m-usC84&pag22">22</a></span>
+									
+										<span><a title="Pagina 23" href="/rubriche/Lavoro/Lavoro_qualificato/m-usC84&pag23">23</a></span>
+									
+										<span><a title="Pagina 24" href="/rubriche/Lavoro/Lavoro_qualificato/m-usC84&pag24">24</a></span>
+									
+										<span><a title="Pagina 25" href="/rubriche/Lavoro/Lavoro_qualificato/m-usC84&pag25">25</a></span>
+									
+										<span><a title="Pagina 26" href="/rubriche/Lavoro/Lavoro_qualificato/m-usC84&pag26">26</a></span>
+									
+										<span><a title="Pagina 27" href="/rubriche/Lavoro/Lavoro_qualificato/m-usC84&pag27">27</a></span>
+									
+										<span><a title="Pagina 28" href="/rubriche/Lavoro/Lavoro_qualificato/m-usC84&pag28">28</a></span>
+									
+										<span><a class="selected">29</a></span>
+									
+										
+									
+										
+									
+										
+									
+										
+									
+										
+									
+										
+									
+										
+									
+										
+									
+										
+									
+										
+									
+									
+									
+								      
+								      <span>&rsaquo;&rsaquo;</span>
+								      
+							  
+							
+						
+						</div><!-- .pag -->
+					</div><!-- .unit lastUnit size1of1 -->
+				</div><!-- .line -->
+				
+				
+				</div><!-- .ris-wrapper -->
+				
+				
+				
+					<div class="ban-wrapper">
+						<div class="bannerRight">
+							<script type="text/javascript">
+							  GA_googleFillSlot("listaP_0_FF");
+							</script>
+						</div>
+						<div class="bannerRight">
+							<script type="text/javascript">
+							  GA_googleFillSlot("listaR_0_FF");
+							</script>
+						</div><!-- .bannerRight -->
+						<div class="bannerRight">
+							<script type="text/javascript">
+							  GA_googleFillSlot("listaM_0_FF");
+							</script>
+						</div><!-- .bannerRight -->
+					</div><!-- .banWrapper -->
+				
+				
+				
+
+			
+			</div><!-- .main -->
+			
+			
+				
+					<!-- VECCHIO FORM.JSPF -->
+						
+					
+					
+							<FORM METHOD="GET" NAME="sform" id="sform" ACTION="/ricercaredirect">
+							<INPUT NAME="kr" TYPE="hidden"  value="45">
+							<input type="hidden" name="mappa" value="">
+							
+								<div class="leftCol sideBar filtri">
+									<div class="sideBarInner">
+										<h3 class="h6">1514 annunci</h3>
+										
+										
+										<!-- inserisco form estesa -->
+										
+	
+										
+										
+										<label for=""><h3 class="h6 filterSez">parole chiave</h3></label>
+										<input class="keywords" name="search" type="text" value="">
+										<div class="pulsante"><button class="btn btn-warning btn-mini" value="Cerca" type="submit">Cerca <i class="icon-search icon-white"></i></button></div><!-- .pulsante -->
+											
+										
+													
+												
+										
+										<h3 class="h6 filterSez">prezzo</h3>
+										<div class="slider-wrapper">
+											<p>
+												<input id="amt-price-min" class="left" type="text" name="prezzomin" />
+												<input id="amt-price-max" class="right" type="text" name="prezzomax" />
+											</p>
+											<div id="slider-price" class="slider"></div>
+										</div><!-- .slider-wrapper -->
+										
+													
+										
+	
+										
+						           		
+						           		
+										
+										
+						           		
+						           		
+	
+										
+
+
+
+
+
+
+
+
+			<h3 class="h6 filterSez">Pubblicato:</h3>
+			<ul class="filterList">
+			<li><a  href="/rubriche/Lavoro/Lavoro_qualificato/">Tutti</a></li>
+			<li><a class="selected" href="/rubriche/Lavoro/Lavoro_qualificato/m-usC84">martedì 12 novembre 2013</a></li><li><a  href="/rubriche/Lavoro/Lavoro_qualificato/m-usC83">venerdì 8 novembre 2013</a></li><li><a  href="/rubriche/Lavoro/Lavoro_qualificato/m-usC82">martedì 5 novembre 2013</a></li><li><a  href="/rubriche/Lavoro/Lavoro_qualificato/m-usC81">venerdì 1 novembre 2013</a></li><li><a  href="/rubriche/Lavoro/Lavoro_qualificato/m-usC80">martedì 29 ottobre 2013</a></li><li><a  href="/rubriche/Lavoro/Lavoro_qualificato/m-usC79">venerdì 25 ottobre 2013</a></li><li><a  href="/rubriche/Lavoro/Lavoro_qualificato/m-usC78">martedì 22 ottobre 2013</a></li><li><a  href="/rubriche/Lavoro/Lavoro_qualificato/m-usC77">venerdì 18 ottobre 2013</a></li><li><a  href="/rubriche/Lavoro/Lavoro_qualificato/m-usC76">martedì 15 ottobre 2013</a></li><li><a  href="/rubriche/Lavoro/Lavoro_qualificato/m-usC75">venerdì 11 ottobre 2013</a></li><li><a  href="/rubriche/Lavoro/Lavoro_qualificato/m-usC74">martedì 8 ottobre 2013</a></li><li><a  href="/rubriche/Lavoro/Lavoro_qualificato/m-usC73">venerdì 4 ottobre 2013</a></li><li><a  href="/rubriche/Lavoro/Lavoro_qualificato/m-usC72">martedì 1 ottobre 2013</a></li>
+</ul>
+<input type="hidden" name="numero" value="84">
+						           		<!--<br>-->
+										<span class="toggle">
+										<span class="offerte">
+										<a title="offerte" class="selected" href="/rubriche/Lavoro/Lavoro_qualificato/m-usC84">Offerte</a>
+										</span>
+										|
+										<span class="richieste">
+										<a title="richieste"  href="/rubriche/Lavoro/Lavoro_qualificato/m-richiesteusC84">Richieste</a>
+										</span>
+										</span>
+										<input type="hidden" name="tipo" value="offerte">
+										
+										
+									</div><!-- .sideBarInner -->
+									
+									
+									<div class="bannerLeft">
+										<script type="text/javascript">
+										  GA_googleFillSlot("listaM_L_0_FF");
+										</script>
+									</div><!-- .bannerLeft -->
+									
+								</div><!-- .leftCol -->
+							</FORM>
+					<!-- FINE VECCHIO FORM.JSPF -->
+				
+			
+				</div><!-- .inner -->
+			</div><!-- .line -->
+		</div><!-- .body -->
+		
+		<div class="push"></div><!-- .push -->
+		
+	</div><!-- .page -->
+		
+
+<div class="footer">
+	
+	<div class="mod foot auxiliary">
+		<p><!-- SLOT: 2 -->
+			
+				&copy; Copyright 2003-2013 PortaPortese.it -
+		 Tutti i diritti riservati. 
+		
+		
+		<br />IL NOSTRO NETWORK: <a href="http://www.secondamano.it" title="Annunci gratuiti su Secondamano il miglior sito di annunci gratuiti">Secondamano</a> | <a href="http://www.gliaffari.it" title="annunci liguria annunci auto liguria annunci genova annunci sanremo case liguria">Gliaffari.it</a> | <a href="http://www.bricabrac.it/" title="annunci napoli affitto napoli auto napoli moto napoli lavoro napoli annunci campania">BricaBrac</a> | <a href="http://www.settorefinanza.com" title="SettoreFinanza - Preventivi per mutui prestiti e cessioni del quinto">SettoreFinanza</a> | <a href="http://www.piubarche.it/" title="i migliori annunci di barche sono su piubarche.it">piubarche.it</a></p>
+	</div><!-- .foot -->
+
+	<div class="subFoot">
+		<div class="inner">
+			<div class="line">
+				<div class="unit size1of1">
+					<ul class="subNav">
+						<li><a href="/zone/miopp/" title="">login</a> &middot;</li>
+						<!-- <li><a href="" title="">mappa del sito</a> Â·</li> -->
+						<li><a href="/ricerche-frequenti/" title="">ricerche frequenti</a> &middot;</li>
+						<li><a href="/contatti/" title="">contatti</a></li>
+					</ul>
+				</div><!-- .unit lastUnit size1of1 -->
+			</div><!-- .line -->
+		</div><!-- .inner -->
+	</div><!-- .subFoot -->
+	
+</div><!-- .footer -->
+
+
+
+<script type="text/javascript">setPopup();</script>
+
+
+</body>
+</html>
