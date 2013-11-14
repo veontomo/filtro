@@ -68,14 +68,14 @@ if(isset($_POST['submit'])){
 				<?php
 					$keywordsTag = isset($_POST['keywords']) ?  'value="'.htmlspecialchars($_POST['keywords']).'"' : 'placeholder="inserisci le parole chiavi"';
 				?>
-				<input type="text" name="keywords" id="keywords" <?php echo $keywordsTag;?>><br />
+				<input type="text" name="keywords" id="keywords" <?php echo $keywordsTag;?>>
+				<br>
 				
-				<label for="timeMin">A:</label>
-				<input type="text" id="timeMin" name="timeMin" placeholder="<?php echo date('Y-m-d H:i', strtotime('-1 hour'));?>">
+				<label for="timeMin" class="shortfield">A:</label>
+				<input type="text" id="timeMin" name="timeMin" class="shortfield" placeholder="<?php echo date('Y-m-d H:i', strtotime('-1 hour'));?>">
 
-				<label for="timeMax">Da:</label>
-				<input type="text" id="timeMax" name="timeMax" placeholder="<?php echo date('Y-m-d H:i', time());?>">
-
+				<label for="timeMax" class="shortfield">Da:</label>
+				<input type="text" id="timeMax" name="timeMax" class="shortfield" placeholder="<?php echo date('Y-m-d H:i', time());?>">
 				
 				<input type="submit" value="Controlla" name="submit" id="submit">
 			</form>
