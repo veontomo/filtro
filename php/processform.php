@@ -74,7 +74,14 @@ function categoryToUrls($categ){
 	 		);
 	 		break;
 	 	case 'arredamento':
-	 		$urls = array('subito' => array('http://www.subito.it/annunci-lazio/vendita/arredamento-casalinghi/'));
+	 		$urls = array(
+	 			'subito' => array('http://www.subito.it/annunci-lazio/vendita/arredamento-casalinghi/'),
+	 			'portaportese' => array(
+	 				'http://www.portaportese.it/rubriche/Casa/Arredamento_Mobili/',
+	 				'http://www.portaportese.it/rubriche/Casa/Antiquariato_Quadri/',
+	 				'http://www.portaportese.it/rubriche/Regali/'
+ 				)
+ 			);
 	 		break;
 	 	case 'veicoli':
 	 		$urls = array(
