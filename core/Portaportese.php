@@ -8,7 +8,7 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR
 * Represents a specific case of AdProvider class corresponding to "Portaportese" page.
 * @author A.Shcherbakov
 * @author veontomo@gmail.com
-* @version 0.0.1 
+* @version 0.0.1
 */
 class Portaportese implements AdProvider{
 	/**
@@ -25,27 +25,27 @@ class Portaportese implements AdProvider{
 	private $urlPattern = 'm-usCPLACEHOLDER1&pagPLACEHOLDER2';
 
 	/**
-	* @var string 	provider domain name 
+	* @var string 	provider domain name
 	*/
 	private $providerUrl = 'http://www.portaportese.it';
 
 	/**
 	* @var 		string 	$page url of the specific page inside 'entry page'
 	* @example	if for the 'entry page' $url is 'http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/'
-	* then $page might be equal to 'm-usC72&pag4', so that complete url of the page is 
+	* then $page might be equal to 'm-usC72&pag4', so that complete url of the page is
 	* 'http://www.portaportese.it/rubriche/Lavoro/Lavoro_qualificato/m-usC72&pag4'
 	*/
 	public $page;
 
-	/** 
+	/**
 	* the max value of the ad publication time. Default value is set to now.
-	* @var integer  the earliest possible time of the publication of ad. 
+	* @var integer  the earliest possible time of the publication of ad.
 	*/
 	private $timeMax;
 
-	/** 
+	/**
 	* the min value of the ad publication time. Default value is set to 1 hour before now.
-	* @var integer  the latest possible time of the publication of ad. 
+	* @var integer  the latest possible time of the publication of ad.
 	*/
 	private $timeMin;
 
@@ -54,7 +54,7 @@ class Portaportese implements AdProvider{
 	* the keywords according to which the retrieved ads are supposed to be filtered out
 	* @example if it is equal to "php, programmat, scrivania", that the ads containing
 	* at least one of the strings "php", "programmat" or "scrivania" should pass through the filter.
-	* If it is set to the empty string, all ads should pass through the filter. 
+	* If it is set to the empty string, all ads should pass through the filter.
 	* @var string the comma separated string of the keywords
 	*/
 	public $keywords;
@@ -68,7 +68,7 @@ class Portaportese implements AdProvider{
 		$this->timeMin = strtotime('-7 day');
 		$this->keywords = NULL;
 	}
-	
+
 	/**
 	* Getter for the url
 	* @param 	void
@@ -80,7 +80,7 @@ class Portaportese implements AdProvider{
 
 	/**
 	* Setter for the timeMax
-	* If the argument is a string, then it is transformed into an integer corresponding to the time format 
+	* If the argument is a string, then it is transformed into an integer corresponding to the time format
 	* and if this operation is successful, the timeMax is set to  that integer
 	* If the argument is an integer, the timeMax is set to this integer
 	* @param 	mixed 	$str 	string or integer
@@ -113,7 +113,7 @@ class Portaportese implements AdProvider{
 
 	/**
 	* Setter for the timeMin
-	* If the argument is a string, then it is transformed into an integer corresponding to the time format 
+	* If the argument is a string, then it is transformed into an integer corresponding to the time format
 	* and if this operation is successful, the timeMin is set to  that integer
 	* If the argument is an integer, the timeMin is set to this integer
 	* @param mixed 		$str 	string or integer
@@ -179,20 +179,22 @@ class Portaportese implements AdProvider{
 
 	/**
 	* Retrieve all the advertisments from the "entry page" and forthcoming ones defined by the url pattern
-	* @param 	integer 	$pageNumber  the first placeholder value that corresponds to the ads published at the same date 
+	* @param 	integer 	$pageNumber  the first placeholder value that corresponds to the ads published at the same date
 	* @return 	array 	an array each element of which is an instance of class Ad.
 	*/
 	public function retrieveAdsFixedDate($pageNumber){
 		$counter = 1;
 		$ads = array();
 		do{
-			$page = preg_replace(array('/PLACEHOLDER1/', '/PLACEHOLDER2/'), 
+			$page = preg_replace(array('/PLACEHOLDER1/', '/PLACEHOLDER2/'),
 				array($pageNumber, $counter), $this->urlPattern);
 			$adsOnePage = $this->retrieveAdsOnePage($page);
 			$counter++;
 			if(is_array($adsOnePage) && !empty($adsOnePage)){
+				$keywords = $this->keywords;
 				$adsfiltered = array_filter($adsOnePage, function($ad){
-					return $ad->containsAnyOf($this->keywords);
+					global $keywords;
+					return $ad->containsAnyOf($keywords);
 				});
 				$ads = array_merge($ads, $adsOnePage);
 				$isEnough = false;
@@ -207,7 +209,7 @@ class Portaportese implements AdProvider{
 
 	/**
 	* Removes a previously saved page from the repository
-	* @param string 	$page url of the page which local version should be removed from the repo 
+	* @param string 	$page url of the page which local version should be removed from the repo
 	*/
 	public function eraseFromRepo($page){
 		$urlComplete = $this->url.$page;
@@ -217,9 +219,9 @@ class Portaportese implements AdProvider{
 		$retr->eraseFromRepo();
 	}
 
-	/** 
+	/**
 	* Produces the content of the page which location is given by concatenation of $url and $page
-	* @param 	string 	$page 		url of the page parametrized by the $page in the bunch of $this->url  
+	* @param 	string 	$page 		url of the page parametrized by the $page in the bunch of $this->url
 	* @return 	string 				content of the page given by $url
 	* @uses 	FileRetrieval::retrieveFromWeb() to retrieve the content
 	*/
@@ -257,7 +259,7 @@ class Portaportese implements AdProvider{
 		$ads = $xpath->query("//*/div[@class='ris mod']");
 		$this->log($ads->length . " ads are retrieved. \n");
 
-		// if no ads were found on the page, delete that page from the repo 	
+		// if no ads were found on the page, delete that page from the repo
 		if($ads->length == 0){
 			$this->eraseFromRepo($page);
 			$this->log("the file {$this->url}$page  is supposed to be deleted.\n");
@@ -307,9 +309,9 @@ class Portaportese implements AdProvider{
 		$xpath = new DOMXpath($doc);
 
 		// the dates are items if an unordered list with class="filterList". One has to remove the first
-		// item in the list, because it corresponds to "Tutti", not to ads published in a specific date. 
+		// item in the list, because it corresponds to "Tutti", not to ads published in a specific date.
 		$dates = $xpath->query('//*/ul[@class="filterList"]/li[position()>1]');
-		
+
 		$output = array();
 		foreach ($dates as $date) {
 			$links = $date->getElementsByTagName('a');
@@ -346,9 +348,9 @@ class Portaportese implements AdProvider{
 
 
 	/**
-	* Writes info in the log file. 
+	* Writes info in the log file.
 	* For this class, the log file name is chosen to be Portaportese.log and is located in the directory "logs"
-	* @param string 	$content 	message to put into the log file 
+	* @param string 	$content 	message to put into the log file
 	* @return void
 	*/
 	private function log($content){
@@ -364,7 +366,7 @@ class Portaportese implements AdProvider{
 			. $content."\n\n";
 		$fileName = $targetDir.DIRECTORY_SEPARATOR.basename(__FILE__,'.php').'.log';
 		file_put_contents($fileName, $infoToWrite, FILE_APPEND);
-		
+
 	}
 
 
