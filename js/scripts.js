@@ -5,5 +5,7 @@ $(document).ready(function(){
 	$('*[name=timeMin]').appendDtpicker(datePickerFormat);
 	$('*[name=timeMax]').appendDtpicker(datePickerFormat);
 
+	$('#timeMin, #timeMax').css('background-color', 'rgba(255, 232, 190, 20)');
+
 
 });

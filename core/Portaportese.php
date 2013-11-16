@@ -191,12 +191,8 @@ class Portaportese implements AdProvider{
 			$adsOnePage = $this->retrieveAdsOnePage($page);
 			$counter++;
 			if(is_array($adsOnePage) && !empty($adsOnePage)){
-				$keywords = $this->keywords;
-				$adsfiltered = array_filter($adsOnePage, function($ad){
-					global $keywords;
-					return $ad->containsAnyOf($keywords);
-				});
-				$ads = array_merge($ads, $adsOnePage);
+				$adsfiltered = $this->filterOut($adsOnePage);
+				$ads = array_merge($ads, $adsfiltered);
 				$isEnough = false;
 			}else{
 				$isEnough = true;
@@ -204,6 +200,22 @@ class Portaportese implements AdProvider{
 		}
 		while (!$isEnough);
 		return $ads;
+	}
+
+
+	/**
+	* Removes ads that do not contain any of the keywords. Relies on Ad::containsAnyOf().
+	* @param array 	$arrOfAds 	array of ads
+	* @return array 	array of ads
+	*/
+	public function filterOut($arrOfAds){
+		$output = array();
+		foreach ($arrOfAds as $ad) {
+			if($ad->containsAnyOf($this->keywords)){
+				$output[] = $ad;
+			}
+		}
+		return $output;
 	}
 
 
@@ -263,7 +275,6 @@ class Portaportese implements AdProvider{
 		if($ads->length == 0){
 			$this->eraseFromRepo($page);
 			$this->log("the file {$this->url}$page  is supposed to be deleted.\n");
-
 		};
 		foreach ($ads as $ad) {
 			$adCurrent = new Ad;
@@ -273,7 +284,6 @@ class Portaportese implements AdProvider{
 			if($dateNodes->length > 0){
 				$adCurrent->date = formatTime($dateNodes->item(0)->nodeValue);
 			}
-
 			$descrNodes = $xpath->query('div/div[@class="primary"]', $ad);
 			// it is supposed to be just one description in the ad, so if others are present, neglect them
 			if($descrNodes->length > 0){

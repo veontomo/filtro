@@ -95,8 +95,8 @@ input.shortfield{
 
 
 #submit{
-	display: block;
-	margin: 2em 5em;
+	display: inline-block;
+	margin-left: 5em;
 }
 
 #all-ads{

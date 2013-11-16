@@ -138,9 +138,6 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 		$this->removeExternalUrl(array('dirname' => 'webImitationPortaportese', 'filename' => $fileName));
 
 	}
-	/**
-	* @group current
-	*/
 
 	public function testRetriveAdsOnePage(){
 		$savedAdDir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR
@@ -251,11 +248,74 @@ class PortaporteseTest extends PHPUnit_Framework_TestCase
 			$pp->setTimeMax('8 Oct 2013 00:00');
 			$actual3 = $pp->linksInDateRange();
 			$this->assertEquals($expected2, $actual3);
-
-
-
 		}
 
 
+		public function testRetrieveAdsFixedDate(){
+			$pp = $this->getMock('Portaportese', array('retrieveAdsOnePage'));
+			$this->assertClassHasAttribute('keywords', 'Portaportese');
+			$pp->keywords = "word1, word2";
+			$pp->expects($this->any())
+			    ->method('retrieveAdsOnePage')
+			    ->will($this->returnCallback('justAMock'));
+			$result = $pp->retrieveAdsFixedDate(1);
+			$this->assertEquals(3, count($result));
+		}
+
+
+
+		public function testFilterOut(){
+			$pp = new Portaportese;
+			$pp->keywords = "word1, word2";
+
+			$ad1 = new Ad;
+			$ad1->content = "first ad, it contains word1";
+			$ad2 = new Ad;
+			$ad2->content = "second ad";
+			$ad3 = new Ad;
+			$ad3->content = "third ad, it contains word2";
+			$ad4 = new Ad;
+			$ad4->content = "fourth ad";
+			$ad5 = new Ad;
+			$ad5->content = "fifth ad, it contains word1";
+
+			$filtered = $pp->filterOut(array($ad1, $ad2, $ad3, $ad4, $ad5));
+			$this->assertEquals(3, count($filtered));
+
+		}
 }
+
+function justAMock(){
+	echo __METHOD__;
+	print_r(func_get_args());
+	$arg = func_get_args();
+	$ad1 = new Ad;
+	$ad1->content = "first ad, it contains word1";
+	$ad2 = new Ad;
+	$ad2->content = "second ad";
+	$ad3 = new Ad;
+	$ad3->content = "third ad, it contains word2";
+	$ad4 = new Ad;
+	$ad4->content = "fourth ad";
+	$ad5 = new Ad;
+	$ad5->content = "fifth ad, it contains word1";
+
+	$block1 = array($ad1, $ad2, $ad3, $ad4, $ad5);
+
+	switch ($arg[0]) {
+		case 'm-usC1&pag1':
+			$output = $block1;
+			break;
+		case 'm-usC1&pag2':
+			$output = array();
+			break;		
+		default:
+			$output = array();
+			break;
+	}
+	return $output;
+}
+
+
+
 ?>
